@@ -25,6 +25,7 @@ tracking purchases by buyers.
 * **Object Mapping (Optional):** MapStruct or ModelMapper (can be integrated if needed for DTO-DAO conversions)
 
 ---
+# Car Purchase Service Database Schema
 
 ## Core Entities and Their Relationships
 
@@ -94,11 +95,165 @@ We've made some meaningful assumptions about the properties for each entity:
 
 ---
 
-### Entity Relationships
 
-entity relation related will be update soon....
+### Entity Relationships diagram
+
+![Entity Diagram](Entity_diagram.png)
+
+
+
+This repository contains the SQL schema for a simple car sales platform. It models entities like buyers, sellers, cars, car images, reviews, and user authentication, along with the relationships between them.
 
 ---
+
+## Table of Contents
+
+* [Database Overview](#database-overview)
+* [Entities and Relationships](#entities-and-relationships)
+    * [Buyer](#buyer)
+    * [Seller](#seller)
+    * [Car](#car)
+    * [Car_image](#car_image)
+    * [Review](#review)
+    * [User](#user)
+    * [purchased_car](#purchased_car)
+* [Foreign Key Relationships](#foreign-key-relationships)
+
+---
+
+## Database Overview
+
+This schema is designed to support the core functionalities of a car sales application, including:
+
+* **User Management:** Differentiating between buyers and sellers, and handling general user authentication.
+* **Car Listings:** Storing details about cars for sale and their associated images.
+* **Transactions:** Recording details of purchased cars.
+* **Feedback:** Allowing buyers to review cars.
+
+---
+
+## Entities and Relationships
+
+Below is a detailed description of each table (entity) in the database.
+
+### `Buyer`
+
+Represents individual users who purchase cars.
+
+| Column       | Type       | Constraints      | Description                     |
+| :----------- | :--------- | :--------------- | :------------------------------ |
+| `id`         | `INTEGER`  | `PRIMARY KEY`    | Unique identifier for the buyer |
+| `first_name` | `VARCHAR`  | `NOT NULL`       | Buyer's first name              |
+| `last_name`  | `VARCHAR`  | `NOT NULL`       | Buyer's last name               |
+| `email`      | `VARCHAR`  | `NOT NULL`       | Buyer's email address (unique)  |
+| `phone`      | `VARCHAR`  | `NOT NULL`       | Buyer's phone number            |
+
+### `Seller`
+
+Represents companies or individuals selling cars.
+
+| Column         | Type      | Constraints   | Description                          |
+| :------------- | :-------- | :------------ | :----------------------------------- |
+| `id`           | `INTEGER` | `PRIMARY KEY` | Unique identifier for the seller     |
+| `company_name` | `VARCHAR` | `NOT NULL`    | Name of the selling company/individual |
+| `email`        | `VARCHAR` | `NOT NULL`    | Seller's email address (unique)      |
+| `phone`        | `VARCHAR` | `NOT NULL`    | Seller's phone number                |
+
+### `Car`
+
+Stores details about cars available for sale.
+
+| Column      | Type          | Constraints   | Description                        |
+| :---------- | :------------ | :------------ | :--------------------------------- |
+| `id`        | `INTEGER`     | `PRIMARY KEY` | Unique identifier for the car      |
+| `model`     | `VARCHAR`     | `NOT NULL`    | Car model (e.g., "Civic", "F-150") |
+| `year`      | `VARCHAR`     | `NOT NULL`    | Manufacturing year of the car      |
+| `price`     | `DECIMAL(8,2)`| `NOT NULL`    | Selling price of the car           |
+| `isAvailable`| `BOOLEAN`     | `NOT NULL`    | Indicates if the car is currently available for sale |
+| `seller_id` | `INTEGER`     | `NOT NULL`    | `FOREIGN KEY` to `Seller` table    |
+
+### `Car_image`
+
+Stores image URLs and public IDs for each car.
+
+| Column      | Type      | Constraints   | Description                      |
+| :---------- | :-------- | :------------ | :------------------------------- |
+| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the image  |
+| `car_id`    | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table     |
+| `public_id` | `VARCHAR` | `NOT NULL`    | Public ID of the image (e.g., for cloud storage) |
+| `image_url` | `TEXT`    | `NOT NULL`    | URL of the car image             |
+
+### `Review`
+
+Stores feedback and ratings provided by buyers for cars.
+
+| Column     | Type      | Constraints   | Description                      |
+| :--------- | :-------- | :------------ | :------------------------------- |
+| `id`       | `INTEGER` | `PRIMARY KEY` | Unique identifier for the review |
+| `car_id`   | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table     |
+| `rate`     | `INTEGER` | `NOT NULL`    | Rating for the car (e.g., 1-5)   |
+| `feedback` | `TEXT`    | `NOT NULL`    | Detailed feedback text           |
+| `buyer_id` | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Buyer` table   |
+
+### `User`
+
+Handles authentication and roles for users (potentially linking to `Buyer` or `Seller` via email).
+
+| Column      | Type      | Constraints   | Description                     |
+| :---------- | :-------- | :------------ | :------------------------------ |
+| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the user  |
+| `user_name` | `VARCHAR` | `NOT NULL`    | User's login username (e.g., email) |
+| `password`  | `VARCHAR` | `NOT NULL`    | Hashed password                 |
+| `role`      | `VARCHAR` | `NOT NULL`    | User role (e.g., "Buyer", "Seller", "Admin") |
+
+**Note on `User` foreign keys:** The schema indicates `user_name` can reference both `Seller.email` and `Buyer.email`. This implies that `user_name` likely stores the email address, allowing a single `User` entry to link to either a `Buyer` or `Seller` profile based on their role. This design needs careful handling at the application level to ensure consistency.
+
+### `purchased_car`
+
+Records details of cars that have been bought.
+
+| Column         | Type      | Constraints   | Description                          |
+| :------------- | :-------- | :------------ | :----------------------------------- |
+| `id`           | `INTEGER` | `PRIMARY KEY` | Unique identifier for the purchase record |
+| `buyer_id`     | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Buyer` table       |
+| `seller_id`    | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Seller` table      |
+| `car_id`       | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table         |
+| `purchased_date`| `DATE`    | `NOT NULL`    | Date of the car purchase             |
+
+---
+
+## Foreign Key Relationships
+
+The following foreign key constraints are defined to maintain data integrity and establish relationships between tables:
+
+* **`Car` to `Seller`**:
+    * `Car.seller_id` references `Seller.id` (Many Cars to One Seller)
+* **`Car_image` to `Car`**:
+    * `Car_image.car_id` references `Car.id` (Many Images to One Car)
+* **`Review` to `Car`**:
+    * `Review.car_id` references `Car.id` (Many Reviews to One Car)
+* **`Review` to `Buyer`**:
+    * `Review.buyer_id` references `Buyer.id` (Many Reviews to One Buyer)
+* **`purchased_car` to `Buyer`**:
+    * `purchased_car.buyer_id` references `Buyer.id`
+* **`purchased_car` to `Seller`**:
+    * `purchased_car.seller_id` references `Seller.id`
+* **`purchased_car` to `Car`**:
+    * `purchased_car.car_id` references `Car.id`
+* **`User` to `Seller` and `Buyer` (Conditional)**:
+    * `User.user_name` references `Seller.email`
+    * `User.user_name` references `Buyer.email`
+      (This implies `user_name` stores an email, and a user can be either a buyer or a seller, but not both simultaneously using these specific FKs as written, or it's designed for a shared email authentication system.)
+
+This schema provides a solid foundation for a car sales application. You can extend it further with features like payment details, car specifications, or search history.
+
+---
+
+---
+
+Below test is not yet edited it so don't refer.
+---
+
 
 ## Functionalities
 
