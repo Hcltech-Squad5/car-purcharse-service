@@ -25,6 +25,7 @@ tracking purchases by buyers.
 * **Object Mapping (Optional):** MapStruct or ModelMapper (can be integrated if needed for DTO-DAO conversions)
 
 ---
+
 # Car Purchase Service Database Schema
 
 ## Core Entities and Their Relationships
@@ -95,14 +96,12 @@ We've made some meaningful assumptions about the properties for each entity:
 
 ---
 
-
 ### Entity Relationships diagram
 
 ![Entity Diagram](Entity_diagram.png)
 
-
-
-This repository contains the SQL schema for a simple car sales platform. It models entities like buyers, sellers, cars, car images, reviews, and user authentication, along with the relationships between them.
+This repository contains the SQL schema for a simple car sales platform. It models entities like buyers, sellers, cars,
+car images, reviews, and user authentication, along with the relationships between them.
 
 ---
 
@@ -140,55 +139,55 @@ Below is a detailed description of each table (entity) in the database.
 
 Represents individual users who purchase cars.
 
-| Column       | Type       | Constraints      | Description                     |
-| :----------- | :--------- | :--------------- | :------------------------------ |
-| `id`         | `INTEGER`  | `PRIMARY KEY`    | Unique identifier for the buyer |
-| `first_name` | `VARCHAR`  | `NOT NULL`       | Buyer's first name              |
-| `last_name`  | `VARCHAR`  | `NOT NULL`       | Buyer's last name               |
-| `email`      | `VARCHAR`  | `NOT NULL`       | Buyer's email address (unique)  |
-| `phone`      | `VARCHAR`  | `NOT NULL`       | Buyer's phone number            |
+| Column       | Type      | Constraints   | Description                     |
+|:-------------|:----------|:--------------|:--------------------------------|
+| `id`         | `INTEGER` | `PRIMARY KEY` | Unique identifier for the buyer |
+| `first_name` | `VARCHAR` | `NOT NULL`    | Buyer's first name              |
+| `last_name`  | `VARCHAR` | `NOT NULL`    | Buyer's last name               |
+| `email`      | `VARCHAR` | `NOT NULL`    | Buyer's email address (unique)  |
+| `phone`      | `VARCHAR` | `NOT NULL`    | Buyer's phone number            |
 
 ### `Seller`
 
 Represents companies or individuals selling cars.
 
-| Column         | Type      | Constraints   | Description                          |
-| :------------- | :-------- | :------------ | :----------------------------------- |
-| `id`           | `INTEGER` | `PRIMARY KEY` | Unique identifier for the seller     |
+| Column         | Type      | Constraints   | Description                            |
+|:---------------|:----------|:--------------|:---------------------------------------|
+| `id`           | `INTEGER` | `PRIMARY KEY` | Unique identifier for the seller       |
 | `company_name` | `VARCHAR` | `NOT NULL`    | Name of the selling company/individual |
-| `email`        | `VARCHAR` | `NOT NULL`    | Seller's email address (unique)      |
-| `phone`        | `VARCHAR` | `NOT NULL`    | Seller's phone number                |
+| `email`        | `VARCHAR` | `NOT NULL`    | Seller's email address (unique)        |
+| `phone`        | `VARCHAR` | `NOT NULL`    | Seller's phone number                  |
 
 ### `Car`
 
 Stores details about cars available for sale.
 
-| Column      | Type          | Constraints   | Description                        |
-| :---------- | :------------ | :------------ | :--------------------------------- |
-| `id`        | `INTEGER`     | `PRIMARY KEY` | Unique identifier for the car      |
-| `model`     | `VARCHAR`     | `NOT NULL`    | Car model (e.g., "Civic", "F-150") |
-| `year`      | `VARCHAR`     | `NOT NULL`    | Manufacturing year of the car      |
-| `price`     | `DECIMAL(8,2)`| `NOT NULL`    | Selling price of the car           |
-| `isAvailable`| `BOOLEAN`     | `NOT NULL`    | Indicates if the car is currently available for sale |
-| `seller_id` | `INTEGER`     | `NOT NULL`    | `FOREIGN KEY` to `Seller` table    |
+| Column        | Type           | Constraints   | Description                                          |
+|:--------------|:---------------|:--------------|:-----------------------------------------------------|
+| `id`          | `INTEGER`      | `PRIMARY KEY` | Unique identifier for the car                        |
+| `model`       | `VARCHAR`      | `NOT NULL`    | Car model (e.g., "Civic", "F-150")                   |
+| `year`        | `VARCHAR`      | `NOT NULL`    | Manufacturing year of the car                        |
+| `price`       | `DECIMAL(8,2)` | `NOT NULL`    | Selling price of the car                             |
+| `isAvailable` | `BOOLEAN`      | `NOT NULL`    | Indicates if the car is currently available for sale |
+| `seller_id`   | `INTEGER`      | `NOT NULL`    | `FOREIGN KEY` to `Seller` table                      |
 
 ### `Car_image`
 
 Stores image URLs and public IDs for each car.
 
-| Column      | Type      | Constraints   | Description                      |
-| :---------- | :-------- | :------------ | :------------------------------- |
-| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the image  |
-| `car_id`    | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table     |
+| Column      | Type      | Constraints   | Description                                      |
+|:------------|:----------|:--------------|:-------------------------------------------------|
+| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the image                  |
+| `car_id`    | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table                     |
 | `public_id` | `VARCHAR` | `NOT NULL`    | Public ID of the image (e.g., for cloud storage) |
-| `image_url` | `TEXT`    | `NOT NULL`    | URL of the car image             |
+| `image_url` | `TEXT`    | `NOT NULL`    | URL of the car image                             |
 
 ### `Review`
 
 Stores feedback and ratings provided by buyers for cars.
 
 | Column     | Type      | Constraints   | Description                      |
-| :--------- | :-------- | :------------ | :------------------------------- |
+|:-----------|:----------|:--------------|:---------------------------------|
 | `id`       | `INTEGER` | `PRIMARY KEY` | Unique identifier for the review |
 | `car_id`   | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table     |
 | `rate`     | `INTEGER` | `NOT NULL`    | Rating for the car (e.g., 1-5)   |
@@ -199,26 +198,29 @@ Stores feedback and ratings provided by buyers for cars.
 
 Handles authentication and roles for users (potentially linking to `Buyer` or `Seller` via email).
 
-| Column      | Type      | Constraints   | Description                     |
-| :---------- | :-------- | :------------ | :------------------------------ |
-| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the user  |
-| `user_name` | `VARCHAR` | `NOT NULL`    | User's login username (e.g., email) |
-| `password`  | `VARCHAR` | `NOT NULL`    | Hashed password                 |
+| Column      | Type      | Constraints   | Description                                  |
+|:------------|:----------|:--------------|:---------------------------------------------|
+| `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the user               |
+| `user_name` | `VARCHAR` | `NOT NULL`    | User's login username (e.g., email)          |
+| `password`  | `VARCHAR` | `NOT NULL`    | Hashed password                              |
 | `role`      | `VARCHAR` | `NOT NULL`    | User role (e.g., "Buyer", "Seller", "Admin") |
 
-**Note on `User` foreign keys:** The schema indicates `user_name` can reference both `Seller.email` and `Buyer.email`. This implies that `user_name` likely stores the email address, allowing a single `User` entry to link to either a `Buyer` or `Seller` profile based on their role. This design needs careful handling at the application level to ensure consistency.
+**Note on `User` foreign keys:** The schema indicates `user_name` can reference both `Seller.email` and `Buyer.email`.
+This implies that `user_name` likely stores the email address, allowing a single `User` entry to link to either a
+`Buyer` or `Seller` profile based on their role. This design needs careful handling at the application level to ensure
+consistency.
 
 ### `purchased_car`
 
 Records details of cars that have been bought.
 
-| Column         | Type      | Constraints   | Description                          |
-| :------------- | :-------- | :------------ | :----------------------------------- |
-| `id`           | `INTEGER` | `PRIMARY KEY` | Unique identifier for the purchase record |
-| `buyer_id`     | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Buyer` table       |
-| `seller_id`    | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Seller` table      |
-| `car_id`       | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table         |
-| `purchased_date`| `DATE`    | `NOT NULL`    | Date of the car purchase             |
+| Column           | Type      | Constraints   | Description                               |
+|:-----------------|:----------|:--------------|:------------------------------------------|
+| `id`             | `INTEGER` | `PRIMARY KEY` | Unique identifier for the purchase record |
+| `buyer_id`       | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Buyer` table            |
+| `seller_id`      | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Seller` table           |
+| `car_id`         | `INTEGER` | `NOT NULL`    | `FOREIGN KEY` to `Car` table              |
+| `purchased_date` | `DATE`    | `NOT NULL`    | Date of the car purchase                  |
 
 ---
 
@@ -243,19 +245,515 @@ The following foreign key constraints are defined to maintain data integrity and
 * **`User` to `Seller` and `Buyer` (Conditional)**:
     * `User.user_name` references `Seller.email`
     * `User.user_name` references `Buyer.email`
-      (This implies `user_name` stores an email, and a user can be either a buyer or a seller, but not both simultaneously using these specific FKs as written, or it's designed for a shared email authentication system.)
+      (This implies `user_name` stores an email, and a user can be either a buyer or a seller, but not both
+      simultaneously using these specific FKs as written, or it's designed for a shared email authentication system.)
 
-This schema provides a solid foundation for a car sales application. You can extend it further with features like payment details, car specifications, or search history.
+This schema provides a solid foundation for a car sales application. You can extend it further with features like
+payment details, car specifications, or search history.
 
 ---
 
+# Functionalities
+
+## Car Purchased service API
+
+This document outlines the API endpoints for the Car Sales Platform. The API provides functionalities for managing
+users (buyers and sellers), car listings, car images, purchase records, and reviews.
+
 ---
 
-Below test is not yet edited it so don't refer.
+## Base URL
+
+The base URL for all API endpoints is:
+
+`http://your-domain.com/v1/api/`
+
 ---
 
+## User Management
 
-## Functionalities
+This section details the endpoints for managing general user accounts.
+
+### User Functions (Core)
+
+These functions manage the `User` entity directly, which stores username (email), password, and role.
+
+* **Create User**
+    * **Description:** Registers a new user account.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/user/create`
+    * **Request Body:**
+        ```json
+        {
+          "email": "user@example.com",
+          "password": "securepassword123",
+          "role": "BUYER" // or "SELLER"
+        }
+        ```
+    * **Response:** Success message or user ID.
+
+* **Update User**
+    * **Description:** Updates the password or role for an existing user.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/user/update`
+    * **Request Body:**
+        ```json
+        {
+          "password": "newsecurepassword",
+          "role": "SELLER", // Optional: Update password
+          "username": "user@example.com" // Optional: Update role
+        }
+        ```
+    * **Response:** Success message or updated user details.
+
+* **Delete User**
+    * **Description:** Deletes a user account by username.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/user/delete`
+    * **Request Body:**
+        ```json
+        {
+          "username": "user@example.com"
+        }
+        ```
+    * **Response:** Success message.
+
+### User Controller (`/admin/`) - (Optional for Admin Access)
+
+These endpoints are typically protected and accessible only by administrators for comprehensive user management.
+
+* **Get All Users**
+    * **Description:** Returns a list of all user accounts (username and role).
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/admin/all`
+    * **Response:** `[{ "username": "...", "role": "..." }]`
+
+* **Get User by ID**
+    * **Description:** Returns a user's details (username and role) by their ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/admin/{id}`
+    * **Path Variable:** `{id}` - The ID of the user.
+    * **Response:** `{ "username": "...", "role": "..." }`
+
+* **Get User by Username**
+    * **Description:** Returns a user's details (username and role) by their username (email).
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/admin/{username}`
+    * **Path Variable:** `{username}` - The username (email) of the user.
+    * **Response:** `{ "username": "...", "role": "..." }`
+
+* **Get Users by Role**
+    * **Description:** Returns a list of users filtered by their role.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/admin/role/{role}`
+    * **Path Variable:** `{role}` - The role of the users (e.g., "BUYER", "SELLER").
+    * **Response:** `[{ "username": "...", "role": "..." }]`
+
+* **Update User Password by ID**
+    * **Description:** Updates only the password for a user identified by their ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/admin/password/id/{id}`
+    * **Path Variable:** `{id}` - The ID of the user.
+    * **Request Body:**
+        ```json
+        {
+          "password": "newsecurepassword"
+        }
+        ```
+    * **Response:** Success message.
+
+* **Update User Password by Username**
+    * **Description:** Updates only the password for a user identified by their username.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/admin/password/username/{username}`
+    * **Path Variable:** `{username}` - The username (email) of the user.
+    * **Request Body:**
+        ```json
+        {
+          "password": "newsecurepassword"
+        }
+        ```
+    * **Response:** Success message.
+
+* **Delete User by ID**
+    * **Description:** Deletes a user record by ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/admin/id/{id}`
+    * **Path Variable:** `{id}` - The ID of the user.
+    * **Response:** Success message.
+
+* **Delete User by Username**
+    * **Description:** Deletes a user record by username.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/admin/username/{username}`
+    * **Path Variable:** `{username}` - The username (email) of the user.
+    * **Response:** Success message.
+
+---
+
+## Buyer Management
+
+### Buyer Controller (`/buyer`)
+
+* **Register Buyer**
+    * **Description:** Creates a new buyer profile and associates it with a user account.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/buyer/register`
+    * **Request Body:** (Includes all `Buyer` entity info and the user's password)
+        ```json
+        {
+          "first_name": "John",
+          "last_name": "Doe",
+          "email": "john.doe@example.com",
+          "phone": "123-456-7890",
+          "password": "buyersecurepass" // This will also create/link a User entity
+        }
+        ```
+    * **Response:** Details of the created buyer.
+
+* **Get All Buyers**
+    * **Description:** Returns a list of all buyer profiles.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/buyer/`
+    * **Response:** `[{ "id": ..., "first_name": "...", ... }]`
+
+* **Get Buyer by ID**
+    * **Description:** Returns a buyer's details by their ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/buyer/{id}`
+    * **Path Variable:** `{id}` - The ID of the buyer.
+    * **Response:** `{ "id": ..., "first_name": "...", ... }`
+
+* **Update Buyer by ID**
+    * **Description:** Updates an existing buyer's profile by ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/buyer/{id}`
+    * **Path Variable:** `{id}` - The ID of the buyer.
+    * **Request Body:** (Partial or full `Buyer` entity info to update)
+        ```json
+        {
+          "phone": "987-654-3210"
+        }
+        ```
+    * **Response:** Updated buyer details.
+
+* **Delete Buyer by ID**
+    * **Description:** Deletes a buyer profile by ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/buyer/{id}`
+    * **Path Variable:** `{id}` - The ID of the buyer.
+    * **Response:** Success message.
+
+---
+
+## Seller Management
+
+### Seller Controller (`/seller`)
+
+* **Register Seller**
+    * **Description:** Creates a new seller profile and associates it with a user account.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/seller/register`
+    * **Request Body:** (Includes all `Seller` entity information and the user's password)
+        ```json
+        {
+          "company_name": "Auto Traders Inc.",
+          "email": "info@autotraders.com",
+          "phone": "555-111-2222",
+          "password": "sellersecurepass" // This will also create/link a User entity
+        }
+        ```
+    * **Response:** Details of the created seller (without unnecessary fields).
+
+* **Get All Sellers**
+    * **Description:** Returns a list of all seller profiles.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/seller/`
+    * **Response:** `[{ "id": ..., "company_name": "...", ... }]`
+
+* **Get Seller by ID**
+    * **Description:** Returns a seller's details by their ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/seller/{id}`
+    * **Path Variable:** `{id}` - The ID of the seller.
+    * **Response:** `{ "id": ..., "company_name": "...", ... }`
+
+* **Update Seller by ID**
+    * **Description:** Updates an existing seller's profile by ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/seller/{id}`
+    * **Path Variable:** `{id}` - The ID of the seller.
+    * **Request Body:** (Partial or full `Seller` entity info to update)
+        ```json
+        {
+          "phone": "555-333-4444"
+        }
+        ```
+    * **Response:** Updated seller details.
+
+* **Delete Seller by ID**
+    * **Description:** Deletes a seller profile by ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/seller/{id}`
+    * **Path Variable:** `{id}` - The ID of the seller.
+    * **Response:** Success message.
+
+---
+
+## Car Listings
+
+### Car Controller (`/car`)
+
+* **Create Car Listing**
+    * **Description:** Adds a new car to the listings.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/car/`
+    * **Request Body:** (All `Car` entity info, including `seller_id`)
+        ```json
+        {
+          "model": "Toyota Camry",
+          "year": "2023",
+          "price": 25000.00,
+          "isAvailable": true,
+          "seller_id": 1
+        }
+        ```
+    * **Response:** Details of the created car.
+
+* **Get All Cars**
+    * **Description:** Returns a list of all car listings.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/car/`
+    * **Response:** `[{ "id": ..., "model": "...", ... }]`
+
+* **Get Car by ID**
+    * **Description:** Returns details of a specific car by its ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/car/{id}`
+    * **Path Variable:** `{id}` - The ID of the car.
+    * **Response:** `{ "id": ..., "model": "...", ... }`
+
+* **Update Car by ID**
+    * **Description:** Updates details of an existing car by ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/car/{id}`
+    * **Path Variable:** `{id}` - The ID of the car.
+    * **Request Body:** (Partial or full `Car` entity info to update)
+        ```json
+        {
+          "price": 24500.00,
+          "isAvailable": false
+        }
+        ```
+    * **Response:** Updated car details.
+
+* **Delete Car by ID**
+    * **Description:** Deletes a car listing by ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/car/{id}`
+    * **Path Variable:** `{id}` - The ID of the car.
+    * **Response:** Success message.
+
+* **Get Cars by Seller ID**
+    * **Description:** Returns a list of cars listed by a specific seller.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/car/seller/{sellerId}`
+    * **Path Variable:** `{sellerId}` - The ID of the seller.
+    * **Response:** `[{ "id": ..., "model": "...", ... }]`
+
+* **Search Cars by Model Name (Request Parameter)**
+    * **Description:** Returns a list of cars whose model name matches the provided parameter.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/car/seller`
+    * **Request Parameter:** `name` - The model name to search for (e.g., `?name=bmw`).
+    * **Example:** `/v1/api/car/seller?name=bmw`
+    * **Response:** `[{ "id": ..., "model": "BMW X5", ... }]`
+
+### CarImage Controller (`/carImage`)
+
+* **Add Car Image**
+    * **Description:** Registers a new image for a specific car.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/carImage/register`
+    * **Request Body:** (All `Car_image` entity info)
+        ```json
+        {
+          "car_id": 1,
+          "public_id": "car_image_xyz123",
+          "image_url": "[http://example.com/images/car1_front.jpg](http://example.com/images/car1_front.jpg)"
+        }
+        ```
+    * **Response:** Details of the created car image.
+
+* **Get All Car Images**
+    * **Description:** Returns a list of all car image records.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/carImage/`
+    * **Response:** `[{ "id": ..., "car_id": ..., "image_url": "..." }]`
+
+* **Get Car Image by ID**
+    * **Description:** Returns details of a specific car image by its ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/carImage/{id}`
+    * **Path Variable:** `{id}` - The ID of the car image.
+    * **Response:** `{ "id": ..., "car_id": ..., "image_url": "..." }`
+
+* **Update Car Image by ID**
+    * **Description:** Updates details of an existing car image record by ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/carImage/{id}`
+    * **Path Variable:** `{id}` - The ID of the car image.
+    * **Request Body:** (Partial or full `Car_image` entity info to update)
+        ```json
+        {
+          "image_url": "[http://example.com/images/car1_new_front.jpg](http://example.com/images/car1_new_front.jpg)"
+        }
+        ```
+    * **Response:** Updated car image details.
+
+* **Delete Car Image by ID**
+    * **Description:** Deletes a car image record by ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/carImage/{id}`
+    * **Path Variable:** `{id}` - The ID of the car image.
+    * **Response:** Success message.
+
+---
+
+## Purchase Management
+
+### Purchased Car Controller (`/purchased/`)
+
+* **Record Car Purchase**
+    * **Description:** Records a car as purchased.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/purchased/`
+    * **Request Body:**
+        ```json
+        {
+          "car_id": 101,
+          "buyer_id": 1,
+          "seller_id": 5
+        }
+        ```
+    * **Response:** `purchased_id` of the newly created record.
+
+* **Get All Purchased Cars**
+    * **Description:** Retrieves a list of all recorded purchased cars, including buyer, seller, and car details.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/purchased/all`
+    * **Response:**
+      `[{ "purchased_id": ..., "buyer": { ... }, "seller": { ... }, "car": { ... }, "purchased_date": "YYYY-MM-DD" }]`
+
+* **Get Purchased Car by Car ID**
+    * **Description:** Retrieves the purchase record for a specific car ID, including buyer and seller details.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/purchased/car/{id}`
+    * **Path Variable:** `{id}` - The ID of the car.
+    * **Response:**
+      `{ "purchased_id": ..., "buyer": { ... }, "seller": { ... }, "car": { ... }, "purchased_date": "YYYY-MM-DD" }`
+
+* **Get Purchased Cars by Buyer ID**
+    * **Description:** Retrieves a list of cars purchased by a specific buyer.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/purchased/buyer/{id}`
+    * **Path Variable:** `{id}` - The ID of the buyer.
+    * **Response:**
+      `[{ "purchased_id": ..., "buyer": { ... }, "seller": { ... }, "car": { ... }, "purchased_date": "YYYY-MM-DD" }]`
+
+* **Get Purchased Cars by Seller ID**
+    * **Description:** Retrieves a list of cars sold by a specific seller.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/purchased/seller/{id}`
+    * **Path Variable:** `{id}` - The ID of the seller.
+    * **Response:**
+      `[{ "purchased_id": ..., "buyer": { ... }, "seller": { ... }, "car": { ... }, "purchased_date": "YYYY-MM-DD" }]`
+
+* **Update Purchased Car Record**
+    * **Description:** Updates an existing purchased car record based on its ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/purchased/{id}`
+    * **Path Variable:** `{id}` - The ID of the purchased record to update.
+    * **Request Body:** (Partial or full update fields for `car_id`, `buyer_id`, `seller_id`)
+        ```json
+        {
+          "car_id": 102,
+          "buyer_id": 2
+        }
+        ```
+    * **Response:** Updated purchase record details.
+
+* **Delete Purchased Car Record**
+    * **Description:** Deletes a purchased car record by its ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/purchased/{id}`
+    * **Path Variable:** `{id}` - The ID of the purchased record to delete.
+    * **Response:** Success message.
+
+---
+
+## Review Management
+
+### Review Controller (`/review`)
+
+* **Submit Review**
+    * **Description:** Allows a buyer to submit a review for a car.
+    * **Method:** `POST`
+    * **Endpoint:** `/v1/api/review/`
+    * **Request Body:** (All `Review` entity information)
+        ```json
+        {
+          "car_id": 101,
+          "rate": 5,
+          "feedback": "Excellent car, very satisfied!",
+          "buyer_id": 1
+        }
+        ```
+    * **Response:** Details of the created review.
+
+* **Get Review by ID**
+    * **Description:** Retrieves a specific review by its ID.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/review/{id}`
+    * **Path Variable:** `{id}` - The ID of the review.
+    * **Response:** `{ "rate": ..., "feedback": "...", "car": { ... }, "buyer": { ... } }`
+
+* **Get Reviews by Car ID**
+    * **Description:** Retrieves a list of all reviews for a specific car.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/review/car/{carId}`
+    * **Path Variable:** `{carId}` - The ID of the car.
+    * **Response:** `[{ "rate": ..., "feedback": "...", "car": { ... }, "buyer": { ... } }]`
+
+* **Get Reviews by Buyer ID**
+    * **Description:** Retrieves a list of all reviews submitted by a specific buyer.
+    * **Method:** `GET`
+    * **Endpoint:** `/v1/api/review/buyer/{buyerId}`
+    * **Path Variable:** `{buyerId}` - The ID of the buyer.
+    * **Response:** `[{ "rate": ..., "feedback": "...", "car": { ... }, "buyer": { ... } }]`
+
+* **Update Review by ID**
+    * **Description:** Updates an existing review record by its ID.
+    * **Method:** `PUT`
+    * **Endpoint:** `/v1/api/review/{id}`
+    * **Path Variable:** `{id}` - The ID of the review.
+    * **Request Body:** (Partial or full update fields for `rate`, `feedback`)
+        ```json
+        {
+          "rate": 4,
+          "feedback": "Still good, but gas mileage could be better."
+        }
+        ```
+    * **Response:** Updated review details.
+
+* **Delete Review by ID**
+    * **Description:** Deletes a review record by its ID.
+    * **Method:** `DELETE`
+    * **Endpoint:** `/v1/api/review/{id}`
+    * **Path Variable:** `{id}` - The ID of the review.
+    * **Response:** Success message.
+
+---
 
 ### Basic CRUD Operations
 
@@ -356,7 +854,7 @@ You will need to configure your PostgreSQL database connection in `application.p
 with your actual database credentials and connection details:
 
 ```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/cardb
+spring.datasource.url=jdbc:postgresql://localhost:5432/Car_App
 spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.datasource.driver-class-name=org.postgresql.Driver

@@ -1,0 +1,84 @@
+ Base URl for all controller = "/v1/api/"
+
+User functions
+
+* create function which takes email as username, password, role(like buyer, seller) and store in database
+* create update function which takes username, password, role and update in DB
+* create delete function which takes username and delete the record
+
+this below operation inside {} are optional which I just thought we can edit this{
+User Controller ("/admin/") only for admin
+
+get "/all" --> returns all the user which contains( username and role )
+
+get "/{id}" --> return user by id which contains( username and role )
+get "/{username}" --> return user by username which contains( username and role )
+get "/{role}" --> return list of user by role
+
+put "/{id}" --> update by id (which is used to update password only)
+put "/{username}" --> update by username (which is used to update password only)
+
+delete "/{id}" --> delete by id
+delete "/{user}" --> delete by username
+
+}
+
+Buyer Controller  ("/buyer")
+ Post "/register" --> takes(all buyer entity information and password also) --> created user
+ get "/" --> returns all the list of buyer
+ get "/{id}" --> return buyer by id
+ put "/{id}" --> update buyer by id
+ delete "/{id}" --> delete buyer by id
+
+ Seller Controller  ("/seller")
+ Post "/register" --> takes(all seller entity information and password also) --> created user --> return seller without unnecessary
+  get "/" --> returns all the list of seller
+  get "/{id}" --> return seller by id
+  put "/{id}" --> update seller by id
+  delete "/{id}" --> delete seller by id
+
+
+  Car Controller  ("/car")
+ Post "/"
+ get "/"
+ get "/{id}" - car Id
+ put "/{id}" - car id
+ delete "/{id}" - car Id
+
+ get "/seller/{sellerId}" - sellerId
+ get "/seller" - which accept in request parameter example:- "/v1/api/car/seller?name=bmw"
+
+   CarImage Controller  ("/carImage")
+
+  Post "/register"
+  get "/"
+  get "/{id}"
+  put "/{id}"
+  delete "/{id}"
+
+Purchased car Controller ("/purchased/")
+
+post "/" --> takes (car id, buyer id, seller id) --> implement ( store in the database) --> return (purchased Id )
+
+get "/all" --> takes (purchased id) ---> implement (retrieve the all the purchased car from database ) --> return (all details which include buyer details, seller details, car details)
+
+get "/car/{id}" --> takes (car id) --> implement(retrieve the data of car in purchased car table using car id ) --> return (car details, buyer details, seller details)
+
+get "/buyer/{id}" --> takes (buyer id) --> implement(retrieve the list of car which buyer is purchased in purchased car table using buyer id ) --> return (list of all (car details, buyer details, seller details) which having same buyer)
+
+get "/seller/{id}" --> takes (seller id) --> implement(retrieve the list of car which seller sold from purchased car table using seller id ) --> return (list of all (car details, buyer details, seller details) which having same seller)
+
+put "/{id}" --> takes(purchased id, car id, buyer id, seller id ) --> implement (updated the purchased table based on input supply) --> return (updated data)
+
+delete "/{id}" --> takes(purchased id) --> implement (delete the record based on id ) --> return (success message)
+
+
+Review controller ("/review")
+
+post "/" - takes all entity info --> store in DB --> return same
+get "/{id}" --> return rate, feedback, car, buyer
+get "/{carId}" --> return the list of rate, feedback,car, buyer(where buyer is different)
+get "/{buyerId}" --> return the list of rate, feedback, buyer, car(where car is different)
+
+put "/id" --> update the record
+delete "/id" --> delete the record
