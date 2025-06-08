@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="3775f867-5089-4872-8895-332e2218df88" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controller_List.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/car-purcharse-service.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/controller_List.txt" beforeDir="false" />
+    <list default="true" id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/CarDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/ResponseStructure.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarDtoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/SellerDtoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/exception/IdNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/SellerRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/CarService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/SellerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarImageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/exception/GobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/exception/GobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarImageRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,32 +34,65 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
-  <component name="ProjectId" id="2yC4F3ZyEwTuaqiTwDJkdAQ9Iym" />
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="2yC5QpP6de6XVsSHpvBiR4PKIvL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.CarPurcharseServiceApplication.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+    "last_opened_file_path": "C:/Users/sharath.bn/training/projects/capstone/car-purcharse-service-original/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/exception"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\exception" />
+      <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\dto\service" />
+      <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\dto" />
+      <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\controller" />
+      <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hcltech.car_purcharse_service.service" />
+      <recent name="com.hcltech.car_purcharse_service.dto.service" />
+      <recent name="com.hcltech.car_purcharse_service.dto" />
+      <recent name="com.hcltech.car_purcharse_service.repository" />
+      <recent name="com.hcltech.car_purcharse_service.controller" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3775f867-5089-4872-8895-332e2218df88" name="Changes" comment="" />
-      <created>1749325119001</created>
+      <changelist id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="" />
+      <created>1749325702875</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1749325119001</updated>
+      <updated>1749325702875</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarDtoService.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarDtoService.java</url>
+          <line>103</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

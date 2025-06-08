@@ -17,14 +17,14 @@ import java.util.Map;
 @RequestMapping("/v1/api/car/image/")
 public class CarImageController {
 
-private CloudinaryUtilsService cloudinaryUtilsService;
+    private CloudinaryUtilsService cloudinaryUtilsService;
 
     public CarImageController(CloudinaryUtilsService cloudinaryUtilsService) {
         this.cloudinaryUtilsService = cloudinaryUtilsService;
     }
 
-    @PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map> uploadImage(@Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string",format = "binary")))@RequestPart("file") MultipartFile file){
+    @PostMapping(path = "/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Map> uploadImage(@Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file) {
 
 
         try {
