@@ -5,39 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/UserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarImageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarImageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/ReviewController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/BuyerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/BuyerDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/CarDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/CarDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/ReviewDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/ReviewDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarDtoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarDtoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarImageDtoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/CarImageDtoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/SellerDtoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/SellerDtoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Buyer.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Buyer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/CarImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/CarImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/PurchasedCar.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/PurchasedCar.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Review.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Review.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarImageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarImageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/CarRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/ReviewRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/ReviewRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/SellerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/SellerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/BuyerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/BuyerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/CarImageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/CarImageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/CarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/ReviewService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/ReviewService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/SellerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/SellerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/utils/CloudinaryUtilsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/utils/CloudinaryUtilsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +43,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sharath.bn/training/projects/capstone/car-purcharse-service-original/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto",
+    "last_opened_file_path": "C:/Users/settynaveen.kumar/Desktop/Capstone/car-purcharse-service",
     "settings.editor.selected.configurable": "preferences.keymap"
   }
 }]]></component>
@@ -85,8 +57,8 @@
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.hcltech.car_purcharse_service.service" />
-      <recent name="com.hcltech.car_purcharse_service.repository" />
       <recent name="com.hcltech.car_purcharse_service.controller" />
+      <recent name="com.hcltech.car_purcharse_service.repository" />
       <recent name="com.hcltech.car_purcharse_service.dto" />
       <recent name="com.hcltech.car_purcharse_service.dto.service" />
     </key>
