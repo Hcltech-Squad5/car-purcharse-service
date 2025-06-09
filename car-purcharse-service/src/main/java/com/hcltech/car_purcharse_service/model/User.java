@@ -51,7 +51,7 @@ public class User {
     }
 
     public void setRole(String role) {
-        role = role;
+        this.role = role;
     }
 }
 
