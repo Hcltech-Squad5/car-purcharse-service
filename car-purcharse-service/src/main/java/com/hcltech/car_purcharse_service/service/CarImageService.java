@@ -5,16 +5,17 @@ import com.hcltech.car_purcharse_service.repository.CarImageRepository;
 import com.hcltech.car_purcharse_service.utils.CloudinaryUtilsService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CarImageService {
 
-    private CloudinaryUtilsService cloudinaryUtilsService;
+    final String ERROR_MESSAGE = "The Car Image is not found";
+
     private CarImageRepository carImageRepository;
 
-    public CarImageService(CloudinaryUtilsService cloudinaryUtilsService, CarImageRepository carImageRepository) {
-        this.cloudinaryUtilsService = cloudinaryUtilsService;
+    public CarImageService(CarImageRepository carImageRepository) {
         this.carImageRepository = carImageRepository;
     }
 
@@ -28,10 +29,17 @@ public class CarImageService {
         return savedCarImage;
     }
 
-    public void delete(Integer id){
-        CarImage carImage = carImageRepository.findById(id).orElseThrow(()->new RuntimeException("The Car Image is not found"));
+    public void delete(Integer id) {
+        CarImage carImage = carImageRepository.findById(id).orElseThrow(() -> new RuntimeException(ERROR_MESSAGE));
+    }
 
+    public CarImage getById(Integer id) {
+        CarImage carImage = carImageRepository.findById(id).orElseThrow(() -> new RuntimeException(""));
 
-
+        return carImage;
+    }
+    public List<CarImage> getByCarId(Integer carId){
+        List<CarImage> carImageList = carImageRepository.findByCarId(carId);
+        return carImageList;
     }
 }

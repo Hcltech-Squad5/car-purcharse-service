@@ -53,13 +53,13 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-    public ReviewDto getReviewById(Long id) {
+    public ReviewDto getReviewById(Integer id) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with ID: " + id));
         return mapToResponseDto(review);
     }
 
-    public ReviewDto updateReview(Long id, ReviewDto dto) {
+    public ReviewDto updateReview(Integer id, ReviewDto dto) {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Review not found with ID: " + id));
 
@@ -70,7 +70,7 @@ public class ReviewService {
         return mapToResponseDto(updatedReview);
     }
 
-    public void deleteReview(Long id) {
+    public void deleteReview(Integer id) {
         if (!reviewRepository.existsById(id)) {
             throw new RuntimeException("Review not found with ID: " + id);
         }

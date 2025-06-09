@@ -15,9 +15,10 @@ public class CloudinaryUtilsService {
         this.cloudinary = cloudinary;
     }
 
-    public Map uploadImage(byte[] image){
+    public Map uploadImage(byte[] image) {
         try {
-            return cloudinary.uploader().upload(image, ObjectUtils.emptyMap());
+            Map imageDetails = cloudinary.uploader().upload(image, ObjectUtils.emptyMap());
+            return imageDetails;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

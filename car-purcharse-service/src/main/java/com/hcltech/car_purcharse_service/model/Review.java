@@ -7,10 +7,21 @@ public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     private String rate;
     private String feedback;
+
+    public Review() {
+    }
+
+    public Review(Integer id, String rate, String feedback, Buyer buyer, Car car) {
+        this.id = id;
+        this.rate = rate;
+        this.feedback = feedback;
+        this.buyer = buyer;
+        this.car = car;
+    }
 
     @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
@@ -46,11 +57,11 @@ public class Review {
         this.feedback = feedback;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

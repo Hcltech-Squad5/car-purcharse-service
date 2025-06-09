@@ -34,7 +34,7 @@ public class CarController {
 
     @PostMapping(path = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CarDto> create(@RequestBody CarDto carDto,@Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file){
-        return ResponseEntity.status(201).body(carDtoService.create(carDto));
+        return ResponseEntity.status(201).body(carDtoService.create(carDto,file));
     }
 
     @PutMapping("/update")
@@ -53,7 +53,7 @@ public class CarController {
     }
 
     @GetMapping(value = "/seller/{sellerId}")
-    public ResponseEntity<List<CarDto>> getCarsBySeller(@PathVariable Long sellerId) {
+    public ResponseEntity<List<CarDto>> getCarsBySeller(@PathVariable Integer sellerId) {
         List<CarDto> cars = carDtoService.getCarsBySeller(sellerId);
         return ResponseEntity.ok(cars);
     }

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class BuyerDto {
-    private Long id;
+    private Integer id;
     @NotBlank(message = "First name is required")
     @Size(min = 2, max = 40, message = "First name must be between 2 and 40 characters")
     private String firstName;
@@ -25,7 +25,7 @@ public class BuyerDto {
 
     public BuyerDto() {}
 
-    public BuyerDto(Long id, String firstName, String lastName, String email, String phoneNumber) {
+    public BuyerDto(Integer id, String firstName, String lastName, String email, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,8 +41,8 @@ public class BuyerDto {
         this.password = password;
     }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

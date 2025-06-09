@@ -12,33 +12,33 @@ public class CarService {
     @Autowired
     CarRepository carRepository;
 
-    public List<Car> getAll(){
+    public List<Car> getAll() {
         return carRepository.findAll();
     }
 
-    public Car getOneById(Integer id){
+    public Car getOneById(Integer id) {
         return carRepository.findById(id).orElse(null);
     }
 
-    public Car create(Car car){
+    public Car create(Car car) {
         return carRepository.save(car);
     }
 
-    public Car update(Car car){
+    public Car update(Car car) {
         return carRepository.save(car);
     }
 
-    public String delete(Integer id){
+    public String delete(Integer id) {
         carRepository.deleteById(id);
         return "Delete Successful";
     }
 
-    public List<Car> getAvailableCars(){
+    public List<Car> getAvailableCars() {
         return carRepository.findByIsAvailableTrue();
     }
 
-    public List<Car> getCarsBySeller(Long sellerId){
-        return carRepository.findBySeller_SellerId(sellerId);
+    public List<Car> getCarsBySeller(Integer sellerId) {
+        return carRepository.findAllBySellerId(sellerId);
     }
 
 //    public Seller getSellerId(Long sellerId){

@@ -3,18 +3,16 @@ package com.hcltech.car_purcharse_service.service;
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.model.Buyer;
 import com.hcltech.car_purcharse_service.repository.BuyerRepository;
-import com.hcltech.car_purcharse_service.service.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public  class BuyerService {
+public class BuyerService {
 
     @Autowired
     private BuyerRepository buyerRepository;
@@ -45,7 +43,7 @@ public  class BuyerService {
     }
 
 
-    public BuyerDto getBuyerById(Long id) {
+    public BuyerDto getBuyerById(Integer id) {
         Buyer buyer = buyerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Buyer not found"));
         return mapToDto(buyer);
@@ -59,7 +57,7 @@ public  class BuyerService {
     }
 
 
-    public BuyerDto updateBuyer(Long id, BuyerDto buyerDto) {
+    public BuyerDto updateBuyer(Integer id, BuyerDto buyerDto) {
         Buyer existing = buyerRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Buyer not found"));
         existing.setFirstName(buyerDto.getFirstName());
@@ -70,12 +68,12 @@ public  class BuyerService {
     }
 
 
-    public void deleteBuyer(Long id) {
+    public void deleteBuyer(Integer id) {
         buyerRepository.deleteById(id);
     }
 
 
-    public Map<String, String> getUserCredentials(Long buyerId) {
+    public Map<String, String> getUserCredentials(Integer buyerId) {
         Buyer buyer = buyerRepository.findById(buyerId)
                 .orElseThrow(() -> new RuntimeException("Buyer not found"));
 

@@ -10,15 +10,15 @@ public class PurchasedCar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "buyer_id", nullable = false)
     private Buyer buyer;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 

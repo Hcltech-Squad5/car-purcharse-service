@@ -28,10 +28,10 @@ public class SellerService {
     {
         return sellerRepository.findAll();
     }
-    public List<Car> findAllCar()
-    {
-        return sellerRepository.findAllCar();
-    }
+//    public List<Car> findAllCar()
+//    {
+//        return sellerRepository.findAllCar();
+//    }
     public boolean deleteSellerById(int id)
     {
         Optional<Seller> recSeller = sellerRepository.findById(id);

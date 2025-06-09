@@ -22,7 +22,7 @@ public class BuyerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BuyerDto> getBuyerById(@PathVariable Long id) {
+    public ResponseEntity<BuyerDto> getBuyerById(@PathVariable Integer id) {
         return ResponseEntity.ok(buyerService.getBuyerById(id));
     }
 
@@ -32,12 +32,12 @@ public class BuyerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BuyerDto> updateBuyer(@PathVariable Long id, @RequestBody BuyerDto buyerDto) {
+    public ResponseEntity<BuyerDto> updateBuyer(@PathVariable Integer id, @RequestBody BuyerDto buyerDto) {
         return ResponseEntity.ok(buyerService.updateBuyer(id, buyerDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBuyer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBuyer(@PathVariable Integer id) {
         buyerService.deleteBuyer(id);
         return ResponseEntity.noContent().build();
     }

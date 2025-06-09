@@ -1,13 +1,15 @@
 package com.hcltech.car_purcharse_service.dto.service;
 
-//import com.hcltech.car_purcharse_service.dao.CarDaoService;
 
 import com.hcltech.car_purcharse_service.dto.CarDto;
+import com.hcltech.car_purcharse_service.dto.CarImageDto;
 import com.hcltech.car_purcharse_service.model.Car;
-/* import com.hcltech.car_purcharse_service.repository.SellerRepository; */
+import com.hcltech.car_purcharse_service.model.Seller;
+import com.hcltech.car_purcharse_service.repository.SellerRepository;
 import com.hcltech.car_purcharse_service.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,11 +17,18 @@ import java.util.stream.Collectors;
 @Service
 public class CarDtoService {
 
-    @Autowired
-    CarService carService;
 
-    @Autowired
-//    SellerRepository sellerRepository;
+    private CarService carService;
+
+    private SellerRepository sellerRepository;
+
+    private CarImageDtoService carImageDtoService;
+
+    public CarDtoService(CarService carService, SellerRepository sellerRepository, CarImageDtoService carImageDtoService) {
+        this.carService = carService;
+        this.sellerRepository = sellerRepository;
+        this.carImageDtoService = carImageDtoService;
+    }
 
     public List<CarDto> getAll() {
         List<Car> allCars = carService.getAll();
@@ -33,9 +42,11 @@ public class CarDtoService {
         return result;
     }
 
-    public CarDto create(CarDto carDto) {
+    public CarDto create(CarDto carDto, MultipartFile file) {
+
         Car car = toEntity(carDto);
         Car savedCar = carService.create(car);
+
         CarDto result = toDto(savedCar);
         return result;
     }
@@ -58,7 +69,7 @@ public class CarDtoService {
         return result;
     }
 
-    public List<CarDto> getCarsBySeller(Long sellerId) {
+    public List<CarDto> getCarsBySeller(Integer sellerId) {
         List<Car> sellerCars = carService.getCarsBySeller(sellerId);
         List<CarDto> result = toDto(sellerCars);
         return result;
@@ -82,7 +93,7 @@ public class CarDtoService {
         result.setPrice(car.getPrice());
         result.setAvailable(car.getAvailable());
         if (car.getSeller() != null) {
-//            result.setSellerId(car.getSeller().getSellerId());
+            result.setSellerId(car.getSeller().getId());
         } else {
             result.setSellerId(null);
         }
@@ -101,8 +112,8 @@ public class CarDtoService {
         result.setYear(carDto.getYear());
         result.setAvailable(carDto.getAvailable());
         if (carDto.getSellerId() != null) {
-//            Seller seller = sellerRepository.findById(carDto.getSellerId()).orElse(null);
-//            result.setSeller(seller);
+            Seller seller = sellerRepository.findById(carDto.getSellerId()).orElse(null);
+            result.setSeller(seller);
         } else {
             result.setSeller(null);
         }

@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface SellerRepository extends JpaRepository<Seller,Integer> {
 
-    public List<Car> findAllCar();
+//    public List<Car> findAllCar();
 
 }

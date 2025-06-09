@@ -33,11 +33,13 @@ public class SellerController {
     {
         return sellerDtoService.findAllSeller();
     }
-    @GetMapping("/car")
-    public ResponseEntity<ResponseStructure<List<Car>>> findAllCar()
-    {
-        return sellerDtoService.findAllCar();
-    }
+
+//    @GetMapping("/car")
+//    public ResponseEntity<ResponseStructure<List<Car>>> findAllCar()
+//    {
+//        return sellerDtoService.findAllCar();
+//    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ResponseStructure<Seller>> updateSeller(@RequestBody Seller seller,@PathVariable int id)
     {

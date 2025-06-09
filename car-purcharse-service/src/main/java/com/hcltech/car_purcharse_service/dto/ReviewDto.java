@@ -1,16 +1,16 @@
 package com.hcltech.car_purcharse_service.dto;
 
 public class ReviewDto {
-    private Long id;
+    private Integer id;
     private String rate;
     private String feedback;
-    private Long buyerId;
-    private Long carId;
+    private Integer buyerId;
+    private Integer carId;
 
     public ReviewDto()
     {}
     
-    public ReviewDto(Long buyerId, String feedback, Long carId, Long id, String rate) {
+    public ReviewDto(Integer buyerId, String feedback, Integer carId, Integer id, String rate) {
         this.buyerId = buyerId;
         this.feedback = feedback;
         this.carId = carId;
@@ -18,29 +18,29 @@ public class ReviewDto {
         this.rate = rate;
     }
 
-    public Long getCarId() {
+    public Integer getCarId() {
         return carId;
     }
 
-    public void setCarId(Long carId) {
+    public void setCarId(Integer carId) {
         this.carId = carId;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
 
-    public Long getBuyerId() {
+    public Integer getBuyerId() {
         return buyerId;
     }
 
-    public void setBuyerId(Long buyerId) {
+    public void setBuyerId(Integer buyerId) {
         this.buyerId = buyerId;
     }
 

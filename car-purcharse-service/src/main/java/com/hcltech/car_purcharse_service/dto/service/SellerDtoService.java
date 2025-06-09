@@ -49,13 +49,13 @@ public class SellerDtoService {
         return new ResponseEntity<ResponseStructure<List<Seller>>>(HttpStatus.FOUND);
     }
 
-    public ResponseEntity<ResponseStructure<List<Car>>> findAllCar() {
-        ResponseStructure<List<Car>> structure = new ResponseStructure<>();
-        structure.setData(sellerService.findAllCar());
-        structure.setMessage("All Car found");
-        structure.setStatusCode(HttpStatus.OK.value());
-        return new ResponseEntity<ResponseStructure<List<Car>>>(HttpStatus.OK);
-    }
+//    public ResponseEntity<ResponseStructure<List<Car>>> findAllCar() {
+//        ResponseStructure<List<Car>> structure = new ResponseStructure<>();
+//        structure.setData(sellerService.findAllCar());
+//        structure.setMessage("All Car found");
+//        structure.setStatusCode(HttpStatus.OK.value());
+//        return new ResponseEntity<ResponseStructure<List<Car>>>(HttpStatus.OK);
+//    }
 
     public ResponseEntity<ResponseStructure<Seller>> updateSeller(Seller seller, int id) {
         Optional<Seller> opt = sellerService.findSellerById(id);
