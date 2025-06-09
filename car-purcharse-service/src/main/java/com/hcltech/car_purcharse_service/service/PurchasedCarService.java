@@ -1,5 +1,6 @@
 package com.hcltech.car_purcharse_service.service;
 
+import com.hcltech.car_purcharse_service.controller.PurchasedCarController;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarDto;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarResponseDto;
 import com.hcltech.car_purcharse_service.exception.ResourceNotFoundException;
@@ -12,6 +13,8 @@ import com.hcltech.car_purcharse_service.repository.CarRepository;
 import com.hcltech.car_purcharse_service.repository.PurchasedCarRepository;
 import com.hcltech.car_purcharse_service.repository.SellerRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,25 +26,25 @@ import java.util.stream.Collectors;
 public class PurchasedCarService {
 
     @Autowired
-
-    private PurchasedCarRepository purchasedCarRepository;
+    PurchasedCarRepository purchasedCarRepository;
     @Autowired
-    private BuyerRepository buyerRepository;
+    BuyerRepository buyerRepository;
     @Autowired
-    private SellerRepository sellerRepository;
+    SellerRepository sellerRepository;
     @Autowired
-    private CarRepository carRepository;
+    CarRepository carRepository;
     @Autowired
-
-    private ModelMapper modelMapper;
-
+    ModelMapper modelMapper;
+    private static final Logger logger = LoggerFactory.getLogger(PurchasedCarController.class);
 
     public PurchasedCarResponseDto createPurchasedCar(PurchasedCarDto dto) {
+        logger.info("Received request to save purchased car details : {}", dto);
+     
 
         PurchasedCar entity = modelMapper.map(dto, PurchasedCar.class);
 
         PurchasedCar saved = purchasedCarRepository.save(entity);
-
+        logger.info("Saved succefully: {}", saved.getId());
         return modelMapper.map(saved, PurchasedCarResponseDto.class);
 
     }

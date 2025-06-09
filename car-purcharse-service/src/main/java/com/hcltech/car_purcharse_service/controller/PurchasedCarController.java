@@ -3,23 +3,28 @@ package com.hcltech.car_purcharse_service.controller;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarDto;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarResponseDto;
 import com.hcltech.car_purcharse_service.service.PurchasedCarService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/purchased-cars")
 public class PurchasedCarController {
-
+private static final Logger logger = LoggerFactory.getLogger(PurchasedCarController.class);
     @Autowired
     private PurchasedCarService purchasedCarService;
 
 
     @PostMapping("/")
     public ResponseEntity<PurchasedCarResponseDto> createPurchasedCar(@RequestBody PurchasedCarDto dto) {
+        logger.info("Received request to save purchased car details : {}", dto);
         PurchasedCarResponseDto created = purchasedCarService.createPurchasedCar(dto);
+        logger.info("Saved succefully: {}", created.getId());
         return ResponseEntity.ok(created);
     }
 
