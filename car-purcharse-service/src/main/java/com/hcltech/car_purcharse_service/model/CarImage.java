@@ -13,7 +13,7 @@ public class CarImage {
     @Column(name = "public_id", nullable = false)
     private String publicId;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     public Car getCar() {

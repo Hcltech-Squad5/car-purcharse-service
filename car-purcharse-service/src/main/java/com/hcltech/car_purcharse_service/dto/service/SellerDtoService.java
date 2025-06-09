@@ -27,6 +27,7 @@ public class SellerDtoService {
         return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.CREATED);
     }
 
+
     public ResponseEntity<ResponseStructure<Seller>> findSellerById(int id) {
         Optional<Seller> opt = sellerService.findSellerById(id);
         ResponseStructure<Seller> structure = new ResponseStructure<>();

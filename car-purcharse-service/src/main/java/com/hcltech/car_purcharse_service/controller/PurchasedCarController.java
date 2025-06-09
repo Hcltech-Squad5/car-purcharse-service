@@ -1,0 +1,75 @@
+package com.hcltech.car_purcharse_service.controller;
+
+import com.hcltech.car_purcharse_service.dto.PurchasedCarDto;
+import com.hcltech.car_purcharse_service.dto.PurchasedCarResponseDto;
+import com.hcltech.car_purcharse_service.service.PurchasedCarService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/purchased-cars")
+public class PurchasedCarController {
+
+    @Autowired
+    private PurchasedCarService purchasedCarService;
+
+
+    @PostMapping("/")
+    public ResponseEntity<PurchasedCarResponseDto> createPurchasedCar(@RequestBody PurchasedCarDto dto) {
+        PurchasedCarResponseDto created = purchasedCarService.createPurchasedCar(dto);
+        return ResponseEntity.ok(created);
+    }
+
+
+    @GetMapping("/all")
+    public ResponseEntity<List<PurchasedCarResponseDto>> getAllPurchasedCars() {
+        List<PurchasedCarResponseDto> list = purchasedCarService.getAllPurchasedCars();
+        return ResponseEntity.ok(list);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PurchasedCarResponseDto> getPurchasedCarById(@PathVariable Integer id) {
+        PurchasedCarResponseDto result = purchasedCarService.getPurchasedCarById(id);
+        return ResponseEntity.ok(result);
+    }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PurchasedCarResponseDto> updatePurchasedCar(
+            @PathVariable Integer id,
+            @RequestBody PurchasedCarDto dto) {
+        PurchasedCarResponseDto updated = purchasedCarService.updatePurchasedCar(id, dto);
+        return ResponseEntity.ok(updated);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePurchasedCar(@PathVariable Integer id) {
+        purchasedCarService.deletePurchasedCar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/buyer/{buyerId}")
+    public ResponseEntity<List<PurchasedCarResponseDto>> getPurchasedCarsByBuyerId(@PathVariable Integer buyerId) {
+        List<PurchasedCarResponseDto> list = purchasedCarService.getPurchasedCarsByBuyerId(buyerId);
+        return ResponseEntity.ok(list);
+    }
+
+
+    @GetMapping("/seller/{sellerId}")
+    public ResponseEntity<List<PurchasedCarResponseDto>> getPurchasedCarsBySellerId(@PathVariable Integer sellerId) {
+        List<PurchasedCarResponseDto> list = purchasedCarService.getPurchasedCarsBySellerId(sellerId);
+        return ResponseEntity.ok(list);
+    }
+
+
+    @GetMapping("/car/{carId}")
+    public ResponseEntity<List<PurchasedCarResponseDto>> getPurchasedCarsByCarId(@PathVariable Integer carId) {
+        List<PurchasedCarResponseDto> list = purchasedCarService.getPurchasedCarsByCarId(carId);
+        return ResponseEntity.ok(list);
+    }
+}
