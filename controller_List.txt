@@ -2,18 +2,18 @@
 
 User functions
 
-* create function which takes email as username, password, role(like buyer, seller) and store in database
-* create update function which takes username, password, role and update in DB
+* create function which takes email as username, password, roles(like buyer, seller) and store in database
+* create update function which takes username, password, roles and update in DB
 * create delete function which takes username and delete the record
 
 this below operation inside {} are optional which I just thought we can edit this{
 User Controller ("/admin/") only for admin
 
-get "/all" --> returns all the user which contains( username and role )
+get "/all" --> returns all the user which contains( username and roles )
 
-get "/{id}" --> return user by id which contains( username and role )
-get "/{username}" --> return user by username which contains( username and role )
-get "/{role}" --> return list of user by role
+get "/{id}" --> return user by id which contains( username and roles )
+get "/{username}" --> return user by username which contains( username and roles )
+get "/{roles}" --> return list of user by roles
 
 put "/{id}" --> update by id (which is used to update password only)
 put "/{username}" --> update by username (which is used to update password only)

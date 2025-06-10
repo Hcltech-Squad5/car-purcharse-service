@@ -3,7 +3,6 @@ package com.hcltech.car_purcharse_service.service;
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.model.Buyer;
 import com.hcltech.car_purcharse_service.repository.BuyerRepository;
-import com.hcltech.car_purcharse_service.service.UserService;
 import com.hcltech.car_purcharse_service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import org.modelmapper.ModelMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -47,9 +45,9 @@ public class BuyerService {
         User newUser = new User();
         newUser.setUserName(email);
         newUser.setPassword(rawPassword);
-        newUser.setRole("BUYER");
+        newUser.setRoles("BUYER");
 
-        logger.debug("Preparing to create user with username: {} and role: {}", newUser.getUserName(), newUser.getRole());
+        logger.debug("Preparing to create user with username: {} and role: {}", newUser.getUserName(), newUser.getRoles());
 
         try {
             logger.info("Sending user credentials to UserService for email: {}", email);

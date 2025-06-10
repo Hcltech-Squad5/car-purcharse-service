@@ -5,7 +5,6 @@ import com.hcltech.car_purcharse_service.model.User;
 import com.hcltech.car_purcharse_service.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +75,7 @@ public class UserService {
     public User getByRole(String Role) {
         try {
             logger.info("fetching user by Role{}", Role);
-            User user = repo.findByRole(Role).orElseThrow();
+            User user = repo.findByRoles(Role).orElseThrow();
             return user;
         } catch (Exception e) {
             logger.error("Failed to fetch the user by role {}", Role);
@@ -137,7 +136,7 @@ public class UserService {
             User user = new User();
             user.setUserName(userName);
             user.setPassword(passwordEncoder.encode(password));
-            user.setRole(role);
+            user.setRoles(role);
 
             User save = repo.save(user);
             return save;

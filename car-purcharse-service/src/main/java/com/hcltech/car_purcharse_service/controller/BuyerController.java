@@ -24,7 +24,7 @@ public class BuyerController {
         this.buyerService = buyerService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<BuyerDto> createBuyer(@Valid @RequestBody BuyerDto buyerDto) {
         logger.info("Received request to create buyer with email: {}", buyerDto.getEmail());
         BuyerDto createdBuyer = buyerService.createBuyer(buyerDto);

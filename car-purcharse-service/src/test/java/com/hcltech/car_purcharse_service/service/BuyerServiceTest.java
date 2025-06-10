@@ -95,7 +95,7 @@ public class BuyerServiceTest {
         User createdUser = new User();
         createdUser.setId(101);
         createdUser.setUserName(buyerDto.getEmail());
-        createdUser.setRole("BUYER");
+        createdUser.setRoles("BUYER");
 
         when(userService.create(any(User.class))).thenReturn(createdUser);
         when(buyerRepository.save(any(Buyer.class))).thenReturn(buyer);

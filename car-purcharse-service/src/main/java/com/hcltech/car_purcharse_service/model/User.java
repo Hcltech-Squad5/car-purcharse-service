@@ -13,14 +13,14 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, length = 40)
-    private String role;
+    @Column(nullable = false)
+    private String roles;
 
     public Integer getId() {
         return id;
@@ -46,12 +46,12 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }
 

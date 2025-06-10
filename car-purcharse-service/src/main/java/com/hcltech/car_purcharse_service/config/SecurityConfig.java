@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,19 +22,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-//@EnableMethodSecurity
+@EnableMethodSecurity // Uncomment this if you plan to use @PreAuthorize, @PostAuthorize etc.
 public class SecurityConfig {
 
-    private static final String[] SWAGGER_WHITE_LIST = {"/swagger-ui.html",
-            "/swagger-ui/index.html",
+    private static final String[] SWAGGER_WHITE_LIST = {
+            "/swagger-ui.html",
             "/swagger-ui/**",
+            "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/v3/api-docs/**"};
-    //    private static final String[] H2_CONSOLE_WHITE_LIST     = { "/h2-console/**" };
-    private static final String[] AUTHENTICATION_WHITE_LIST = {"/api/v1/auth/register",
-            "/api/v1/auth/login",
-            "/api/v1/auth/logout",
-            "/api/v1/auth/**"};
+            "/swagger-resources"
+    }; // Added /swagger-resources without ** for completeness, though ** usually covers it.
+
+    private static final String[] AUTHENTICATION_WHITE_LIST = {
+
+            "/v1/api/admin/**",
+            "/v1/api/auth/**",
+            "/v1/api/buyer/create",
+            "/v1/api/seller/create"
+
+    };
 
     private MyUserDetailsService myUserDetailsService;
     private JwtFilter jwtFilter;
@@ -45,25 +52,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf(csrf -> csrf.disable())
+        httpSecurity
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for stateless APIs
+                .cors(cors -> cors.disable()) // Adjust CORS as needed for your frontend
+                .headers(header -> header.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable())) // For H2-Console if you use it, or iframes in general
 
-                .cors(cors -> cors.disable())
-
-                .headers(header -> header.frameOptions(frameOptionsConfig -> frameOptionsConfig.disable()))
-
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Crucial for JWTs
 
                 .authorizeHttpRequests(request -> request
-//                        .requestMatchers(SWAGGER_WHITE_LIST).permitAll()
-//                        .requestMatchers(AUTHENTICATION_WHITE_LIST).permitAll()
-//                        .anyRequest().authenticated())
-                        .anyRequest().permitAll())
-//                .httpBasic(Customizer.withDefaults())
-//                .formLogin(Customizer.withDefaults())
+                        // Explicitly permit authentication endpoints
+                        .requestMatchers(AUTHENTICATION_WHITE_LIST).permitAll()
+                        // ALL OTHER REQUESTS require authentication
+                        .anyRequest().authenticated()
+                )
+                // Remove httpBasic and formLogin if you are solely relying on JWT
+                // .httpBasic(Customizer.withDefaults())
+                // .formLogin(Customizer.withDefaults())
 
                 .authenticationProvider(authenticationProvider())
+                // Add your custom JWT filter before Spring Security's UsernamePasswordAuthenticationFilter
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
 
         return httpSecurity.build();
     }
@@ -75,9 +83,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(myUserDetailsService);
-//        daoAuthenticationProvider.setUserDetailsService(myUserDetailsService);
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(myUserDetailsService); // Set UserDetailsService here
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
@@ -85,5 +92,11 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        // These paths will completely bypass the Spring Security filter chain
+        return (web -> web.ignoring().requestMatchers(SWAGGER_WHITE_LIST));
     }
 }

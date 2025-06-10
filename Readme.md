@@ -92,7 +92,7 @@ We've made some meaningful assumptions about the properties for each entity:
     * `id` (Long - Primary Key)
     * `userName` (String)
     * `password` (String)
-    * `role` (String)
+    * `roles` (String)
 
 ---
 
@@ -203,11 +203,11 @@ Handles authentication and roles for users (potentially linking to `Buyer` or `S
 | `id`        | `INTEGER` | `PRIMARY KEY` | Unique identifier for the user               |
 | `user_name` | `VARCHAR` | `NOT NULL`    | User's login username (e.g., email)          |
 | `password`  | `VARCHAR` | `NOT NULL`    | Hashed password                              |
-| `role`      | `VARCHAR` | `NOT NULL`    | User role (e.g., "Buyer", "Seller", "Admin") |
+| `roles`      | `VARCHAR` | `NOT NULL`    | User roles (e.g., "Buyer", "Seller", "Admin") |
 
 **Note on `User` foreign keys:** The schema indicates `user_name` can reference both `Seller.email` and `Buyer.email`.
 This implies that `user_name` likely stores the email address, allowing a single `User` entry to link to either a
-`Buyer` or `Seller` profile based on their role. This design needs careful handling at the application level to ensure
+`Buyer` or `Seller` profile based on their roles. This design needs careful handling at the application level to ensure
 consistency.
 
 ### `purchased_car`
@@ -276,7 +276,7 @@ This section details the endpoints for managing general user accounts.
 
 ### User Functions (Core)
 
-These functions manage the `User` entity directly, which stores username (email), password, and role.
+These functions manage the `User` entity directly, which stores username (email), password, and roles.
 
 * **Create User**
     * **Description:** Registers a new user account.
@@ -287,21 +287,21 @@ These functions manage the `User` entity directly, which stores username (email)
         {
           "email": "user@example.com",
           "password": "securepassword123",
-          "role": "BUYER" // or "SELLER"
+          "roles": "BUYER" // or "SELLER"
         }
         ```
     * **Response:** Success message or user ID.
 
 * **Update User**
-    * **Description:** Updates the password or role for an existing user.
+    * **Description:** Updates the password or roles for an existing user.
     * **Method:** `PUT`
     * **Endpoint:** `/v1/api/user/update`
     * **Request Body:**
         ```json
         {
           "password": "newsecurepassword",
-          "role": "SELLER", // Optional: Update password
-          "username": "user@example.com" // Optional: Update role
+          "roles": "SELLER", // Optional: Update password
+          "username": "user@example.com" // Optional: Update roles
         }
         ```
     * **Response:** Success message or updated user details.
@@ -323,31 +323,31 @@ These functions manage the `User` entity directly, which stores username (email)
 These endpoints are typically protected and accessible only by administrators for comprehensive user management.
 
 * **Get All Users**
-    * **Description:** Returns a list of all user accounts (username and role).
+    * **Description:** Returns a list of all user accounts (username and roles).
     * **Method:** `GET`
     * **Endpoint:** `/v1/api/admin/all`
-    * **Response:** `[{ "username": "...", "role": "..." }]`
+    * **Response:** `[{ "username": "...", "roles": "..." }]`
 
 * **Get User by ID**
-    * **Description:** Returns a user's details (username and role) by their ID.
+    * **Description:** Returns a user's details (username and roles) by their ID.
     * **Method:** `GET`
     * **Endpoint:** `/v1/api/admin/{id}`
     * **Path Variable:** `{id}` - The ID of the user.
-    * **Response:** `{ "username": "...", "role": "..." }`
+    * **Response:** `{ "username": "...", "roles": "..." }`
 
 * **Get User by Username**
-    * **Description:** Returns a user's details (username and role) by their username (email).
+    * **Description:** Returns a user's details (username and roles) by their username (email).
     * **Method:** `GET`
     * **Endpoint:** `/v1/api/admin/{username}`
     * **Path Variable:** `{username}` - The username (email) of the user.
-    * **Response:** `{ "username": "...", "role": "..." }`
+    * **Response:** `{ "username": "...", "roles": "..." }`
 
 * **Get Users by Role**
-    * **Description:** Returns a list of users filtered by their role.
+    * **Description:** Returns a list of users filtered by their roles.
     * **Method:** `GET`
-    * **Endpoint:** `/v1/api/admin/role/{role}`
-    * **Path Variable:** `{role}` - The role of the users (e.g., "BUYER", "SELLER").
-    * **Response:** `[{ "username": "...", "role": "..." }]`
+    * **Endpoint:** `/v1/api/admin/roles/{roles}`
+    * **Path Variable:** `{roles}` - The roles of the users (e.g., "BUYER", "SELLER").
+    * **Response:** `[{ "username": "...", "roles": "..." }]`
 
 * **Update User Password by ID**
     * **Description:** Updates only the password for a user identified by their ID.

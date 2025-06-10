@@ -22,7 +22,7 @@ public class Seller {
     @Column(nullable = false)
     private String companyName;
 
-    @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL )
     private List<Car> cars;
 
     public Seller() {
