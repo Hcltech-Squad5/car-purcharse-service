@@ -54,7 +54,7 @@ public class PurchasedCarServiceTest {
     public void setUp() {
         modelMapper = new ModelMapper();
         purchasedCarService = new PurchasedCarService();
-        purchasedCarService.modelMapper = modelMapper;
+       // purchasedCarService.modelMapper = modelMapper;
         purchasedCarService.purchasedCarRepository = purchasedCarRepository;
         purchasedCarService.buyerRepository = buyerRepository;
         purchasedCarService.sellerRepository = sellerRepository;

@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/PurchasedCarServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/PurchasedCarServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +38,9 @@
   "keyToString": {
     "Application.CarPurcharseServiceApplication.executor": "Run",
     "Maven.car-purcharse-service [clean].executor": "Run",
+    "Maven.car-purcharse-service [compile].executor": "Run",
+    "Maven.car-purcharse-service [install].executor": "Run",
+    "Maven.car-purcharse-service [validate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
