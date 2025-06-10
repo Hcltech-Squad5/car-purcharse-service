@@ -7,6 +7,7 @@ import com.hcltech.car_purcharse_service.service.UserService;
 import com.hcltech.car_purcharse_service.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,21 +29,10 @@ public class BuyerService {
     @Autowired
     private UserService userService;
 
-    private BuyerDto mapToDto(Buyer buyer) {
-        logger.debug("Mapping Buyer entity to BuyerDto for ID: {}", buyer.getId());
-        return new BuyerDto(buyer.getId(), buyer.getFirstName(), buyer.getLastName(), buyer.getEmail(), buyer.getPhoneNumber());
-    }
+    @Autowired
+    private ModelMapper modelMapper;
 
-    private Buyer mapToEntity(BuyerDto dto) {
-        logger.debug("Mapping BuyerDto to Buyer entity for ID: {}", dto.getId());
-        Buyer buyer = new Buyer();
-        buyer.setId(dto.getId());
-        buyer.setFirstName(dto.getFirstName());
-        buyer.setLastName(dto.getLastName());
-        buyer.setEmail(dto.getEmail());
-        buyer.setPhoneNumber(dto.getPhoneNumber());
-        return buyer;
-    }
+
 
     public BuyerDto createBuyer(BuyerDto buyerDto) {
         logger.info("Attempting to create a new buyer with email: {}", buyerDto.getEmail());
@@ -71,11 +61,15 @@ public class BuyerService {
         }
 
 
+        Buyer buyer = modelMapper.map(buyerDto, Buyer.class);
         buyerDto.setPassword(null);
-        Buyer buyer = mapToEntity(buyerDto);
+
         Buyer savedBuyer = buyerRepository.save(buyer);
         logger.info("Buyer created successfully with ID: {}", savedBuyer.getId());
-        return mapToDto(savedBuyer);
+
+
+        return modelMapper.map(savedBuyer, BuyerDto.class);
+
     }
 
 
@@ -87,14 +81,16 @@ public class BuyerService {
                     return new RuntimeException("Buyer not found");
                 });
         logger.info("Successfully retrieved buyer with ID: {}", id);
-        return mapToDto(buyer);
+
+        return modelMapper.map(buyer, BuyerDto.class);
     }
 
 
     public List<BuyerDto> getAllBuyers() {
         logger.info("Attempting to retrieve all buyers.");
         List<BuyerDto> buyers = buyerRepository.findAll().stream()
-                .map(this::mapToDto)
+
+                .map(buyer -> modelMapper.map(buyer, BuyerDto.class))
                 .collect(Collectors.toList());
         logger.info("Successfully retrieved {} buyers.", buyers.size());
         return buyers;
@@ -109,13 +105,16 @@ public class BuyerService {
                     return new RuntimeException("Buyer not found");
                 });
         logger.debug("Found existing buyer for update, ID: {}", id);
-        existing.setFirstName(buyerDto.getFirstName());
-        existing.setLastName(buyerDto.getLastName());
-        existing.setEmail(buyerDto.getEmail());
-        existing.setPhoneNumber(buyerDto.getPhoneNumber());
+
+
+        modelMapper.map(buyerDto, existing);
+
         Buyer updatedBuyer = buyerRepository.save(existing);
         logger.info("Buyer with ID: {} updated successfully.", updatedBuyer.getId());
-        return mapToDto(updatedBuyer);
+
+
+        return modelMapper.map(updatedBuyer, BuyerDto.class);
+
     }
 
 
@@ -124,7 +123,7 @@ public class BuyerService {
 
         if (!buyerRepository.existsById(id)) {
             logger.warn("Attempted to delete non-existent buyer with ID: {}", id);
-            throw new RuntimeException("Buyer not found for deletion"); // Or a more specific custom exception
+            throw new RuntimeException("Buyer not found for deletion");
         }
         buyerRepository.deleteById(id);
         logger.info("Buyer with ID: {} deleted successfully.", id);

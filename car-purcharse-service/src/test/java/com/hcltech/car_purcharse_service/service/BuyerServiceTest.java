@@ -2,7 +2,7 @@ package com.hcltech.car_purcharse_service.service;
 
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.model.Buyer;
-import com.hcltech.car_purcharse_service.model.User; // Import User class
+import com.hcltech.car_purcharse_service.model.User;
 import com.hcltech.car_purcharse_service.repository.BuyerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,7 +32,10 @@ public class BuyerServiceTest {
     private BuyerRepository buyerRepository;
 
     @Mock
-    private UserService userService; // This is correctly mocked now
+    private UserService userService;
+
+    @Mock
+    private ModelMapper modelMapper;
 
     @InjectMocks
     private BuyerService buyerService;
@@ -54,10 +59,34 @@ public class BuyerServiceTest {
         buyerDto.setLastName("Buyer");
         buyerDto.setEmail("test.buyer@example.com");
         buyerDto.setPhoneNumber("9876543210");
-        buyerDto.setPassword("securePassword123"); // Password for creation
+        buyerDto.setPassword("securePassword123");
 
         buyerDtoNoPassword = new BuyerDto(1, "Test", "Buyer", "test.buyer@example.com", "9876543210");
 
+        lenient().when(modelMapper.map(any(BuyerDto.class), eq(Buyer.class))).thenReturn(buyer);
+
+        lenient().doAnswer(invocation -> {
+            Buyer sourceBuyer = invocation.getArgument(0);
+            Class<BuyerDto> destinationType = invocation.getArgument(1);
+            BuyerDto resultDto = new BuyerDto();
+            resultDto.setId(sourceBuyer.getId());
+            resultDto.setFirstName(sourceBuyer.getFirstName());
+            resultDto.setLastName(sourceBuyer.getLastName());
+            resultDto.setEmail(sourceBuyer.getEmail());
+            resultDto.setPhoneNumber(sourceBuyer.getPhoneNumber());
+            resultDto.setPassword(null);
+            return resultDto;
+        }).when(modelMapper).map(any(Buyer.class), eq(BuyerDto.class));
+
+        lenient().doAnswer(invocation -> {
+            BuyerDto source = invocation.getArgument(0);
+            Buyer destination = invocation.getArgument(1);
+            destination.setFirstName(source.getFirstName());
+            destination.setLastName(source.getLastName());
+            destination.setEmail(source.getEmail());
+            destination.setPhoneNumber(source.getPhoneNumber());
+            return null;
+        }).when(modelMapper).map(any(BuyerDto.class), any(Buyer.class));
     }
 
     @Test
@@ -69,18 +98,20 @@ public class BuyerServiceTest {
         createdUser.setRole("BUYER");
 
         when(userService.create(any(User.class))).thenReturn(createdUser);
-
         when(buyerRepository.save(any(Buyer.class))).thenReturn(buyer);
 
         BuyerDto createdBuyerDto = buyerService.createBuyer(buyerDto);
 
         assertThat(createdBuyerDto).isNotNull();
-        assertThat(createdBuyerDto.getId()).isEqualTo(1L);
+        assertThat(createdBuyerDto.getId()).isEqualTo(1);
         assertThat(createdBuyerDto.getFirstName()).isEqualTo("Test");
         assertThat(createdBuyerDto.getEmail()).isEqualTo("test.buyer@example.com");
         assertThat(createdBuyerDto.getPassword()).isNull();
+
         verify(userService, times(1)).create(any(User.class));
         verify(buyerRepository, times(1)).save(any(Buyer.class));
+        verify(modelMapper, times(1)).map(eq(buyerDto), eq(Buyer.class));
+        verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
     }
 
     @Test
@@ -90,6 +121,7 @@ public class BuyerServiceTest {
         assertThrows(IllegalArgumentException.class, () -> buyerService.createBuyer(buyerDto));
         verify(userService, never()).create(any(User.class));
         verify(buyerRepository, never()).save(any(Buyer.class));
+        verify(modelMapper, never()).map(any(BuyerDto.class), eq(Buyer.class));
     }
 
     @Test
@@ -100,9 +132,13 @@ public class BuyerServiceTest {
         BuyerDto foundDto = buyerService.getBuyerById(1);
 
         assertThat(foundDto).isNotNull();
-        assertThat(foundDto.getId()).isEqualTo(1L);
+        assertThat(foundDto.getId()).isEqualTo(1);
+        assertThat(foundDto.getFirstName()).isEqualTo("Test");
         assertThat(foundDto.getEmail()).isEqualTo("test.buyer@example.com");
+        assertThat(foundDto.getPassword()).isNull();
+
         verify(buyerRepository, times(1)).findById(1);
+        verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
     }
 
     @Test
@@ -112,6 +148,7 @@ public class BuyerServiceTest {
 
         assertThrows(RuntimeException.class, () -> buyerService.getBuyerById(99));
         verify(buyerRepository, times(1)).findById(99);
+        verify(modelMapper, never()).map(any(), any());
     }
 
     @Test
@@ -132,7 +169,10 @@ public class BuyerServiceTest {
         assertThat(buyerDtos).hasSize(2);
         assertThat(buyerDtos).extracting(BuyerDto::getFirstName).containsExactlyInAnyOrder("Test", "Another");
         assertThat(buyerDtos).extracting(BuyerDto::getPassword).containsOnlyNulls();
+
         verify(buyerRepository, times(1)).findAll();
+        verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
+        verify(modelMapper, times(1)).map(eq(buyer2), eq(BuyerDto.class));
     }
 
     @Test
@@ -156,10 +196,12 @@ public class BuyerServiceTest {
         assertThat(resultDto.getPassword()).isNull();
 
         verify(buyerRepository, times(1)).findById(1);
-        verify(buyerRepository, times(1)).save(any(Buyer.class));
-
-        assertThat(buyer.getFirstName()).isEqualTo("UpdatedTest");
-        assertThat(buyer.getEmail()).isEqualTo("updated.test@example.com");
+        verify(buyerRepository, times(1)).save(argThat(b ->
+                b.getFirstName().equals("UpdatedTest") &&
+                        b.getEmail().equals("updated.test@example.com")
+        ));
+        verify(modelMapper, times(1)).map(eq(updatedBuyerDto), eq(buyer));
+        verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
     }
 
     @Test
@@ -170,6 +212,7 @@ public class BuyerServiceTest {
         assertThrows(RuntimeException.class, () -> buyerService.updateBuyer(99, buyerDto));
         verify(buyerRepository, times(1)).findById(99);
         verify(buyerRepository, never()).save(any(Buyer.class));
+        verify(modelMapper, never()).map(any(), any());
     }
 
     @Test
