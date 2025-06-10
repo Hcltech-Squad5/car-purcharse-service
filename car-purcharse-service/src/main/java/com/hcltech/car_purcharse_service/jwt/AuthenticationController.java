@@ -1,8 +1,7 @@
-package com.hcltech.car_purcharse_service.controller;
+package com.hcltech.car_purcharse_service.jwt;
 
 import com.hcltech.car_purcharse_service.dto.AuthenticationRequestDto;
 import com.hcltech.car_purcharse_service.dto.AuthenticationResponseDto;
-import com.hcltech.car_purcharse_service.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/v1/api/auth")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(final AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
 
@@ -30,10 +29,10 @@ public class AuthenticationController {
         final AuthenticationResponseDto response = authenticationService.login(authenticationRequestDto);
         return ResponseEntity.ok(response);
     }
-
-    @PostMapping("/logout")
-    public ResponseEntity<AuthenticationResponseDto> logout(
-            @RequestBody AuthenticationRequestDto authenticationRequestDto) throws Exception {
-        throw new UnsupportedOperationException("Not implemented yet.");
-    }
+//
+//    @PostMapping("/logout")
+//    public ResponseEntity<AuthenticationResponseDto> logout(
+//            @RequestBody AuthenticationRequestDto authenticationRequestDto) throws Exception {
+//        throw new UnsupportedOperationException("Not implemented yet.");
+//    }
 }

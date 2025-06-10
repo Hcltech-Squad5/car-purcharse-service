@@ -42,7 +42,7 @@ public class CarDtoService {
         return result;
     }
 
-    public CarDto create(CarDto carDto, MultipartFile file) {
+    public CarDto create(CarDto carDto) {
 
         Car car = toEntity(carDto);
         Car savedCar = carService.create(car);
