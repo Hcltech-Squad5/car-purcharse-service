@@ -12,21 +12,9 @@ public class Seller {
 
     @Column(nullable = false)
     private String name;
-
-    public Seller(int id, String name, long contact, String email, String companyName, List<Car> cars) {
-        this.id = id;
-        this.name = name;
-        this.contact = contact;
-        this.email = email;
-        this.companyName = companyName;
-        this.cars = cars;
-    }
-
+    
     @Column(nullable = false,unique = true)
     private long contact;
-
-    public Seller() {
-    }
 
     @Column(nullable = false,unique = true)
     private String email;
@@ -37,6 +25,16 @@ public class Seller {
     @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL)
     private List<Car> cars;
 
+    public Seller() {
+    }
+    public Seller(int id, String name, long contact, String email, String companyName, List<Car> cars) {
+        this.id = id;
+        this.name = name;
+        this.contact = contact;
+        this.email = email;
+        this.companyName = companyName;
+        this.cars = cars;
+    }
     public int getId() {
         return id;
     }
