@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/AuthenticationController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/AuthenticationRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/AuthenticationResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/MyUserDetailsService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/AuthenticationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/PurchasedCarService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/PurchasedCarServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/PurchasedCarServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/PurchasedCarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/ReviewController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/ReviewController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +38,15 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="downloadAnnotationsAutomatically" value="true" />
+        <option name="downloadDocsAutomatically" value="true" />
+        <option name="downloadSourcesAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -34,21 +56,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.CarPurcharseServiceApplication.executor": "Run",
-    "Maven.car-purcharse-service [clean].executor": "Run",
-    "Maven.car-purcharse-service [compile].executor": "Run",
-    "Maven.car-purcharse-service [install].executor": "Run",
-    "Maven.car-purcharse-service [validate].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/settynaveen.kumar/Desktop/Capstone/car-purcharse-service",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.CarPurcharseServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.car-purcharse-service [clean].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sharath.bn/training/projects/capstone/car-purcharse-service-original/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.hcltech.car_purcharse_service.dto" />
+      <recent name="com.hcltech.car_purcharse_service.service" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\dto" />
       <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original" />
@@ -57,8 +80,8 @@
       <recent name="C:\Users\sharath.bn\training\projects\capstone\car-purcharse-service-original\car-purcharse-service\src\main\java\com\hcltech\car_purcharse_service\repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.hcltech.car_purcharse_service.service" />
       <recent name="com.hcltech.car_purcharse_service.controller" />
+      <recent name="com.hcltech.car_purcharse_service.service" />
       <recent name="com.hcltech.car_purcharse_service.repository" />
       <recent name="com.hcltech.car_purcharse_service.dto" />
       <recent name="com.hcltech.car_purcharse_service.dto.service" />

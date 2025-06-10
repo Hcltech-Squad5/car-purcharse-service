@@ -6,6 +6,7 @@ import com.hcltech.car_purcharse_service.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,16 +15,24 @@ import java.util.List;
 public class UserService {
 
     final private static Logger logger = LoggerFactory.getLogger(UserService.class);
-    @Autowired
+
+    private PasswordEncoder passwordEncoder;
+
     private UserRepository repo;
 
+    public UserService(PasswordEncoder passwordEncoder, UserRepository repo) {
+        this.passwordEncoder = passwordEncoder;
+        this.repo = repo;
+    }
 
-    public User create(User user){
+
+    public User create(User user) {
         try {
             logger.info("Inserting the user");
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             User save = repo.save(user);
             return save;
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error("Failed to insert the user into Database");
             throw new RuntimeException(e);
         }
@@ -44,7 +53,7 @@ public class UserService {
     public User getByID(Integer userId) {
         try {
             logger.info("fetching user by ID {}", userId);
-            User user= repo.findById(userId).orElseThrow();
+            User user = repo.findById(userId).orElseThrow();
             return user;
         } catch (Exception e) {
             logger.error("Failed to fetch the user by ID {}", userId);
@@ -52,10 +61,10 @@ public class UserService {
         }
     }
 
-    public  User getByUserName(String userName){
+    public User getByUserName(String userName) {
         try {
             logger.info("fetching user by username {}", userName);
-            User user= repo.findByUserName(userName).orElseThrow();
+            User user = repo.findByUserName(userName).orElseThrow();
             return user;
         } catch (Exception e) {
             logger.error("Failed to fetch the USER by Username {}", userName);
@@ -67,7 +76,7 @@ public class UserService {
     public User getByRole(String Role) {
         try {
             logger.info("fetching user by Role{}", Role);
-            User user= repo.findByRole(Role).orElseThrow();
+            User user = repo.findByRole(Role).orElseThrow();
             return user;
         } catch (Exception e) {
             logger.error("Failed to fetch the user by role {}", Role);
@@ -75,11 +84,11 @@ public class UserService {
         }
     }
 
-    public void updatePasswordById(Integer userId,String newPassword){
+    public void updatePasswordById(Integer userId, String newPassword) {
         try {
             logger.info("Update password by id{}", userId);
-            User user= repo.findById(userId).orElseThrow();
-            user.setPassword(newPassword);
+            User user = repo.findById(userId).orElseThrow();
+            user.setPassword(passwordEncoder.encode(newPassword));
             repo.save(user);
         } catch (Exception e) {
             logger.error("Failed to update the password by id{}", userId);
@@ -87,11 +96,11 @@ public class UserService {
         }
     }
 
-    public void updatePasswordByusername(String userName,String newPassword){
+    public void updatePasswordByusername(String userName, String newPassword) {
         try {
             logger.info("Update password by username");
             User user = repo.findByUserName(userName).orElseThrow();
-            user.setPassword(newPassword);
+            user.setPassword(passwordEncoder.encode(newPassword));
             repo.save(user);
         } catch (Exception e) {
             logger.error("Failed to update the password by username");
@@ -113,11 +122,30 @@ public class UserService {
     public void deleteByuserName(String userName) {
 
         logger.info("Deleting the user by username");
-        if(!repo.findByUserName(userName).isPresent()){
+        if (repo.findByUserName(userName).isEmpty()) {
             logger.error("Failed to delete the user by username");
             throw new RuntimeException("User not found with username: " + userName);
         }
         repo.deleteByUserName(userName);
+    }
+
+    public User createUser(String userName, String password, String role) {
+
+        logger.info("User is creating...");
+
+        try {
+            User user = new User();
+            user.setUserName(userName);
+            user.setPassword(passwordEncoder.encode(password));
+            user.setRole(role);
+
+            User save = repo.save(user);
+            return save;
+        } catch (Exception e) {
+            logger.error("Failed to create the user into Database");
+            throw new RuntimeException(e);
+        }
+
     }
 }
 

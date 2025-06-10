@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/purchased-cars")
+@RequestMapping("/v1/api/purchased-cars")
 public class PurchasedCarController {
 private static final Logger logger = LoggerFactory.getLogger(PurchasedCarController.class);
     @Autowired
