@@ -34,8 +34,8 @@ public class SellerDtoService {
         if (opt.isPresent()) {
             structure.setData(opt.get());
             structure.setMessage("Seller id is present");
-            structure.setStatusCode(HttpStatus.FOUND.value());
-            return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.FOUND);
+            structure.setStatusCode(HttpStatus.OK.value());
+            return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.OK);
         } else {
             throw new IdNotFoundException("Supplier Id is not present");
         }
@@ -45,8 +45,8 @@ public class SellerDtoService {
         ResponseStructure<List<Seller>> structure = new ResponseStructure<>();
         structure.setData(sellerService.findAllSeller());
         structure.setMessage("All Seller Found");
-        structure.setStatusCode(HttpStatus.FOUND.value());
-        return new ResponseEntity<ResponseStructure<List<Seller>>>(HttpStatus.FOUND);
+        structure.setStatusCode(HttpStatus.OK.value());
+        return new ResponseEntity<ResponseStructure<List<Seller>>>(structure,HttpStatus.OK);
     }
 
 

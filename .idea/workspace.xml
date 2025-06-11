@@ -6,20 +6,23 @@
   <component name="ChangeListManager">
     <list default="true" id="1acdc11f-93af-404b-b30f-3d9bca3cab84" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/CarPurcharseServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/CarPurcharseServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/config/ApplicationConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/BuyerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/SellerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/MyUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/MyUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/Seller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/BuyerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/BuyerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/BuyerServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/service/BuyerServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller_List.txt" beforeDir="false" afterPath="$PROJECT_DIR$/controller_List.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/SellerDtoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/dto/service/SellerDtoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/jwt/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/BuyerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/BuyerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/SellerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/repository/SellerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/SellerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/service/SellerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/CarPurcharseServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/CarPurcharseServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/BuyerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/BuyerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/CarControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/CarControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/PurchasedCarControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/PurchasedCarControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/SellerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/controller/SellerControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/repository/BuyerRepositoryTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service/repository/SellerRepositoryTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;SahanaGotakindi&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Hcltech-Squad5/car-purcharse-service.git&quot;,
+    &quot;accountId&quot;: &quot;0da7d99c-bd6e-49c1-a756-8f36526a71f7&quot;
+  }
+}</component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -59,12 +74,45 @@
   "keyToString": {
     "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
     "Application.CarPurcharseServiceApplication.executor": "Run",
+    "JUnit.BuyerControllerTest.createBuyer_Success.executor": "Run",
+    "JUnit.BuyerControllerTest.executor": "Run",
+    "JUnit.BuyerRepositoryTest.executor": "Run",
+    "JUnit.BuyerRepositoryTest.shouldSaveBuyer.executor": "Run",
+    "JUnit.CarControllerTest.createCar_Success.executor": "Run",
+    "JUnit.CarControllerTest.executor": "Run",
+    "JUnit.CarControllerTest.getAllCars_Success.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testDeletePurchasedCar.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testGetPurchasedCarById.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testGetPurchasedCarsByBuyerId.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testGetPurchasedCarsByCarId.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testGetPurchasedCarsBySellerId.executor": "Run",
+    "JUnit.PurchasedCarControllerTest.testUpdatePurchasedCar.executor": "Run",
+    "JUnit.SellerControllerTest.executor": "Run",
+    "JUnit.SellerControllerTest.testDeleteSeller.executor": "Run",
+    "JUnit.SellerControllerTest.testFindAllSeller.executor": "Run",
+    "JUnit.SellerControllerTest.testFindSellerById.executor": "Run",
+    "JUnit.SellerControllerTest.testUpdateSeller.executor": "Run",
+    "JUnit.car_purcharse_service in car-purcharse-service.executor": "Run",
+    "JUnit.com.hcltech.car_purcharse_service in car-purcharse-service.executor": "Run",
+    "JUnit.com.hcltech.car_purcharse_service.controller in car-purcharse-service.executor": "Run",
+    "JUnit.com.hcltech.car_purcharse_service.repository in car-purcharse-service.executor": "Run",
+    "JUnit.com.hcltech.car_purcharse_service.service in car-purcharse-service.executor": "Run",
+    "JUnit.controller in car-purcharse-service.executor": "Run",
+    "JUnit.repository in car-purcharse-service.executor": "Run",
+    "JUnit.service in car-purcharse-service.executor": "Run",
     "Maven.car-purcharse-service [clean].executor": "Run",
     "Maven.car-purcharse-service [install].executor": "Run",
+    "Maven.car-purcharse-service [org.apache.maven.plugins:maven-clean-plugin:3.4.1:clean].executor": "Run",
+    "Maven.car-purcharse-service [sonar:sonar].executor": "Run",
+    "Maven.car-purcharse-service [test].executor": "Run",
+    "Maven.car-purcharse-service [verify].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.Workspaces.CheckRemotesActivity": "true",
+    "RunOnceActivity.restore.workspace.module": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/sharath.bn/training/projects/capstone/car-purcharse-service-original",
+    "last_opened_file_path": "C:/capstone1/car-purcharse-service",
     "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
@@ -88,6 +136,127 @@
       <recent name="com.hcltech.car_purcharse_service.dto.service" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="CarPurcharseServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hcltech.car_purcharse_service.CarPurcharseServiceApplication" />
+      <module name="car-purcharse-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hcltech.car_purcharse_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="BuyerControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-purcharse-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hcltech.car_purcharse_service.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hcltech.car_purcharse_service.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.hcltech.car_purcharse_service.controller.BuyerControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SellerControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-purcharse-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hcltech.car_purcharse_service.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hcltech.car_purcharse_service.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.hcltech.car_purcharse_service.controller.SellerControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="car_purcharse_service in car-purcharse-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-purcharse-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/car-purcharse-service/src/test/java/com/hcltech/car_purcharse_service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.hcltech.car_purcharse_service in car-purcharse-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="car-purcharse-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hcltech.car_purcharse_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.hcltech.car_purcharse_service" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="car-purcharse-service [sonar:sonar]" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings">
+          <MavenRunnerSettings>
+            <option name="delegateBuildToMaven" value="false" />
+            <option name="environmentProperties">
+              <map />
+            </option>
+            <option name="jreName" value="#USE_PROJECT_JDK" />
+            <option name="mavenProperties">
+              <map />
+            </option>
+            <option name="passParentEnv" value="true" />
+            <option name="runMavenInBackground" value="true" />
+            <option name="skipTests" value="false" />
+            <option name="vmOptions" value="-Dsonar.token=squ_f2ddb9b71b65d887e6f593ccad5f49dd6b44bffd" />
+          </MavenRunnerSettings>
+        </option>
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="cmdOptions" />
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="sonar:sonar" />
+              </list>
+            </option>
+            <option name="multimoduleDir" />
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="projectsCmdOptionValues">
+              <list />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$/car-purcharse-service" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.car_purcharse_service in car-purcharse-service" />
+        <item itemvalue="JUnit.BuyerControllerTest" />
+        <item itemvalue="JUnit.SellerControllerTest" />
+        <item itemvalue="JUnit.com.hcltech.car_purcharse_service in car-purcharse-service" />
+        <item itemvalue="Application.CarPurcharseServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -98,6 +267,17 @@
       <updated>1749325702875</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/car-purcharse-service/src/main/java/com/hcltech/car_purcharse_service/controller/CarController.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/car_purcharse_service_original$CarPurcharseServiceApplication.ic" NAME="CarPurcharseServiceApplication Coverage Results" MODIFIED="1749553741286" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

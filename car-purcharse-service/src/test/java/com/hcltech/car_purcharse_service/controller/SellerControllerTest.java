@@ -1,15 +1,22 @@
 package com.hcltech.car_purcharse_service.controller;
 
+import com.hcltech.car_purcharse_service.config.SecurityConfig;
 import com.hcltech.car_purcharse_service.dto.ResponseStructure;
 import com.hcltech.car_purcharse_service.dto.service.SellerDtoService;
+import com.hcltech.car_purcharse_service.jwt.JwtFilter;
+import com.hcltech.car_purcharse_service.jwt.JwtUtil;
+import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
 import com.hcltech.car_purcharse_service.model.Seller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +31,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SellerController.class)
+@AutoConfigureMockMvc
+@Import({JwtUtil.class, JwtFilter.class, SecurityConfig.class})
+@WithMockUser(username = "testuser", roles = {"USER", "ADMIN"})
 public class SellerControllerTest {
 
     @Autowired
@@ -32,12 +42,16 @@ public class SellerControllerTest {
     @MockitoBean
     private SellerDtoService sellerDtoService;
 
+    // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter
+    @MockitoBean
+    private MyUserDetailsService myUserDetailsService;
+
     @Autowired
-    private ObjectMapper objectMapper; // Used to convert objects to JSON
+    private ObjectMapper objectMapper;
 
     private Seller seller;
-    private ResponseStructure<Seller> singleSellerFoundResponse; // Renamed for clarity
-    private ResponseStructure<Seller> singleSellerCreatedResponse; // For save operations
+    private ResponseStructure<Seller> singleSellerFoundResponse;
+    private ResponseStructure<Seller> singleSellerCreatedResponse;
     private ResponseStructure<List<Seller>> listSellerResponse;
     private ResponseStructure<Boolean> booleanResponse;
 
@@ -45,18 +59,15 @@ public class SellerControllerTest {
     void setUp() {
         seller = new Seller(1, "Test Seller", 9876543210L, "test@example.com", "Test Company", null);
 
-        // Response for find by ID
         singleSellerFoundResponse = new ResponseStructure<>();
         singleSellerFoundResponse.setData(seller);
-        singleSellerFoundResponse.setMessage("Seller id is present"); // Corrected message
-        singleSellerFoundResponse.setStatusCode(HttpStatus.FOUND.value());
+        singleSellerFoundResponse.setMessage("Seller id is present");
+        singleSellerFoundResponse.setStatusCode(HttpStatus.OK.value());
 
-        // Response for save operations (CREATE)
         singleSellerCreatedResponse = new ResponseStructure<>();
         singleSellerCreatedResponse.setData(seller);
         singleSellerCreatedResponse.setMessage("Seller details added");
         singleSellerCreatedResponse.setStatusCode(HttpStatus.CREATED.value());
-
 
         List<Seller> sellers = Arrays.asList(seller, new Seller(2, "Another Seller", 1234567890L, "another@example.com", "Another Company", null));
         listSellerResponse = new ResponseStructure<>();
@@ -75,7 +86,7 @@ public class SellerControllerTest {
         when(sellerDtoService.saveSeller(any(Seller.class)))
                 .thenReturn(new ResponseEntity<>(singleSellerCreatedResponse, HttpStatus.CREATED));
 
-        mockMvc.perform(post("/seller")
+        mockMvc.perform(post("/v1/api/seller/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(seller)))
                 .andExpect(status().isCreated())
@@ -86,9 +97,9 @@ public class SellerControllerTest {
     @Test
     void testFindSellerById() throws Exception {
         when(sellerDtoService.findSellerById(anyInt()))
-                .thenReturn(new ResponseEntity<>(singleSellerFoundResponse, HttpStatus.FOUND)); // Use the correct response
-
-        mockMvc.perform(get("/seller/{id}", 1)
+                .thenReturn(new ResponseEntity<>(singleSellerFoundResponse, HttpStatus.FOUND));
+        int id = 1;
+        mockMvc.perform(get("/v1/api/seller/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isFound())
                 .andExpect(jsonPath("$.data.id").value(1))
@@ -100,7 +111,7 @@ public class SellerControllerTest {
         when(sellerDtoService.findAllSeller())
                 .thenReturn(new ResponseEntity<>(listSellerResponse, HttpStatus.OK));
 
-        mockMvc.perform(get("/seller")
+        mockMvc.perform(get("/v1/api/seller")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].name").value("Test Seller"))
@@ -115,11 +126,12 @@ public class SellerControllerTest {
         updatedResponse.setData(updatedSeller);
         updatedResponse.setMessage("Seller Updated successfully");
         updatedResponse.setStatusCode(HttpStatus.ACCEPTED.value());
+        int id = 1;
 
         when(sellerDtoService.updateSeller(any(Seller.class), anyInt()))
                 .thenReturn(new ResponseEntity<>(updatedResponse, HttpStatus.ACCEPTED));
 
-        mockMvc.perform(put("/seller/{id}", 1)
+        mockMvc.perform(put("/v1/api/seller/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedSeller)))
                 .andExpect(status().isAccepted())
@@ -131,8 +143,9 @@ public class SellerControllerTest {
     void testDeleteSeller() throws Exception {
         when(sellerDtoService.deleteSeller(anyInt()))
                 .thenReturn(new ResponseEntity<>(booleanResponse, HttpStatus.OK));
+        int id = 1;
 
-        mockMvc.perform(delete("/seller/{id}", 1)
+        mockMvc.perform(delete("/v1/api/seller/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value(true))

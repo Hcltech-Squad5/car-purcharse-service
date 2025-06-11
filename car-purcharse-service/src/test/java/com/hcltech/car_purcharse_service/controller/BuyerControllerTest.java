@@ -1,13 +1,18 @@
 package com.hcltech.car_purcharse_service.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hcltech.car_purcharse_service.config.SecurityConfig;
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
+import com.hcltech.car_purcharse_service.jwt.JwtFilter;
+import com.hcltech.car_purcharse_service.jwt.JwtUtil;
+import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
 import com.hcltech.car_purcharse_service.service.BuyerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest; // <--- Changed this
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -16,19 +21,21 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.hamcrest.Matchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-@WebMvcTest(BuyerController.class)
+@WebMvcTest(BuyerController.class) // <-- Use WebMvcTest here
+@AutoConfigureMockMvc
 @WithMockUser(username = "testuser", roles = {"USER", "ADMIN"})
+@Import({JwtUtil.class, JwtFilter.class, SecurityConfig.class})
 class BuyerControllerTest {
 
     @Autowired
@@ -36,6 +43,10 @@ class BuyerControllerTest {
 
     @MockitoBean
     private BuyerService buyerService;
+
+    // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter
+    @MockitoBean
+    private MyUserDetailsService myUserDetailsService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -81,7 +92,7 @@ class BuyerControllerTest {
 
         when(buyerService.createBuyer(any(BuyerDto.class))).thenReturn(createdBuyerDto);
 
-        mockMvc.perform(post("/buyer")
+        mockMvc.perform(post("/v1/api/buyer/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newBuyerDto))
                         .with(csrf()))
@@ -105,7 +116,7 @@ class BuyerControllerTest {
         invalidBuyerDto.setPassword("short");
 
 
-        mockMvc.perform(post("/buyer")
+        mockMvc.perform(post("/v1/api/buyer/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidBuyerDto))
                         .with(csrf()))
@@ -120,7 +131,7 @@ class BuyerControllerTest {
     void getBuyerById_Success() throws Exception {
         when(buyerService.getBuyerById(1)).thenReturn(buyerDto1);
 
-        mockMvc.perform(get("/buyer/{id}", 1)
+        mockMvc.perform(get("/v1/api/buyer/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -134,9 +145,9 @@ class BuyerControllerTest {
     void getBuyerById_NotFound() throws Exception {
         when(buyerService.getBuyerById(99)).thenThrow(new RuntimeException("Buyer not found"));
 
-        mockMvc.perform(get("/buyer/{id}", 99)
+        mockMvc.perform(get("/v1/api/buyer/{id}", 99)
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isInternalServerError()); // Or whatever status your controller returns for not found.
 
         verify(buyerService, times(1)).getBuyerById(99);
     }
@@ -146,7 +157,7 @@ class BuyerControllerTest {
         List<BuyerDto> allBuyers = Arrays.asList(buyerDto1, buyerDto2);
         when(buyerService.getAllBuyers()).thenReturn(allBuyers);
 
-        mockMvc.perform(get("/buyer")
+        mockMvc.perform(get("/v1/api/buyer")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -179,7 +190,7 @@ class BuyerControllerTest {
 
         when(buyerService.updateBuyer(eq(1), any(BuyerDto.class))).thenReturn(returnedBuyerDto);
 
-        mockMvc.perform(put("/buyer/{id}", 1)
+        mockMvc.perform(put("/v1/api/buyer/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedBuyerInfo))
                         .with(csrf()))
@@ -196,7 +207,7 @@ class BuyerControllerTest {
     void deleteBuyer_Success() throws Exception {
         doNothing().when(buyerService).deleteBuyer(1);
 
-        mockMvc.perform(delete("/buyer/{id}", 1)
+        mockMvc.perform(delete("/v1/api/buyer/{id}", 1)
                         .with(csrf()))
                 .andExpect(status().isNoContent());
 

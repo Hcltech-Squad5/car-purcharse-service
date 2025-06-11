@@ -32,7 +32,7 @@ public class CarController {
         return ResponseEntity.ok(carDtoService.getOneById(id));
     }
 
-    @PostMapping(path = "/create")
+    @PostMapping("/create")
     public ResponseEntity<CarDto> create(@RequestBody CarDto carDto){
         return ResponseEntity.status(201).body(carDtoService.create(carDto));
     }
