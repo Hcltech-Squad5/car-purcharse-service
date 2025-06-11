@@ -4,7 +4,7 @@ import java.util.List;
 
 
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
-import com.hcltech.car_purcharse_service.service.BuyerService;
+import com.hcltech.car_purcharse_service.dao.service.BuyerDaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +18,16 @@ public class BuyerController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuyerController.class);
 
-    private final BuyerService buyerService;
+    private final BuyerDaoService buyerDaoService;
 
-    public BuyerController(BuyerService buyerService) {
-        this.buyerService = buyerService;
+    public BuyerController(BuyerDaoService buyerDaoService) {
+        this.buyerDaoService = buyerDaoService;
     }
 
     @PostMapping("/create")
     public ResponseEntity<BuyerDto> createBuyer(@Valid @RequestBody BuyerDto buyerDto) {
         logger.info("Received request to create buyer with email: {}", buyerDto.getEmail());
-        BuyerDto createdBuyer = buyerService.createBuyer(buyerDto);
+        BuyerDto createdBuyer = buyerDaoService.createBuyer(buyerDto);
         logger.info("Buyer created successfully with ID: {}", createdBuyer.getId());
         return ResponseEntity.ok(createdBuyer);
     }
@@ -35,7 +35,7 @@ public class BuyerController {
     @GetMapping("/{id}")
     public ResponseEntity<BuyerDto> getBuyerById(@PathVariable Integer id) {
         logger.info("Received request to get buyer by ID: {}", id);
-        BuyerDto buyer = buyerService.getBuyerById(id);
+        BuyerDto buyer = buyerDaoService.getBuyerById(id);
         logger.info("Successfully retrieved buyer with ID: {}", id);
         return ResponseEntity.ok(buyer);
     }
@@ -43,7 +43,7 @@ public class BuyerController {
     @GetMapping
     public ResponseEntity<List<BuyerDto>> getAllBuyers() {
         logger.info("Received request to get all buyers");
-        List<BuyerDto> buyers = buyerService.getAllBuyers();
+        List<BuyerDto> buyers = buyerDaoService.getAllBuyers();
         logger.info("Successfully retrieved {} buyers", buyers.size());
         return ResponseEntity.ok(buyers);
     }
@@ -51,7 +51,7 @@ public class BuyerController {
     @PutMapping("/{id}")
     public ResponseEntity<BuyerDto> updateBuyer(@PathVariable Integer id, @RequestBody BuyerDto buyerDto) {
         logger.info("Received request to update buyer with ID: {}", id);
-        BuyerDto updatedBuyer = buyerService.updateBuyer(id, buyerDto);
+        BuyerDto updatedBuyer = buyerDaoService.updateBuyer(id, buyerDto);
         logger.info("Buyer with ID: {} updated successfully", id);
         return ResponseEntity.ok(updatedBuyer);
     }
@@ -59,7 +59,7 @@ public class BuyerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBuyer(@PathVariable Integer id) {
         logger.info("Received request to delete buyer with ID: {}", id);
-        buyerService.deleteBuyer(id);
+        buyerDaoService.deleteBuyer(id);
         logger.info("Buyer with ID: {} deleted successfully", id);
         return ResponseEntity.noContent().build();
     }

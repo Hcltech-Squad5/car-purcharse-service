@@ -1,12 +1,12 @@
 package com.hcltech.car_purcharse_service.service;
 
-import com.hcltech.car_purcharse_service.model.Car;
+import com.hcltech.car_purcharse_service.dto.ResponseStructure;
+import com.hcltech.car_purcharse_service.exception.IdNotFoundException;
 import com.hcltech.car_purcharse_service.model.Seller;
-import com.hcltech.car_purcharse_service.repository.SellerRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.hcltech.car_purcharse_service.dao.service.SellerDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,38 +16,62 @@ import java.util.Optional;
 public class SellerService {
 
     @Autowired
-    private SellerRepository sellerRepository;
+    private SellerDaoService sellerDaoService;
 
-    private static final Logger log = LoggerFactory.getLogger(SellerService.class);
-
-    public Seller saveSeller(Seller seller)
-    {
-        log.info("Seller details saved in DB");
-        return  sellerRepository.save(seller);
+    public ResponseEntity<ResponseStructure<Seller>> saveSeller(Seller seller) {
+        ResponseStructure<Seller> structure = new ResponseStructure<>();
+        structure.setData(sellerDaoService.saveSeller(seller));
+        structure.setMessage("Seller details added");
+        structure.setStatusCode(HttpStatus.CREATED.value());
+        return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.CREATED);
     }
 
-    public Optional<Seller> findSellerById(int id)
-    {
-        log.info("seller found by id");
-        return sellerRepository.findById(id);
-    }
-    public List<Seller> findAllSeller()
-    {
-        log.info("All Seller");
-        return sellerRepository.findAll();
+
+    public ResponseEntity<ResponseStructure<Seller>> findSellerById(int id) {
+        Optional<Seller> opt = sellerDaoService.findSellerById(id);
+        ResponseStructure<Seller> structure = new ResponseStructure<>();
+        if (opt.isPresent()) {
+            structure.setData(opt.get());
+            structure.setMessage("Seller id is present");
+            structure.setStatusCode(HttpStatus.OK.value());
+            return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.OK);
+        } else {
+            throw new IdNotFoundException("Supplier Id is not present");
+        }
     }
 
-    public boolean deleteSellerById(int id)
-    {
-        Optional<Seller> recSeller = sellerRepository.findById(id);
-        if(recSeller.isPresent())
-        {
-            log.info("deleted by id");
-            sellerRepository.deleteById(id);
-            return true;
-        }else{
-            log.error("wrong id");
-            return false;
+    public ResponseEntity<ResponseStructure<List<Seller>>> findAllSeller() {
+        ResponseStructure<List<Seller>> structure = new ResponseStructure<>();
+        structure.setData(sellerDaoService.findAllSeller());
+        structure.setMessage("All Seller Found");
+        structure.setStatusCode(HttpStatus.OK.value());
+        return new ResponseEntity<ResponseStructure<List<Seller>>>(structure,HttpStatus.OK);
+    }
+
+
+    public ResponseEntity<ResponseStructure<Seller>> updateSeller(Seller seller, int id) {
+        Optional<Seller> opt = sellerDaoService.findSellerById(id);
+        ResponseStructure<Seller> structure = new ResponseStructure<>();
+        if (opt.isPresent()) {
+            structure.setData(sellerDaoService.saveSeller(seller));
+            structure.setMessage("Seller Updated successfully");
+            structure.setStatusCode(HttpStatus.ACCEPTED.value());
+            return new ResponseEntity<ResponseStructure<Seller>>(structure, HttpStatus.ACCEPTED);
+        } else {
+            throw new IdNotFoundException("Seller id is invalid");
+        }
+    }
+
+    public ResponseEntity<ResponseStructure<Boolean>> deleteSeller(int id) {
+        Optional<Seller> opt = sellerDaoService.findSellerById(id);
+        ResponseStructure<Boolean> structure = new ResponseStructure<>();
+        if (opt.isPresent()) {
+            structure.setData(sellerDaoService.deleteSellerById(id));
+            structure.setMessage("Seller details deleted successfully");
+            structure.setStatusCode(HttpStatus.OK.value());
+            return new ResponseEntity<ResponseStructure<Boolean>>(structure, HttpStatus.OK);
+        } else {
+            throw new IdNotFoundException("Seller id is not present");
         }
     }
 }

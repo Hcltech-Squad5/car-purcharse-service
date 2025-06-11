@@ -2,7 +2,7 @@ package com.hcltech.car_purcharse_service.controller;
 
 import com.hcltech.car_purcharse_service.config.SecurityConfig;
 import com.hcltech.car_purcharse_service.dto.ResponseStructure;
-import com.hcltech.car_purcharse_service.dto.service.SellerDtoService;
+import com.hcltech.car_purcharse_service.service.SellerService;
 import com.hcltech.car_purcharse_service.jwt.JwtFilter;
 import com.hcltech.car_purcharse_service.jwt.JwtUtil;
 import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
@@ -40,7 +40,7 @@ public class SellerControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private SellerDtoService sellerDtoService;
+    private SellerService sellerService;
 
     // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter
     @MockitoBean
@@ -83,7 +83,7 @@ public class SellerControllerTest {
 
     @Test
     void testSaveSeller() throws Exception {
-        when(sellerDtoService.saveSeller(any(Seller.class)))
+        when(sellerService.saveSeller(any(Seller.class)))
                 .thenReturn(new ResponseEntity<>(singleSellerCreatedResponse, HttpStatus.CREATED));
 
         mockMvc.perform(post("/v1/api/seller/create")
@@ -96,7 +96,7 @@ public class SellerControllerTest {
 
     @Test
     void testFindSellerById() throws Exception {
-        when(sellerDtoService.findSellerById(anyInt()))
+        when(sellerService.findSellerById(anyInt()))
                 .thenReturn(new ResponseEntity<>(singleSellerFoundResponse, HttpStatus.FOUND));
         int id = 1;
         mockMvc.perform(get("/v1/api/seller/{id}", id)
@@ -108,7 +108,7 @@ public class SellerControllerTest {
 
     @Test
     void testFindAllSeller() throws Exception {
-        when(sellerDtoService.findAllSeller())
+        when(sellerService.findAllSeller())
                 .thenReturn(new ResponseEntity<>(listSellerResponse, HttpStatus.OK));
 
         mockMvc.perform(get("/v1/api/seller")
@@ -128,7 +128,7 @@ public class SellerControllerTest {
         updatedResponse.setStatusCode(HttpStatus.ACCEPTED.value());
         int id = 1;
 
-        when(sellerDtoService.updateSeller(any(Seller.class), anyInt()))
+        when(sellerService.updateSeller(any(Seller.class), anyInt()))
                 .thenReturn(new ResponseEntity<>(updatedResponse, HttpStatus.ACCEPTED));
 
         mockMvc.perform(put("/v1/api/seller/{id}", id)
@@ -141,7 +141,7 @@ public class SellerControllerTest {
 
     @Test
     void testDeleteSeller() throws Exception {
-        when(sellerDtoService.deleteSeller(anyInt()))
+        when(sellerService.deleteSeller(anyInt()))
                 .thenReturn(new ResponseEntity<>(booleanResponse, HttpStatus.OK));
         int id = 1;
 

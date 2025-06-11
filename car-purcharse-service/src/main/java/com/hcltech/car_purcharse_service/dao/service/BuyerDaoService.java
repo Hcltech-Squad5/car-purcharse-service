@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.model.Buyer;
@@ -17,15 +17,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-public class BuyerService {
+public class BuyerDaoService {
 
-    private static final Logger logger = LoggerFactory.getLogger(BuyerService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BuyerDaoService.class);
 
     @Autowired
     private BuyerRepository buyerRepository;
 
     @Autowired
-    private UserService userService;
+    private UserDaoService userDaoService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -51,7 +51,7 @@ public class BuyerService {
 
         try {
             logger.info("Sending user credentials to UserService for email: {}", email);
-            userService.create(newUser);
+            userDaoService.create(newUser);
             logger.info("User account created successfully by UserService for email: {}", email);
         } catch (Exception e) {
             logger.error("Failed to create user account in UserService for email: {}. Error: {}", email, e.getMessage());

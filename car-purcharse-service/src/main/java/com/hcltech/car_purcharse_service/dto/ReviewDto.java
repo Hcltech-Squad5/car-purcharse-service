@@ -1,5 +1,12 @@
 package com.hcltech.car_purcharse_service.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data // Generates getters, setters, equals, hashCode, and toString
+@NoArgsConstructor // Generates a no-argument constructor
+@AllArgsConstructor // Generates a constructor with all arguments
 public class ReviewDto {
     private Integer id;
     private String rate;
@@ -7,57 +14,57 @@ public class ReviewDto {
     private Integer buyerId;
     private Integer carId;
 
-    public ReviewDto()
-    {}
-    
-    public ReviewDto(Integer buyerId, String feedback, Integer carId, Integer id, String rate) {
-        this.buyerId = buyerId;
-        this.feedback = feedback;
-        this.carId = carId;
-        this.id = id;
-        this.rate = rate;
-    }
-
-    public Integer getCarId() {
-        return carId;
-    }
-
-    public void setCarId(Integer carId) {
-        this.carId = carId;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-
-
-    public Integer getBuyerId() {
-        return buyerId;
-    }
-
-    public void setBuyerId(Integer buyerId) {
-        this.buyerId = buyerId;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
-
-    public String getRate() {
-        return rate;
-    }
-
-    public void setRate(String rate) {
-        this.rate = rate;
-    }
+//    public ReviewDto()
+//    {}
+//
+//    public ReviewDto(Integer buyerId, String feedback, Integer carId, Integer id, String rate) {
+//        this.buyerId = buyerId;
+//        this.feedback = feedback;
+//        this.carId = carId;
+//        this.id = id;
+//        this.rate = rate;
+//    }
+//
+//    public Integer getCarId() {
+//        return carId;
+//    }
+//
+//    public void setCarId(Integer carId) {
+//        this.carId = carId;
+//    }
+//
+//    public Integer getId() {
+//        return id;
+//    }
+//
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
+//
+//
+//
+//    public Integer getBuyerId() {
+//        return buyerId;
+//    }
+//
+//    public void setBuyerId(Integer buyerId) {
+//        this.buyerId = buyerId;
+//    }
+//
+//    public String getFeedback() {
+//        return feedback;
+//    }
+//
+//    public void setFeedback(String feedback) {
+//        this.feedback = feedback;
+//    }
+//
+//    public String getRate() {
+//        return rate;
+//    }
+//
+//    public void setRate(String rate) {
+//        this.rate = rate;
+//    }
 }
 

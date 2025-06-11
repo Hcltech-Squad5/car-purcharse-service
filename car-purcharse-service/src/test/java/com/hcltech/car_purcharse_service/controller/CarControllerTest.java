@@ -3,7 +3,7 @@ package com.hcltech.car_purcharse_service.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hcltech.car_purcharse_service.config.SecurityConfig;
 import com.hcltech.car_purcharse_service.dto.CarDto;
-import com.hcltech.car_purcharse_service.dto.service.CarDtoService;
+import com.hcltech.car_purcharse_service.service.CarService;
 import com.hcltech.car_purcharse_service.jwt.JwtFilter;
 import com.hcltech.car_purcharse_service.jwt.JwtUtil;
 import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
@@ -38,7 +38,7 @@ class CarControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private CarDtoService carDtoService;
+    private CarService carService;
 
     // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter/SecurityConfig
     @MockitoBean
@@ -66,7 +66,7 @@ class CarControllerTest {
     @Test
     void createCar_Success() throws Exception {
         CarDto createdCarDto = new CarDto(1, "Toyota", "Camry", 2023, 30000.0, true, 1);
-        when(carDtoService.create(any(CarDto.class))).thenReturn(createdCarDto);
+        when(carService.create(any(CarDto.class))).thenReturn(createdCarDto);
 
         mockMvc.perform(post("/v1/api/car/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,14 +77,14 @@ class CarControllerTest {
                 .andExpect(jsonPath("$.make").value("Toyota"))
                 .andExpect(jsonPath("$.sellerId").value(1));
 
-        verify(carDtoService, times(1)).create(any(CarDto.class));
+        verify(carService, times(1)).create(any(CarDto.class));
     }
 
 
     @Test
     void getAllCars_Success() throws Exception {
         List<CarDto> cars = Arrays.asList(testCarDto, new CarDto(2, "Nissan", "Altima", 2022, 28000.0, true, 2));
-        when(carDtoService.getAll()).thenReturn(cars);
+        when(carService.getAll()).thenReturn(cars);
 
         mockMvc.perform(get("/v1/api/car/getAll")
                         .accept(MediaType.APPLICATION_JSON))
@@ -94,12 +94,12 @@ class CarControllerTest {
                 .andExpect(jsonPath("$[0].make").value("Toyota"))
                 .andExpect(jsonPath("$[1].make").value("Nissan"));
 
-        verify(carDtoService, times(1)).getAll();
+        verify(carService, times(1)).getAll();
     }
 
     @Test
     void getOneById_Success() throws Exception {
-        when(carDtoService.getOneById(1)).thenReturn(testCarDtoUpdate);
+        when(carService.getOneById(1)).thenReturn(testCarDtoUpdate);
 
         mockMvc.perform(get("/v1/api/car/getOneById/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
@@ -109,13 +109,13 @@ class CarControllerTest {
                 .andExpect(jsonPath("$.make").value("Toyota"))
                 .andExpect(jsonPath("$.model").value("Camry"));
 
-        verify(carDtoService, times(1)).getOneById(1);
+        verify(carService, times(1)).getOneById(1);
     }
 
 
     @Test
     void updateCar_Success() throws Exception {
-        when(carDtoService.update(any(CarDto.class))).thenReturn(testCarDtoUpdate);
+        when(carService.update(any(CarDto.class))).thenReturn(testCarDtoUpdate);
 
         mockMvc.perform(put("/v1/api/car/update")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -125,38 +125,38 @@ class CarControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.year").value(2024));
 
-        verify(carDtoService, times(1)).update(any(CarDto.class));
+        verify(carService, times(1)).update(any(CarDto.class));
     }
 
     @Test
     void deleteCar_Success() throws Exception {
-        when(carDtoService.delete(1)).thenReturn("Delete Successful");
+        when(carService.delete(1)).thenReturn("Delete Successful");
 
         mockMvc.perform(delete("/v1/api/car/delete/{id}", 1)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Delete Successful"));
 
-        verify(carDtoService, times(1)).delete(1);
+        verify(carService, times(1)).delete(1);
     }
 
     @Test
     void getAvailableCars_Success() throws Exception {
         List<CarDto> availableCars = Arrays.asList(testCarDto, new CarDto(2, "Honda", "CRV", 2023, 35000.0, true, 2));
-        when(carDtoService.getAvailableCars()).thenReturn(availableCars);
+        when(carService.getAvailableCars()).thenReturn(availableCars);
 
         mockMvc.perform(get("/v1/api/car/getAvailableCars")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].available").value(true));
-        verify(carDtoService, times(1)).getAvailableCars();
+                .andExpect(jsonPath("$[0].isAvailable").value(true));
+        verify(carService, times(1)).getAvailableCars();
     }
 
     @Test
     void getCarsBySeller_Success() throws Exception {
         Integer sellerId = 1;
-        when(carDtoService.getCarsBySeller(sellerId)).thenReturn(testCarDtoList);
+        when(carService.getCarsBySeller(sellerId)).thenReturn(testCarDtoList);
 
         mockMvc.perform(get("/v1/api/car/seller/{sellerId}", sellerId)
                         .accept(MediaType.APPLICATION_JSON))
@@ -164,6 +164,6 @@ class CarControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].sellerId").value(sellerId))
                 .andExpect(jsonPath("$[1].sellerId").value(sellerId));
-        verify(carDtoService, times(1)).getCarsBySeller(sellerId);
+        verify(carService, times(1)).getCarsBySeller(sellerId);
     }
 }

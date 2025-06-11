@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 import com.hcltech.car_purcharse_service.dto.PurchasedCarDto;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarResponseDto;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PurchasedCarServiceTest {
+public class PurchasedCarDaoServiceTest {
 
     @Mock
       private PurchasedCarRepository purchasedCarRepository;
@@ -43,7 +43,7 @@ public class PurchasedCarServiceTest {
     private ModelMapper modelMapper;
 
     @InjectMocks
-    private PurchasedCarService purchasedCarService;
+    private PurchasedCarDtoService purchasedCarDtoService;
     private PurchasedCar purchasedCar;
     private PurchasedCarDto purchasedCarDto;
     private Buyer buyer;
@@ -53,12 +53,12 @@ public class PurchasedCarServiceTest {
     @BeforeEach
     public void setUp() {
         modelMapper = new ModelMapper();
-        purchasedCarService = new PurchasedCarService();
+        purchasedCarDtoService = new PurchasedCarDtoService();
        // purchasedCarService.modelMapper = modelMapper;
-        purchasedCarService.purchasedCarRepository = purchasedCarRepository;
-        purchasedCarService.buyerRepository = buyerRepository;
-        purchasedCarService.sellerRepository = sellerRepository;
-        purchasedCarService.carRepository = carRepository;
+        purchasedCarDtoService.purchasedCarRepository = purchasedCarRepository;
+        purchasedCarDtoService.buyerRepository = buyerRepository;
+        purchasedCarDtoService.sellerRepository = sellerRepository;
+        purchasedCarDtoService.carRepository = carRepository;
 
         buyer = new Buyer();
         buyer.setId(1);
@@ -81,7 +81,7 @@ public class PurchasedCarServiceTest {
         when(carRepository.findById(3)).thenReturn(Optional.of(car));
         when(purchasedCarRepository.save(any(PurchasedCar.class))).thenReturn(purchasedCar);
 
-        PurchasedCarResponseDto response = purchasedCarService.createPurchasedCar(purchasedCarDto);
+        PurchasedCarResponseDto response = purchasedCarDtoService.createPurchasedCar(purchasedCarDto);
 
         assertNotNull(response);
         assertEquals(1, response.getId());
@@ -93,7 +93,7 @@ public class PurchasedCarServiceTest {
     void testGetAllPurchasedCars() {
         when(purchasedCarRepository.findAll()).thenReturn(Arrays.asList(purchasedCar));
 
-        var result = purchasedCarService.getAllPurchasedCars();
+        var result = purchasedCarDtoService.getAllPurchasedCars();
 
         assertEquals(1, result.size());
         assertEquals(1, result.get(0).getId());
@@ -102,7 +102,7 @@ public class PurchasedCarServiceTest {
     void testGetPurchasedCarById() {
         when(purchasedCarRepository.findById(1)).thenReturn(Optional.of(purchasedCar));
 
-        PurchasedCarResponseDto response = purchasedCarService.getPurchasedCarById(1);
+        PurchasedCarResponseDto response = purchasedCarDtoService.getPurchasedCarById(1);
 
         assertEquals(1, response.getId());
         assertEquals(3, response.getCarId());
@@ -116,7 +116,7 @@ public class PurchasedCarServiceTest {
         when(carRepository.findById(3)).thenReturn(Optional.of(car));
         when(purchasedCarRepository.save(any(PurchasedCar.class))).thenReturn(purchasedCar);
 
-        PurchasedCarResponseDto response = purchasedCarService.updatePurchasedCar(1, purchasedCarDto);
+        PurchasedCarResponseDto response = purchasedCarDtoService.updatePurchasedCar(1, purchasedCarDto);
 
         assertEquals(1, response.getId());
         verify(purchasedCarRepository).save(any(PurchasedCar.class));
@@ -126,7 +126,7 @@ public class PurchasedCarServiceTest {
     void testDeletePurchasedCar() {
         when(purchasedCarRepository.findById(1)).thenReturn(Optional.of(purchasedCar));
 
-        purchasedCarService.deletePurchasedCar(1);
+        purchasedCarDtoService.deletePurchasedCar(1);
 
         verify(purchasedCarRepository).delete(purchasedCar);
     }
@@ -134,7 +134,7 @@ public class PurchasedCarServiceTest {
     void testGetPurchasedCarsByBuyerId() {
         when(purchasedCarRepository.findByBuyerId(1)).thenReturn(Arrays.asList(purchasedCar));
 
-        var result = purchasedCarService.getPurchasedCarsByBuyerId(1);
+        var result = purchasedCarDtoService.getPurchasedCarsByBuyerId(1);
 
          assertEquals(1, result.size());
           assertEquals(1, result.get(0).getBuyerId());
@@ -143,7 +143,7 @@ public class PurchasedCarServiceTest {
     void testGetPurchasedCarsBySellerId() {
         when(purchasedCarRepository.findBySellerId(2)).thenReturn(Arrays.asList(purchasedCar));
 
-        var result = purchasedCarService.getPurchasedCarsBySellerId(2);
+        var result = purchasedCarDtoService.getPurchasedCarsBySellerId(2);
          assertEquals(1, result.size());
         assertEquals(2, result.get(0).getSellerId());
     }
@@ -152,7 +152,7 @@ public class PurchasedCarServiceTest {
     void testGetPurchasedCarsByCarId() {
         when(purchasedCarRepository.findByCarId(3)).thenReturn(Arrays.asList(purchasedCar));
 
-          var result = purchasedCarService.getPurchasedCarsByCarId(3);
+          var result = purchasedCarDtoService.getPurchasedCarsByCarId(3);
 
         assertEquals(1, result.size());
         assertEquals(3, result.get(0).getCarId());
@@ -163,7 +163,7 @@ public class PurchasedCarServiceTest {
         when(purchasedCarRepository.findById(100)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class,
-                () -> purchasedCarService.getPurchasedCarById(100));
+                () -> purchasedCarDtoService.getPurchasedCarById(100));
     }
 
     @Test
@@ -171,6 +171,6 @@ public class PurchasedCarServiceTest {
         when(purchasedCarRepository.findById(200)).thenReturn(Optional.empty());
 
         assertThrows(ResourceNotFoundException.class,
-                () -> purchasedCarService.deletePurchasedCar(200));
+                () -> purchasedCarDtoService.deletePurchasedCar(200));
     }
 }

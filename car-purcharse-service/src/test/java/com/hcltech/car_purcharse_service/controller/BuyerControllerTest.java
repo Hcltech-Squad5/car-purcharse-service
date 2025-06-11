@@ -6,7 +6,7 @@ import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.jwt.JwtFilter;
 import com.hcltech.car_purcharse_service.jwt.JwtUtil;
 import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
-import com.hcltech.car_purcharse_service.service.BuyerService;
+import com.hcltech.car_purcharse_service.dao.service.BuyerDaoService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ class BuyerControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private BuyerService buyerService;
+    private BuyerDaoService buyerDaoService;
 
     // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter
     @MockitoBean
@@ -90,7 +90,7 @@ class BuyerControllerTest {
         createdBuyerDto.setPhoneNumber("555-123-4567");
         createdBuyerDto.setPassword("charliePass");
 
-        when(buyerService.createBuyer(any(BuyerDto.class))).thenReturn(createdBuyerDto);
+        when(buyerDaoService.createBuyer(any(BuyerDto.class))).thenReturn(createdBuyerDto);
 
         mockMvc.perform(post("/v1/api/buyer/create")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -102,7 +102,7 @@ class BuyerControllerTest {
                 .andExpect(jsonPath("$.lastName").value("Brown"))
                 .andExpect(jsonPath("$.email").value("charlie@example.com"));
 
-        verify(buyerService, times(1)).createBuyer(any(BuyerDto.class));
+        verify(buyerDaoService, times(1)).createBuyer(any(BuyerDto.class));
     }
 
     @Test
@@ -124,12 +124,12 @@ class BuyerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("First name is required"))
                 .andExpect(jsonPath("$.password").value("Password must be at least 8 characters long"));
 
-        verify(buyerService, times(0)).createBuyer(any(BuyerDto.class));
+        verify(buyerDaoService, times(0)).createBuyer(any(BuyerDto.class));
     }
 
     @Test
     void getBuyerById_Success() throws Exception {
-        when(buyerService.getBuyerById(1)).thenReturn(buyerDto1);
+        when(buyerDaoService.getBuyerById(1)).thenReturn(buyerDto1);
 
         mockMvc.perform(get("/v1/api/buyer/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
@@ -138,24 +138,24 @@ class BuyerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("Alice"))
                 .andExpect(jsonPath("$.lastName").value("Smith"));
 
-        verify(buyerService, times(1)).getBuyerById(1);
+        verify(buyerDaoService, times(1)).getBuyerById(1);
     }
 
     @Test
     void getBuyerById_NotFound() throws Exception {
-        when(buyerService.getBuyerById(99)).thenThrow(new RuntimeException("Buyer not found"));
+        when(buyerDaoService.getBuyerById(99)).thenThrow(new RuntimeException("Buyer not found"));
 
         mockMvc.perform(get("/v1/api/buyer/{id}", 99)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError()); // Or whatever status your controller returns for not found.
 
-        verify(buyerService, times(1)).getBuyerById(99);
+        verify(buyerDaoService, times(1)).getBuyerById(99);
     }
 
     @Test
     void getAllBuyers_Success() throws Exception {
         List<BuyerDto> allBuyers = Arrays.asList(buyerDto1, buyerDto2);
-        when(buyerService.getAllBuyers()).thenReturn(allBuyers);
+        when(buyerDaoService.getAllBuyers()).thenReturn(allBuyers);
 
         mockMvc.perform(get("/v1/api/buyer")
                         .accept(MediaType.APPLICATION_JSON))
@@ -168,7 +168,7 @@ class BuyerControllerTest {
                 .andExpect(jsonPath("$[1].firstName").value("Bob"))
                 .andExpect(jsonPath("$[1].lastName").value("Johnson"));
 
-        verify(buyerService, times(1)).getAllBuyers();
+        verify(buyerDaoService, times(1)).getAllBuyers();
     }
 
     @Test
@@ -188,7 +188,7 @@ class BuyerControllerTest {
         returnedBuyerDto.setPhoneNumber("111-222-3333");
         returnedBuyerDto.setPassword("newpass456");
 
-        when(buyerService.updateBuyer(eq(1), any(BuyerDto.class))).thenReturn(returnedBuyerDto);
+        when(buyerDaoService.updateBuyer(eq(1), any(BuyerDto.class))).thenReturn(returnedBuyerDto);
 
         mockMvc.perform(put("/v1/api/buyer/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -200,17 +200,17 @@ class BuyerControllerTest {
                 .andExpect(jsonPath("$.lastName").value("Wonderland"))
                 .andExpect(jsonPath("$.email").value("alice.w@example.com"));
 
-        verify(buyerService, times(1)).updateBuyer(eq(1), any(BuyerDto.class));
+        verify(buyerDaoService, times(1)).updateBuyer(eq(1), any(BuyerDto.class));
     }
 
     @Test
     void deleteBuyer_Success() throws Exception {
-        doNothing().when(buyerService).deleteBuyer(1);
+        doNothing().when(buyerDaoService).deleteBuyer(1);
 
         mockMvc.perform(delete("/v1/api/buyer/{id}", 1)
                         .with(csrf()))
                 .andExpect(status().isNoContent());
 
-        verify(buyerService, times(1)).deleteBuyer(1);
+        verify(buyerDaoService, times(1)).deleteBuyer(1);
     }
 }

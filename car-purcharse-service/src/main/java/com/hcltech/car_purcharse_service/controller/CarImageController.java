@@ -1,8 +1,7 @@
 package com.hcltech.car_purcharse_service.controller;
 
 import com.hcltech.car_purcharse_service.dto.CarImageDto;
-import com.hcltech.car_purcharse_service.dto.service.CarImageDtoService;
-import com.hcltech.car_purcharse_service.utils.CloudinaryUtilsService;
+import com.hcltech.car_purcharse_service.service.CarImageService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,25 +11,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/api/car/image/")
 public class CarImageController {
 
-    private CarImageDtoService carImageDtoService;
+    private CarImageService carImageService;
 
-    public CarImageController(CarImageDtoService carImageDtoService) {
-        this.carImageDtoService = carImageDtoService;
+    public CarImageController(CarImageService carImageService) {
+        this.carImageService = carImageService;
     }
 
     @PutMapping(path = "/update/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CarImageDto> updateImage(@PathVariable Integer id, @Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file) {
 
-        CarImageDto carImageDto = carImageDtoService.Update(file, id);
+        CarImageDto carImageDto = carImageService.Update(file, id);
         ResponseEntity<CarImageDto> responseEntity = new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
         return responseEntity;
     }
@@ -38,7 +34,7 @@ public class CarImageController {
     @PostMapping(path = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CarImageDto> uploadImage(@PathVariable Integer id, @Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file) {
 
-        CarImageDto carImageDto = carImageDtoService.upload(file, id);
+        CarImageDto carImageDto = carImageService.upload(file, id);
         ResponseEntity<CarImageDto> responseEntity = new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
         return responseEntity;
     }
@@ -46,7 +42,7 @@ public class CarImageController {
     @GetMapping("/all/{carId}")
     public ResponseEntity<List<CarImageDto>> getAllImageByCar(@PathVariable Integer carId) {
 
-        List<CarImageDto> allImageByCar = carImageDtoService.getAllImageByCar(carId);
+        List<CarImageDto> allImageByCar = carImageService.getAllImageByCar(carId);
 
         return ResponseEntity.ok(allImageByCar);
     }
@@ -54,7 +50,7 @@ public class CarImageController {
     @GetMapping("/{Id}")
     public ResponseEntity<CarImageDto> getImageById(@PathVariable Integer id) {
 
-        CarImageDto imageById = carImageDtoService.getImageById(id);
+        CarImageDto imageById = carImageService.getImageById(id);
 
         return ResponseEntity.ok(imageById);
     }
@@ -62,14 +58,14 @@ public class CarImageController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteById(@PathVariable Integer id) {
 
-        String message = carImageDtoService.deleteById(id);
+        String message = carImageService.deleteById(id);
 
         return ResponseEntity.ok(message);
     }
 
     @DeleteMapping("/delete/{carId}")
     public ResponseEntity<String> deleteByCarId(@PathVariable Integer carId) {
-        String message = carImageDtoService.deleteByCarId(carId);
+        String message = carImageService.deleteByCarId(carId);
 
         return ResponseEntity.ok(message);
     }

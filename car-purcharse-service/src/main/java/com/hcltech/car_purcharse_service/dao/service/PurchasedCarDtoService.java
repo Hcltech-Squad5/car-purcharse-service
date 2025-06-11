@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 import com.hcltech.car_purcharse_service.controller.PurchasedCarController;
 import com.hcltech.car_purcharse_service.dto.PurchasedCarDto;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PurchasedCarService {
+public class PurchasedCarDtoService {
 
     @Autowired
     PurchasedCarRepository purchasedCarRepository;

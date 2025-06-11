@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 
 import com.hcltech.car_purcharse_service.model.User;
@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserDaoService {
 
-    final private static Logger logger = LoggerFactory.getLogger(UserService.class);
+    final private static Logger logger = LoggerFactory.getLogger(UserDaoService.class);
 
     private PasswordEncoder passwordEncoder;
 
     private UserRepository repo;
 
-    public UserService(PasswordEncoder passwordEncoder, UserRepository repo) {
+    public UserDaoService(PasswordEncoder passwordEncoder, UserRepository repo) {
         this.passwordEncoder = passwordEncoder;
         this.repo = repo;
     }

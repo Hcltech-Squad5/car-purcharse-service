@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 import com.hcltech.car_purcharse_service.model.Car;
 import com.hcltech.car_purcharse_service.model.Seller;
@@ -18,13 +18,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CarServiceTest {
+class CarDaoServiceTest {
 
     @Mock
     private CarRepository carRepository;
 
     @InjectMocks
-    private CarService carService;
+    private CarDaoService carDaoService;
 
     private Seller testSeller;
     private Car testCar1;
@@ -49,7 +49,7 @@ class CarServiceTest {
         List<Car> cars = Arrays.asList(testCar1, testCar2);
         when(carRepository.findAll()).thenReturn(cars);
 
-        List<Car> result = carService.getAll();
+        List<Car> result = carDaoService.getAll();
 
         assertThat(result).isNotNull();
         assertThat(result).hasSize(2);
@@ -63,7 +63,7 @@ class CarServiceTest {
     void getOneById() {
         when(carRepository.findById(testCar1.getId())).thenReturn(Optional.of(testCar1));
 
-        Car result = carService.getOneById(testCar1.getId());
+        Car result = carDaoService.getOneById(testCar1.getId());
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isEqualTo(testCar1.getId());
@@ -85,7 +85,7 @@ class CarServiceTest {
         });
 
         Car newCar = new Car(null, "Ford", "Focus", 2024, 35000.0, true, testSeller);
-        Car createdCar = carService.create(newCar);
+        Car createdCar = carDaoService.create(newCar);
 
         assertThat(createdCar).isNotNull();
         assertThat(createdCar.getId()).isNotNull(); // Check if ID was generated
@@ -101,7 +101,7 @@ class CarServiceTest {
         when(carRepository.save(any(Car.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         testCar1.setPrice(32000.0); // Modify a property
-        Car updatedCar = carService.update(testCar1);
+        Car updatedCar = carDaoService.update(testCar1);
 
         assertThat(updatedCar).isNotNull();
         assertThat(updatedCar.getId()).isEqualTo(testCar1.getId());
@@ -115,7 +115,7 @@ class CarServiceTest {
     void delete() {
         doNothing().when(carRepository).deleteById(testCar1.getId());
 
-        String result = carService.delete(testCar1.getId());
+        String result = carDaoService.delete(testCar1.getId());
 
         assertThat(result).isEqualTo("Delete Successful");
 
@@ -127,11 +127,11 @@ class CarServiceTest {
     void getAvailableCars() {
         when(carRepository.findByIsAvailableTrue()).thenReturn(Arrays.asList(testCar1)); // Only testCar1 is available
 
-        List<Car> result = carService.getAvailableCars();
+        List<Car> result = carDaoService.getAvailableCars();
 
         assertThat(result).isNotNull();
         assertThat(result).hasSize(1);
-        assertThat(result.get(0).getAvailable()).isTrue();
+        assertThat(result.get(0).getIsAvailable()).isTrue();
         assertThat(result).containsExactly(testCar1);
 
         verify(carRepository, times(1)).findByIsAvailableTrue();
@@ -143,7 +143,7 @@ class CarServiceTest {
         List<Car> sellerCars = Arrays.asList(testCar1, testCar2); // Both belong to testSeller
         when(carRepository.findAllBySellerId(testSeller.getId())).thenReturn(sellerCars);
 
-        List<Car> result = carService.getCarsBySeller(testSeller.getId());
+        List<Car> result = carDaoService.getCarsBySeller(testSeller.getId());
 
         assertThat(result).isNotNull();
         assertThat(result).hasSize(2);

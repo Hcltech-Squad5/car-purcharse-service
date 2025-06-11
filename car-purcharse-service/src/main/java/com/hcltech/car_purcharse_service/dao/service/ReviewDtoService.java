@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 
 import com.hcltech.car_purcharse_service.dto.ReviewDto;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReviewService {
+public class ReviewDtoService {
 
     private final ReviewRepository reviewRepository;
     @Autowired
@@ -23,9 +23,9 @@ public class ReviewService {
     @Autowired
     private final CarRepository carRepository;
 
-    public ReviewService(ReviewRepository reviewRepository,
-                         BuyerRepository buyerRepository,
-                         CarRepository carRepository) {
+    public ReviewDtoService(ReviewRepository reviewRepository,
+                            BuyerRepository buyerRepository,
+                            CarRepository carRepository) {
         this.reviewRepository = reviewRepository;
         this.buyerRepository = buyerRepository;
         this.carRepository = carRepository;

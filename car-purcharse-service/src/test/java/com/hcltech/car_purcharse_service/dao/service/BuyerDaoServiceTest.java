@@ -1,4 +1,4 @@
-package com.hcltech.car_purcharse_service.service;
+package com.hcltech.car_purcharse_service.dao.service;
 
 import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.model.Buyer;
@@ -26,19 +26,19 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class BuyerServiceTest {
+public class BuyerDaoServiceTest {
 
     @Mock
     private BuyerRepository buyerRepository;
 
     @Mock
-    private UserService userService;
+    private UserDaoService userDaoService;
 
     @Mock
     private ModelMapper modelMapper;
 
     @InjectMocks
-    private BuyerService buyerService;
+    private BuyerDaoService buyerDaoService;
 
     private Buyer buyer;
     private BuyerDto buyerDto;
@@ -61,7 +61,7 @@ public class BuyerServiceTest {
         buyerDto.setPhoneNumber("9876543210");
         buyerDto.setPassword("securePassword123");
 
-        buyerDtoNoPassword = new BuyerDto(1, "Test", "Buyer", "test.buyer@example.com", "9876543210");
+        buyerDtoNoPassword = new BuyerDto(1, "Test", "Buyer", "test.buyer@example.com", "9876543210",null);
 
         lenient().when(modelMapper.map(any(BuyerDto.class), eq(Buyer.class))).thenReturn(buyer);
 
@@ -97,10 +97,10 @@ public class BuyerServiceTest {
         createdUser.setUserName(buyerDto.getEmail());
         createdUser.setRoles("BUYER");
 
-        when(userService.create(any(User.class))).thenReturn(createdUser);
+        when(userDaoService.create(any(User.class))).thenReturn(createdUser);
         when(buyerRepository.save(any(Buyer.class))).thenReturn(buyer);
 
-        BuyerDto createdBuyerDto = buyerService.createBuyer(buyerDto);
+        BuyerDto createdBuyerDto = buyerDaoService.createBuyer(buyerDto);
 
         assertThat(createdBuyerDto).isNotNull();
         assertThat(createdBuyerDto.getId()).isEqualTo(1);
@@ -108,7 +108,7 @@ public class BuyerServiceTest {
         assertThat(createdBuyerDto.getEmail()).isEqualTo("test.buyer@example.com");
         assertThat(createdBuyerDto.getPassword()).isNull();
 
-        verify(userService, times(1)).create(any(User.class));
+        verify(userDaoService, times(1)).create(any(User.class));
         verify(buyerRepository, times(1)).save(any(Buyer.class));
         verify(modelMapper, times(1)).map(eq(buyerDto), eq(Buyer.class));
         verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
@@ -118,8 +118,8 @@ public class BuyerServiceTest {
     @DisplayName("Should throw IllegalArgumentException when creating buyer without password")
     void shouldThrowExceptionWhenCreatingBuyerWithoutPassword() {
         buyerDto.setPassword(null);
-        assertThrows(IllegalArgumentException.class, () -> buyerService.createBuyer(buyerDto));
-        verify(userService, never()).create(any(User.class));
+        assertThrows(IllegalArgumentException.class, () -> buyerDaoService.createBuyer(buyerDto));
+        verify(userDaoService, never()).create(any(User.class));
         verify(buyerRepository, never()).save(any(Buyer.class));
         verify(modelMapper, never()).map(any(BuyerDto.class), eq(Buyer.class));
     }
@@ -129,7 +129,7 @@ public class BuyerServiceTest {
     void shouldGetBuyerByIdSuccessfully() {
         when(buyerRepository.findById(1)).thenReturn(Optional.of(buyer));
 
-        BuyerDto foundDto = buyerService.getBuyerById(1);
+        BuyerDto foundDto = buyerDaoService.getBuyerById(1);
 
         assertThat(foundDto).isNotNull();
         assertThat(foundDto.getId()).isEqualTo(1);
@@ -146,7 +146,7 @@ public class BuyerServiceTest {
     void shouldThrowExceptionWhenBuyerNotFoundById() {
         when(buyerRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> buyerService.getBuyerById(99));
+        assertThrows(RuntimeException.class, () -> buyerDaoService.getBuyerById(99));
         verify(buyerRepository, times(1)).findById(99);
         verify(modelMapper, never()).map(any(), any());
     }
@@ -163,7 +163,7 @@ public class BuyerServiceTest {
 
         when(buyerRepository.findAll()).thenReturn(Arrays.asList(buyer, buyer2));
 
-        List<BuyerDto> buyerDtos = buyerService.getAllBuyers();
+        List<BuyerDto> buyerDtos = buyerDaoService.getAllBuyers();
 
         assertThat(buyerDtos).isNotNull();
         assertThat(buyerDtos).hasSize(2);
@@ -187,7 +187,7 @@ public class BuyerServiceTest {
         when(buyerRepository.findById(1)).thenReturn(Optional.of(buyer));
         when(buyerRepository.save(any(Buyer.class))).thenReturn(buyer);
 
-        BuyerDto resultDto = buyerService.updateBuyer(1, updatedBuyerDto);
+        BuyerDto resultDto = buyerDaoService.updateBuyer(1, updatedBuyerDto);
 
         assertThat(resultDto).isNotNull();
         assertThat(resultDto.getId()).isEqualTo(1);
@@ -209,7 +209,7 @@ public class BuyerServiceTest {
     void shouldThrowExceptionWhenUpdatingNonExistentBuyer() {
         when(buyerRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> buyerService.updateBuyer(99, buyerDto));
+        assertThrows(RuntimeException.class, () -> buyerDaoService.updateBuyer(99, buyerDto));
         verify(buyerRepository, times(1)).findById(99);
         verify(buyerRepository, never()).save(any(Buyer.class));
         verify(modelMapper, never()).map(any(), any());
@@ -221,7 +221,7 @@ public class BuyerServiceTest {
         when(buyerRepository.existsById(1)).thenReturn(true);
         doNothing().when(buyerRepository).deleteById(1);
 
-        buyerService.deleteBuyer(1);
+        buyerDaoService.deleteBuyer(1);
 
         verify(buyerRepository, times(1)).existsById(1);
         verify(buyerRepository, times(1)).deleteById(1);
@@ -233,7 +233,7 @@ public class BuyerServiceTest {
         when(buyerRepository.findById(1)).thenReturn(Optional.of(buyer));
 
         String expectedPassword = "PlaceholderSecurePassword123!";
-        Map<String, String> actualCredentials = buyerService.getUserCredentials(1);
+        Map<String, String> actualCredentials = buyerDaoService.getUserCredentials(1);
 
         assertThat(actualCredentials).isNotNull();
         assertThat(actualCredentials).containsKey("password");
@@ -246,7 +246,7 @@ public class BuyerServiceTest {
     void shouldThrowExceptionWhenGettingCredentialsForNonExistentBuyer() {
         when(buyerRepository.findById(anyInt())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class, () -> buyerService.getUserCredentials(99));
+        assertThrows(RuntimeException.class, () -> buyerDaoService.getUserCredentials(99));
         verify(buyerRepository, times(1)).findById(99);
     }
 }
