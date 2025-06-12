@@ -68,7 +68,7 @@ class CarControllerTest {
         CarDto createdCarDto = new CarDto(1, "Toyota", "Camry", 2023, 30000.0, true, 1);
         when(carService.create(any(CarDto.class))).thenReturn(createdCarDto);
 
-        mockMvc.perform(post("/v1/api/car/create")
+        mockMvc.perform(post("/v1/api/cars/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testCarDto))
                         .with(csrf())) // Add csrf() for POST, PUT, DELETE requests with Spring Security
@@ -86,7 +86,7 @@ class CarControllerTest {
         List<CarDto> cars = Arrays.asList(testCarDto, new CarDto(2, "Nissan", "Altima", 2022, 28000.0, true, 2));
         when(carService.getAll()).thenReturn(cars);
 
-        mockMvc.perform(get("/v1/api/car/getAll")
+        mockMvc.perform(get("/v1/api/cars/getAll")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -101,7 +101,7 @@ class CarControllerTest {
     void getOneById_Success() throws Exception {
         when(carService.getOneById(1)).thenReturn(testCarDtoUpdate);
 
-        mockMvc.perform(get("/v1/api/car/getOneById/{id}", 1)
+        mockMvc.perform(get("/v1/api/cars/getOneById/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -117,7 +117,7 @@ class CarControllerTest {
     void updateCar_Success() throws Exception {
         when(carService.update(any(CarDto.class))).thenReturn(testCarDtoUpdate);
 
-        mockMvc.perform(put("/v1/api/car/update")
+        mockMvc.perform(put("/v1/api/cars/update")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(testCarDtoUpdate))
                         .with(csrf()))
@@ -132,7 +132,7 @@ class CarControllerTest {
     void deleteCar_Success() throws Exception {
         when(carService.delete(1)).thenReturn("Delete Successful");
 
-        mockMvc.perform(delete("/v1/api/car/delete/{id}", 1)
+        mockMvc.perform(delete("/v1/api/cars/delete/{id}", 1)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Delete Successful"));
@@ -145,7 +145,7 @@ class CarControllerTest {
         List<CarDto> availableCars = Arrays.asList(testCarDto, new CarDto(2, "Honda", "CRV", 2023, 35000.0, true, 2));
         when(carService.getAvailableCars()).thenReturn(availableCars);
 
-        mockMvc.perform(get("/v1/api/car/getAvailableCars")
+        mockMvc.perform(get("/v1/api/cars/getAvailableCars")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -158,7 +158,7 @@ class CarControllerTest {
         Integer sellerId = 1;
         when(carService.getCarsBySeller(sellerId)).thenReturn(testCarDtoList);
 
-        mockMvc.perform(get("/v1/api/car/seller/{sellerId}", sellerId)
+        mockMvc.perform(get("/v1/api/cars/seller/{sellerId}", sellerId)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))

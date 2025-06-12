@@ -35,10 +35,10 @@ public class SecurityConfig {
 
     private static final String[] AUTHENTICATION_WHITE_LIST = {
 
-            "/v1/api/admin/**",
+            "/v1/api/admins/**",
             "/v1/api/auth/**",
-            "/v1/api/buyer/create",
-            "/v1/api/seller/create"
+            "/v1/api/buyers/create",
+            "/v1/api/sellers/create"
 
     };
 

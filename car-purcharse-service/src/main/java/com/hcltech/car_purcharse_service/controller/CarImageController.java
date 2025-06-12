@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api/car/image/")
+@RequestMapping("/v1/api/car/images/")
 public class CarImageController {
 
     private CarImageService carImageService;
@@ -47,7 +47,7 @@ public class CarImageController {
         return ResponseEntity.ok(allImageByCar);
     }
 
-    @GetMapping("/{Id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CarImageDto> getImageById(@PathVariable Integer id) {
 
         CarImageDto imageById = carImageService.getImageById(id);
@@ -63,7 +63,7 @@ public class CarImageController {
         return ResponseEntity.ok(message);
     }
 
-    @DeleteMapping("/delete/{carId}")
+    @DeleteMapping("/delete/car/{carId}")
     public ResponseEntity<String> deleteByCarId(@PathVariable Integer carId) {
         String message = carImageService.deleteByCarId(carId);
 

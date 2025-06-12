@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RestController
-@RequestMapping("/v1/api/buyer")
+@RequestMapping("/v1/api/buyers")
 public class BuyerController {
 
     private static final Logger logger = LoggerFactory.getLogger(BuyerController.class);

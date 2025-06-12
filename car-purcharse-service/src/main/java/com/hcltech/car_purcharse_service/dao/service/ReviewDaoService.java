@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReviewDtoService {
+public class ReviewDaoService {
 
     private final ReviewRepository reviewRepository;
     @Autowired
@@ -23,7 +23,7 @@ public class ReviewDtoService {
     @Autowired
     private final CarRepository carRepository;
 
-    public ReviewDtoService(ReviewRepository reviewRepository,
+    public ReviewDaoService(ReviewRepository reviewRepository,
                             BuyerRepository buyerRepository,
                             CarRepository carRepository) {
         this.reviewRepository = reviewRepository;

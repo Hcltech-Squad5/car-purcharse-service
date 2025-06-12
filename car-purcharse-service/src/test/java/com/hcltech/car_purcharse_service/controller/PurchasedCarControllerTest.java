@@ -7,7 +7,7 @@ import com.hcltech.car_purcharse_service.dto.PurchasedCarResponseDto;
 import com.hcltech.car_purcharse_service.jwt.JwtFilter;
 import com.hcltech.car_purcharse_service.jwt.JwtUtil;
 import com.hcltech.car_purcharse_service.jwt.MyUserDetailsService; // Import MyUserDetailsService
-import com.hcltech.car_purcharse_service.dao.service.PurchasedCarDtoService;
+import com.hcltech.car_purcharse_service.dao.service.PurchasedCarDaoService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach; // Import BeforeEach
 import org.mockito.Mockito;
@@ -40,7 +40,7 @@ public class PurchasedCarControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private PurchasedCarDtoService purchasedCarDtoService;
+    private PurchasedCarDaoService purchasedCarDaoService;
 
     // ADD THIS LINE: Mock MyUserDetailsService as it's a dependency for JwtFilter
     @MockitoBean
@@ -60,7 +60,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testCreatePurchasedCar() throws Exception {
-        Mockito.when(purchasedCarDtoService.createPurchasedCar(any(PurchasedCarDto.class)))
+        Mockito.when(purchasedCarDaoService.createPurchasedCar(any(PurchasedCarDto.class)))
                 .thenReturn(sampleResponse);
 
         mockMvc.perform(post("/v1/api/purchased-cars/")
@@ -74,7 +74,7 @@ public class PurchasedCarControllerTest {
     void testGetAllPurchasedCars() throws Exception {
         List<PurchasedCarResponseDto> responseList = Collections.singletonList(sampleResponse);
 
-        Mockito.when(purchasedCarDtoService.getAllPurchasedCars()).thenReturn(responseList);
+        Mockito.when(purchasedCarDaoService.getAllPurchasedCars()).thenReturn(responseList);
 
         mockMvc.perform(get("/v1/api/purchased-cars/all"))
                 .andExpect(status().isOk())
@@ -83,7 +83,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testGetPurchasedCarById() throws Exception {
-        Mockito.when(purchasedCarDtoService.getPurchasedCarById(1)).thenReturn(sampleResponse);
+        Mockito.when(purchasedCarDaoService.getPurchasedCarById(1)).thenReturn(sampleResponse);
         int id =1;
         mockMvc.perform(get("/v1/api/purchased-cars/{id}", id))
                 .andExpect(status().isOk())
@@ -92,7 +92,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testUpdatePurchasedCar() throws Exception {
-        Mockito.when(purchasedCarDtoService.updatePurchasedCar(eq(1), any(PurchasedCarDto.class)))
+        Mockito.when(purchasedCarDaoService.updatePurchasedCar(eq(1), any(PurchasedCarDto.class)))
                 .thenReturn(sampleResponse);
         int id =1;
         mockMvc.perform(put("/v1/api/purchased-cars/{id}", id)
@@ -104,7 +104,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testDeletePurchasedCar() throws Exception {
-        Mockito.doNothing().when(purchasedCarDtoService).deletePurchasedCar(1);
+        Mockito.doNothing().when(purchasedCarDaoService).deletePurchasedCar(1);
         int id =1;
         mockMvc.perform(delete("/v1/api/purchased-cars/{id}", id))
                 .andExpect(status().isNoContent());
@@ -112,7 +112,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testGetPurchasedCarsByBuyerId() throws Exception {
-        Mockito.when(purchasedCarDtoService.getPurchasedCarsByBuyerId(1))
+        Mockito.when(purchasedCarDaoService.getPurchasedCarsByBuyerId(1))
                 .thenReturn(Collections.singletonList(sampleResponse));
         int id =1;
         mockMvc.perform(get("/v1/api/purchased-cars/buyer/{buyerId}", id))
@@ -123,7 +123,7 @@ public class PurchasedCarControllerTest {
     @Test
     void testGetPurchasedCarsBySellerId() throws Exception {
         // Assuming sampleResponse has sellerId as 2 (from your sampleDto)
-        Mockito.when(purchasedCarDtoService.getPurchasedCarsBySellerId(2))
+        Mockito.when(purchasedCarDaoService.getPurchasedCarsBySellerId(2))
                 .thenReturn(Collections.singletonList(
                         new PurchasedCarResponseDto(sampleResponse.getId(), sampleResponse.getBuyerId(), 2, sampleResponse.getCarId(), sampleResponse.getPurchaseDate())
                 ));
@@ -135,7 +135,7 @@ public class PurchasedCarControllerTest {
 
     @Test
     void testGetPurchasedCarsByCarId() throws Exception {
-        Mockito.when(purchasedCarDtoService.getPurchasedCarsByCarId(3))
+        Mockito.when(purchasedCarDaoService.getPurchasedCarsByCarId(3))
                 .thenReturn(Collections.singletonList(sampleResponse));
 
         mockMvc.perform(get("/v1/api/purchased-cars/car/{carId}",3))

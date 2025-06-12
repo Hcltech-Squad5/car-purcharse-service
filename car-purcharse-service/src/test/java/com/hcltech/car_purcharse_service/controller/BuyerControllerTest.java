@@ -92,7 +92,7 @@ class BuyerControllerTest {
 
         when(buyerDaoService.createBuyer(any(BuyerDto.class))).thenReturn(createdBuyerDto);
 
-        mockMvc.perform(post("/v1/api/buyer/create")
+        mockMvc.perform(post("/v1/api/buyers/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(newBuyerDto))
                         .with(csrf()))
@@ -116,7 +116,7 @@ class BuyerControllerTest {
         invalidBuyerDto.setPassword("short");
 
 
-        mockMvc.perform(post("/v1/api/buyer/create")
+        mockMvc.perform(post("/v1/api/buyers/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidBuyerDto))
                         .with(csrf()))
@@ -131,7 +131,7 @@ class BuyerControllerTest {
     void getBuyerById_Success() throws Exception {
         when(buyerDaoService.getBuyerById(1)).thenReturn(buyerDto1);
 
-        mockMvc.perform(get("/v1/api/buyer/{id}", 1)
+        mockMvc.perform(get("/v1/api/buyers/{id}", 1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
@@ -145,7 +145,7 @@ class BuyerControllerTest {
     void getBuyerById_NotFound() throws Exception {
         when(buyerDaoService.getBuyerById(99)).thenThrow(new RuntimeException("Buyer not found"));
 
-        mockMvc.perform(get("/v1/api/buyer/{id}", 99)
+        mockMvc.perform(get("/v1/api/buyers/{id}", 99)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError()); // Or whatever status your controller returns for not found.
 
@@ -157,7 +157,7 @@ class BuyerControllerTest {
         List<BuyerDto> allBuyers = Arrays.asList(buyerDto1, buyerDto2);
         when(buyerDaoService.getAllBuyers()).thenReturn(allBuyers);
 
-        mockMvc.perform(get("/v1/api/buyer")
+        mockMvc.perform(get("/v1/api/buyers")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -190,7 +190,7 @@ class BuyerControllerTest {
 
         when(buyerDaoService.updateBuyer(eq(1), any(BuyerDto.class))).thenReturn(returnedBuyerDto);
 
-        mockMvc.perform(put("/v1/api/buyer/{id}", 1)
+        mockMvc.perform(put("/v1/api/buyers/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedBuyerInfo))
                         .with(csrf()))
@@ -207,7 +207,7 @@ class BuyerControllerTest {
     void deleteBuyer_Success() throws Exception {
         doNothing().when(buyerDaoService).deleteBuyer(1);
 
-        mockMvc.perform(delete("/v1/api/buyer/{id}", 1)
+        mockMvc.perform(delete("/v1/api/buyers/{id}", 1)
                         .with(csrf()))
                 .andExpect(status().isNoContent());
 

@@ -86,7 +86,7 @@ public class SellerControllerTest {
         when(sellerService.saveSeller(any(Seller.class)))
                 .thenReturn(new ResponseEntity<>(singleSellerCreatedResponse, HttpStatus.CREATED));
 
-        mockMvc.perform(post("/v1/api/seller/create")
+        mockMvc.perform(post("/v1/api/sellers/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(seller)))
                 .andExpect(status().isCreated())
@@ -99,7 +99,7 @@ public class SellerControllerTest {
         when(sellerService.findSellerById(anyInt()))
                 .thenReturn(new ResponseEntity<>(singleSellerFoundResponse, HttpStatus.FOUND));
         int id = 1;
-        mockMvc.perform(get("/v1/api/seller/{id}", id)
+        mockMvc.perform(get("/v1/api/sellers/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isFound())
                 .andExpect(jsonPath("$.data.id").value(1))
@@ -111,7 +111,7 @@ public class SellerControllerTest {
         when(sellerService.findAllSeller())
                 .thenReturn(new ResponseEntity<>(listSellerResponse, HttpStatus.OK));
 
-        mockMvc.perform(get("/v1/api/seller")
+        mockMvc.perform(get("/v1/api/sellers")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].name").value("Test Seller"))
@@ -131,7 +131,7 @@ public class SellerControllerTest {
         when(sellerService.updateSeller(any(Seller.class), anyInt()))
                 .thenReturn(new ResponseEntity<>(updatedResponse, HttpStatus.ACCEPTED));
 
-        mockMvc.perform(put("/v1/api/seller/{id}", id)
+        mockMvc.perform(put("/v1/api/sellers/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedSeller)))
                 .andExpect(status().isAccepted())
@@ -145,7 +145,7 @@ public class SellerControllerTest {
                 .thenReturn(new ResponseEntity<>(booleanResponse, HttpStatus.OK));
         int id = 1;
 
-        mockMvc.perform(delete("/v1/api/seller/{id}", id)
+        mockMvc.perform(delete("/v1/api/sellers/{id}", id)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").value(true))

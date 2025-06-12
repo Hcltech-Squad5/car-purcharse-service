@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PurchasedCarDtoService {
+public class PurchasedCarDaoService {
 
     @Autowired
     PurchasedCarRepository purchasedCarRepository;
