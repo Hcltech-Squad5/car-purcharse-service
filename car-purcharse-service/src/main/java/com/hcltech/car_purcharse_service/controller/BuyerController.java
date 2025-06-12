@@ -66,12 +66,4 @@ public class BuyerController {
         return ResponseEntity.noContent().build();
     }
 
-
-////    @GetMapping("/{id}/credentials")
-//    public ResponseEntity<Map<String, String>> getUserCredentials(@PathVariable Integer id) {
-//        logger.info("Received request to get credentials for buyer with ID: {}", id);
-//        Map<String, String> credentials = buyerService.getUserCredentials(id);
-//        logger.info("Successfully retrieved credentials for buyer with ID: {}", id);
-//        return ResponseEntity.ok(credentials);
-//    }
 }

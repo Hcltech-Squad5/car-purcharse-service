@@ -18,21 +18,11 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
 
-//    @PostMapping("/register")
-//    public AuthenticationRequestDto register(@RequestBody AuthenticationRequestDto authenticationRequestDto) {
-//        return authenticationService.register(authenticationRequestDto);
-//    }
-
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponseDto> login(
             @RequestBody AuthenticationRequestDto authenticationRequestDto) throws Exception {
         final AuthenticationResponseDto response = authenticationService.login(authenticationRequestDto);
         return ResponseEntity.ok(response);
     }
-//
-//    @PostMapping("/logout")
-//    public ResponseEntity<AuthenticationResponseDto> logout(
-//            @RequestBody AuthenticationRequestDto authenticationRequestDto) throws Exception {
-//        throw new UnsupportedOperationException("Not implemented yet.");
-//    }
+
 }

@@ -1,15 +1,12 @@
 package com.hcltech.car_purcharse_service.jwt;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException; // Added import for ExpiredJwtException
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException; // Added import for SignatureException
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -92,7 +89,7 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpirated(token));
     }
 
-    private Boolean isTokenExpirated(String token) {
+    public Boolean isTokenExpirated(String token) {
         // This method now correctly checks if the token's expiration date is BEFORE the current date
         return getExpirationDateFromToken(token).before(new Date());
     }

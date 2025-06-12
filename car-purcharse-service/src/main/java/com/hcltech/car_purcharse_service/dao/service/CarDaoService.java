@@ -9,8 +9,11 @@ import java.util.List;
 
 @Service
 public class CarDaoService {
-    @Autowired
-    CarRepository carRepository;
+    private final CarRepository carRepository;
+
+    public CarDaoService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     public List<Car> getAll() {
         return carRepository.findAll();
@@ -41,7 +44,4 @@ public class CarDaoService {
         return carRepository.findAllBySellerId(sellerId);
     }
 
-//    public Seller getSellerId(Long sellerId){
-//        return sellerRepository.findById(sellerId);
-//    }
 }

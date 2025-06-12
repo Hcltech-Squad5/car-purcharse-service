@@ -28,7 +28,7 @@ public class CarImageDaoService {
     }
 
     public void delete(Integer id) {
-        CarImage carImage = carImageRepository.findById(id).orElseThrow(() -> new RuntimeException(ERROR_MESSAGE));
+       carImageRepository.deleteById(id);
     }
 
     public CarImage getById(Integer id) {

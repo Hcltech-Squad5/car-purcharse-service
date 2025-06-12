@@ -91,7 +91,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserByID_Success() throws Exception {
+    void getUserById_Success() throws Exception {
         when(userDaoService.getByID(1)).thenReturn(user1);
 
         mockMvc.perform(get("/v1/api/admins/{id}", 1)
@@ -105,7 +105,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserByID_NotFound() throws Exception {
+    void getUserById_NotFound() throws Exception {
         when(userDaoService.getByID(99)).thenThrow(new RuntimeException("User not found"));
 
         mockMvc.perform(get("/v1/api/admins/{id}", 99)
@@ -116,7 +116,7 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserByusername_Success() throws Exception {
+    void getUserByUserName_Success() throws Exception {
         when(userDaoService.getByUserName("testuser1")).thenReturn(user1);
 
         mockMvc.perform(get("/v1/api/admins/username/{userName}", "testuser1")
@@ -165,7 +165,7 @@ class UserControllerTest {
         User updatedUser = new User();
         updatedUser.setPassword("newEncodedPassword");
 
-        doNothing().when(userDaoService).updatePasswordByusername(eq("testuser1"), eq("newPassword"));
+        doNothing().when(userDaoService).updatePasswordUsername(eq("testuser1"), eq("newPassword"));
 
         mockMvc.perform(put("/v1/api/admins/password/username/{userName}", "testuser1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -174,7 +174,7 @@ class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("password updated successfully for user username" + "testuser1"));
 
-        verify(userDaoService, times(1)).updatePasswordByusername(eq("testuser1"), eq("newPassword"));
+        verify(userDaoService, times(1)).updatePasswordUsername(eq("testuser1"), eq("newPassword"));
     }
 
     @Test
@@ -188,14 +188,14 @@ class UserControllerTest {
         verify(userDaoService, times(1)).deleteById(1);
     }
 
-//    @Test
-//    void deleteByUsername_Success() throws Exception {
-//        doNothing().when(userDaoService).deleteByuserName("testuser1");
-//
-//        mockMvc.perform(delete("/v1/api/admin/username/{userName}", "testuser1")
-//                        .with(csrf()))
-//                .andExpect(status().isOk());
-//
-//        verify(userDaoService, times(1)).deleteByuserName("testuser1");
-//    }
+    @Test
+    void deleteByUserName_Success() throws Exception {
+        doNothing().when(userDaoService).deleteByUserName("testuser1");
+
+        mockMvc.perform(delete("/v1/api/admins/username/{userName}", "testuser1")
+                        .with(csrf()))
+                .andExpect(status().isOk());
+
+        verify(userDaoService, times(1)).deleteByUserName("testuser1");
+    }
 }

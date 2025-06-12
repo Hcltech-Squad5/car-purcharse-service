@@ -35,9 +35,5 @@ public class AuthenticationService {
         throw new UsernameNotFoundException(authenticationRequestDto.getUsername() + " not found");
     }
 
-    public AuthenticationResponseDto logout(AuthenticationRequestDto authenticationRequestDto) {
-        return null;
-    }
-
 
 }

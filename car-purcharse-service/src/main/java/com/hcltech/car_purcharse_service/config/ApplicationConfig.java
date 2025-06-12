@@ -2,7 +2,6 @@ package com.hcltech.car_purcharse_service.config;
 
 import com.cloudinary.Cloudinary;
 import com.hcltech.car_purcharse_service.dto.CarImageDto;
-import com.hcltech.car_purcharse_service.jwt.JwtUtil;
 import com.hcltech.car_purcharse_service.model.CarImage;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.modelmapper.ModelMapper;

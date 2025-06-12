@@ -13,15 +13,15 @@ import java.util.List;
 @Service
 public class UserDaoService {
 
-    final private static Logger logger = LoggerFactory.getLogger(UserDaoService.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserDaoService.class);
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private UserRepository repo;
+    private final UserRepository userRepository;
 
-    public UserDaoService(PasswordEncoder passwordEncoder, UserRepository repo) {
+    public UserDaoService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         this.passwordEncoder = passwordEncoder;
-        this.repo = repo;
+        this.userRepository = userRepository;
     }
 
 
@@ -29,8 +29,7 @@ public class UserDaoService {
         try {
             logger.info("Inserting the user");
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            User save = repo.save(user);
-            return save;
+            return userRepository.save(user);
         } catch (Exception e) {
             logger.error("Failed to insert the user into Database");
             throw new RuntimeException(e);
@@ -40,8 +39,7 @@ public class UserDaoService {
     public List<User> getAll() {
         try {
             logger.info("Fetching the all users from Database....");
-            List<User> allUsers = repo.findAll();
-            return allUsers;
+            return userRepository.findAll();
         } catch (Exception e) {
             logger.error("Failed to fetch the All user from Database");
             throw new RuntimeException(e);
@@ -52,8 +50,7 @@ public class UserDaoService {
     public User getByID(Integer userId) {
         try {
             logger.info("fetching user by ID {}", userId);
-            User user = repo.findById(userId).orElseThrow();
-            return user;
+            return userRepository.findById(userId).orElseThrow();
         } catch (Exception e) {
             logger.error("Failed to fetch the user by ID {}", userId);
             throw new RuntimeException(e);
@@ -63,8 +60,7 @@ public class UserDaoService {
     public User getByUserName(String userName) {
         try {
             logger.info("fetching user by username {}", userName);
-            User user = repo.findByUserName(userName).orElseThrow();
-            return user;
+            return userRepository.findByUserName(userName).orElseThrow();
         } catch (Exception e) {
             logger.error("Failed to fetch the USER by Username {}", userName);
             throw new RuntimeException(e);
@@ -72,13 +68,12 @@ public class UserDaoService {
     }
 
 
-    public User getByRole(String Role) {
+    public User getByRole(String role) {
         try {
-            logger.info("fetching user by Role{}", Role);
-            User user = repo.findByRoles(Role).orElseThrow();
-            return user;
+            logger.info("fetching user by role{}", role);
+            return userRepository.findByRoles(role).orElseThrow();
         } catch (Exception e) {
-            logger.error("Failed to fetch the user by role {}", Role);
+            logger.error("Failed to fetch the user by role {}", role);
             throw new RuntimeException(e);
         }
     }
@@ -86,21 +81,21 @@ public class UserDaoService {
     public void updatePasswordById(Integer userId, String newPassword) {
         try {
             logger.info("Update password by id{}", userId);
-            User user = repo.findById(userId).orElseThrow();
+            User user = userRepository.findById(userId).orElseThrow();
             user.setPassword(passwordEncoder.encode(newPassword));
-            repo.save(user);
+            userRepository.save(user);
         } catch (Exception e) {
             logger.error("Failed to update the password by id{}", userId);
             throw new RuntimeException(e);
         }
     }
 
-    public void updatePasswordByusername(String userName, String newPassword) {
+    public void updatePasswordUsername(String userName, String newPassword) {
         try {
             logger.info("Update password by username");
-            User user = repo.findByUserName(userName).orElseThrow();
+            User user = userRepository.findByUserName(userName).orElseThrow();
             user.setPassword(passwordEncoder.encode(newPassword));
-            repo.save(user);
+            userRepository.save(user);
         } catch (Exception e) {
             logger.error("Failed to update the password by username");
             throw new RuntimeException(e);
@@ -111,21 +106,21 @@ public class UserDaoService {
 
         try {
             logger.info("Deleting the user by ID {}", userId);
-            repo.deleteById(userId);
+            userRepository.deleteById(userId);
         } catch (Exception e) {
             logger.error("Failed to delete the user by ID {}", userId);
             throw new RuntimeException(e);
         }
     }
 
-    public void deleteByuserName(String userName) {
+    public void deleteByUserName(String userName) {
 
         logger.info("Deleting the user by username");
-        if (repo.findByUserName(userName).isEmpty()) {
+        if (userRepository.findByUserName(userName).isEmpty()) {
             logger.error("Failed to delete the user by username");
             throw new RuntimeException("User not found with username: " + userName);
         }
-        repo.deleteByUserName(userName);
+        userRepository.deleteByUserName(userName);
     }
 
     public User createUser(String userName, String password, String role) {
@@ -138,8 +133,7 @@ public class UserDaoService {
             user.setPassword(passwordEncoder.encode(password));
             user.setRoles(role);
 
-            User save = repo.save(user);
-            return save;
+            return userRepository.save(user);
         } catch (Exception e) {
             logger.error("Failed to create the user into Database");
             throw new RuntimeException(e);

@@ -5,7 +5,6 @@ import com.hcltech.car_purcharse_service.service.SellerService;
 import com.hcltech.car_purcharse_service.model.Seller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +14,13 @@ import java.util.List;
 @RequestMapping("/v1/api/sellers")
 public class SellerController {
 
-    @Autowired
-    private SellerService sellerService;
+    private final SellerService sellerService;
 
     private static final Logger log = LoggerFactory.getLogger(SellerController.class);
+
+    public SellerController(SellerService sellerService) {
+        this.sellerService = sellerService;
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ResponseStructure<Seller>> saveSeller(@RequestBody Seller seller) {

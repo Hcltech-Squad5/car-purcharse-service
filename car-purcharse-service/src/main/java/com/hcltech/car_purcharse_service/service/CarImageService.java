@@ -15,9 +15,9 @@ import java.util.Map;
 @Service
 public class CarImageService {
 
-    private ModelMapper modelMapper;
-    private CarImageDaoService carImageDaoService;
-    private CloudinaryUtilsService cloudinaryUtilsService;
+    private final ModelMapper modelMapper;
+    private final CarImageDaoService carImageDaoService;
+    private final CloudinaryUtilsService cloudinaryUtilsService;
 
     public CarImageService(ModelMapper modelMapper, CarImageDaoService carImageDaoService, CloudinaryUtilsService cloudinaryUtilsService) {
         this.modelMapper = modelMapper;

@@ -21,15 +21,17 @@ public class BuyerDaoService {
 
     private static final Logger logger = LoggerFactory.getLogger(BuyerDaoService.class);
 
-    @Autowired
-    private BuyerRepository buyerRepository;
+    private final BuyerRepository buyerRepository;
 
-    @Autowired
-    private UserDaoService userDaoService;
+    private final UserDaoService userDaoService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
+    public BuyerDaoService(BuyerRepository buyerRepository, UserDaoService userDaoService, ModelMapper modelMapper) {
+        this.buyerRepository = buyerRepository;
+        this.userDaoService = userDaoService;
+        this.modelMapper = modelMapper;
+    }
 
 
     public BuyerDto createBuyer(BuyerDto buyerDto) {
@@ -89,7 +91,7 @@ public class BuyerDaoService {
         List<BuyerDto> buyers = buyerRepository.findAll().stream()
 
                 .map(buyer -> modelMapper.map(buyer, BuyerDto.class))
-                .collect(Collectors.toList());
+                .toList();
         logger.info("Successfully retrieved {} buyers.", buyers.size());
         return buyers;
     }
@@ -127,18 +129,4 @@ public class BuyerDaoService {
         logger.info("Buyer with ID: {} deleted successfully.", id);
     }
 
-
-    public Map<String, String> getUserCredentials(Integer buyerId) {
-        logger.info("Attempting to retrieve credentials for buyer ID: {}", buyerId);
-        Buyer buyer = buyerRepository.findById(buyerId)
-                .orElseThrow(() -> {
-                    logger.error("Buyer not found for credentials retrieval, ID: {}", buyerId);
-                    return new RuntimeException("Buyer not found");
-                });
-
-        Map<String, String> credentials = new HashMap<>();
-        credentials.put("password", "PlaceholderSecurePassword123!");
-        logger.warn("Returning hardcoded placeholder credentials for buyer ID: {}", buyerId);
-        return credentials;
-    }
 }

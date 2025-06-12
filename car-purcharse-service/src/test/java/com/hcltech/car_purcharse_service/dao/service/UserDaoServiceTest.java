@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
-import java.util.Collections; // Added import for Collections.emptyList()
 import java.util.List;
 import java.util.Optional;
 
@@ -261,7 +260,7 @@ class UserDaoServiceTest {
         when(passwordEncoder.encode("newpassword")).thenReturn("encodednewpassword");
         when(userRepository.save(any(User.class))).thenReturn(user1);
 
-        assertDoesNotThrow(() -> userDaoService.updatePasswordByusername("testuser1", "newpassword"));
+        assertDoesNotThrow(() -> userDaoService.updatePasswordUsername("testuser1", "newpassword"));
 
         verify(userRepository, times(1)).findByUserName("testuser1");
         verify(passwordEncoder, times(1)).encode("newpassword");
@@ -287,7 +286,7 @@ class UserDaoServiceTest {
         when(passwordEncoder.encode("newpassword")).thenReturn("encodednewpassword");
         doThrow(new RuntimeException("DB error during update by username save")).when(userRepository).save(any(User.class));
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.updatePasswordByusername("testuser1", "newpassword"));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.updatePasswordUsername("testuser1", "newpassword"));
         assertTrue(thrown.getMessage().contains("java.lang.RuntimeException: DB error during update by username save"),
                 "Expected re-thrown exception message to contain the original exception's string representation");
         verify(userRepository, times(1)).findByUserName("testuser1");
@@ -322,32 +321,32 @@ class UserDaoServiceTest {
 
     // --- deleteByuserName() Tests ---
     @Test
-    void deleteByuserName_Success() {
+    void deleteByUserName_Success() {
         when(userRepository.findByUserName("testuser1")).thenReturn(Optional.of(user1));
         doNothing().when(userRepository).deleteByUserName("testuser1"); // Assuming this method exists for deletion
 
-        assertDoesNotThrow(() -> userDaoService.deleteByuserName("testuser1"));
+        assertDoesNotThrow(() -> userDaoService.deleteByUserName("testuser1"));
 
         verify(userRepository, times(1)).findByUserName("testuser1");
         verify(userRepository, times(1)).deleteByUserName("testuser1");
     }
 
     @Test
-    void deleteByuserName_NotFound() {
+    void deleteByUserName_NotFound() {
         when(userRepository.findByUserName("nonexistent")).thenReturn(Optional.empty());
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.deleteByuserName("nonexistent"));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.deleteByUserName("nonexistent"));
         assertEquals("User not found with username: nonexistent", thrown.getMessage());
         verify(userRepository, times(1)).findByUserName("nonexistent");
         verify(userRepository, never()).deleteByUserName(anyString());
     }
 
     @Test
-    void deleteByuserName_Failure() {
+    void deleteByUserName_Failure() {
         when(userRepository.findByUserName("testuser1")).thenReturn(Optional.of(user1));
         doThrow(new RuntimeException("DB error during delete by username")).when(userRepository).deleteByUserName("testuser1");
 
-        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.deleteByuserName("testuser1"));
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> userDaoService.deleteByUserName("testuser1"));
         // The service's deleteByuserName does not re-wrap the exception from repo.deleteByUserName
         assertEquals("DB error during delete by username", thrown.getMessage());
         verify(userRepository, times(1)).findByUserName("testuser1");

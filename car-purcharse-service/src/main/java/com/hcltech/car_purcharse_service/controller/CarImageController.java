@@ -27,16 +27,14 @@ public class CarImageController {
     public ResponseEntity<CarImageDto> updateImage(@PathVariable Integer id, @Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file) {
 
         CarImageDto carImageDto = carImageService.Update(file, id);
-        ResponseEntity<CarImageDto> responseEntity = new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
-        return responseEntity;
+        return new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
     }
 
     @PostMapping(path = "/upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<CarImageDto> uploadImage(@PathVariable Integer id, @Parameter(description = "the file to upload", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestPart("file") MultipartFile file) {
 
         CarImageDto carImageDto = carImageService.upload(file, id);
-        ResponseEntity<CarImageDto> responseEntity = new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
-        return responseEntity;
+        return new ResponseEntity<>(carImageDto, HttpStatus.CREATED);
     }
 
     @GetMapping("/all/{carId}")
