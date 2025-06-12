@@ -7,6 +7,7 @@ import com.hcltech.car_purcharse_service.dto.BuyerDto;
 import com.hcltech.car_purcharse_service.dao.service.BuyerDaoService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ public class BuyerController {
         return ResponseEntity.ok(createdBuyer);
     }
 
+    @PreAuthorize("hasRole('BUYER')")
     @GetMapping("/{id}")
     public ResponseEntity<BuyerDto> getBuyerById(@PathVariable Integer id) {
         logger.info("Received request to get buyer by ID: {}", id);

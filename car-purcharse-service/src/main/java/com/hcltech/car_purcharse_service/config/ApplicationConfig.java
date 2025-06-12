@@ -26,11 +26,6 @@ public class ApplicationConfig {
         modelMapper.createTypeMap(CarImage.class, CarImageDto.class)
                 .addMapping(src -> src.getCar().getId(), (carImageDto, carId) -> carImageDto.setCarId((Integer) carId));
 
-//        // DTO to Entity mapping (CarImageDTO -> CarImage)
-//        modelMapper.createTypeMap(CarImageDto.class, CarImage.class)
-//                .addMappings(mapper -> mapper.skip(CarImage::setCar));
-//        // Skip mapping 'car' directly from DTO
-//        // When mapping DTO to Entity, you will manually set the 'Car' object based on carId.
         return modelMapper;
     }
 }

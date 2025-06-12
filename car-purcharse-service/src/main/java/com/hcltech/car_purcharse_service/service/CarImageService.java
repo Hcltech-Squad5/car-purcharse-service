@@ -95,14 +95,14 @@ public class CarImageService {
         }
 
         carImageDaoService.delete(id);
-        return "successfully delete image with Id" + id;
+        return "successfully delete image with Id:" + id;
     }
 
     public String deleteByCarId(Integer carId) {
 
         carImageDaoService.getByCarId(carId).
                 forEach(carImage -> deleteById(carImage.getId()));
-        return "successfully delete images with of Id" + carId;
+        return "successfully delete images with of Id:" + carId;
 
     }
 }
