@@ -13,39 +13,35 @@ import java.util.Optional;
 @Service
 public class SellerDaoService {
 
-    @Autowired
-    private SellerRepository sellerRepository;
+    private final SellerRepository sellerRepository;
 
     private static final Logger log = LoggerFactory.getLogger(SellerDaoService.class);
 
-    public Seller saveSeller(Seller seller)
-    {
-        log.info("Seller details saved in DB");
-        return  sellerRepository.save(seller);
+    public SellerDaoService(SellerRepository sellerRepository) {
+        this.sellerRepository = sellerRepository;
     }
 
-    public Optional<Seller> findSellerById(int id)
-    {
+    public Seller saveSeller(Seller seller) {
+        log.info("Seller details saved in DB");
+        return sellerRepository.save(seller);
+    }
+
+    public Optional<Seller> findSellerById(Integer id) {
         log.info("seller found by id");
         return sellerRepository.findById(id);
     }
-    public List<Seller> findAllSeller()
-    {
+
+    public List<Seller> findAllSeller() {
         log.info("All Seller");
         return sellerRepository.findAll();
     }
 
-    public boolean deleteSellerById(int id)
-    {
-        Optional<Seller> recSeller = sellerRepository.findById(id);
-        if(recSeller.isPresent())
-        {
-            log.info("deleted by id");
-            sellerRepository.deleteById(id);
-            return true;
-        }else{
-            log.error("wrong id");
-            return false;
-        }
+    public void deleteSellerById(Integer id) {
+
+        sellerRepository.deleteById(id);
+    }
+    public Seller updateSeller( Seller seller){
+
+        return sellerRepository.save(seller);
     }
 }

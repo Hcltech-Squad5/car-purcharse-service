@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data // Generates getters, setters, equals, hashCode, and toString
-@NoArgsConstructor // Generates a no-argument constructor
-@AllArgsConstructor // Generates a constructor with all arguments
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "purchased_cars")
 public class PurchasedCar {
@@ -17,11 +17,11 @@ public class PurchasedCar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "buyer_id", nullable = false)
     private Buyer buyer;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "seller_id", nullable = false)
     private Seller seller;
 
@@ -31,68 +31,4 @@ public class PurchasedCar {
 
     @Column(name = "purchase_date")
     private LocalDate purchaseDate;
-
-//
-//    public PurchasedCar() {}
-//
-//
-//    public PurchasedCar(Integer id, Buyer buyer, Seller seller, Car car, LocalDate purchaseDate) {
-//        this.id = id;
-//        this.buyer = buyer;
-//        this.seller = seller;
-//        this.car = car;
-//        this.purchaseDate = purchaseDate;
-//    }
-//
-//
-//    public Integer getId() {
-//        return id;
-//    }
-//
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
-//
-//    public Buyer getBuyer() {
-//        return buyer;
-//    }
-//
-//    public void setBuyer(Buyer buyer) {
-//        this.buyer = buyer;
-//    }
-//
-//    public Seller getSeller() {
-//        return seller;
-//    }
-//
-//    public void setSeller(Seller seller) {
-//        this.seller = seller;
-//    }
-//
-//    public Car getCar() {
-//        return car;
-//    }
-//
-//    public void setCar(Car car) {
-//        this.car = car;
-//    }
-//
-//    public LocalDate getPurchaseDate() {
-//        return purchaseDate;
-//    }
-//
-//    public void setPurchaseDate(LocalDate purchaseDate) {
-//        this.purchaseDate = purchaseDate;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "PurchasedCar{" +
-//                "id=" + id +
-//                ", buyer=" + (buyer != null ? buyer.getId() : null) +
-//                ", seller=" + (seller != null ? seller.getId() : null) +
-//                ", car=" + (car != null ? car.getId() : null) +
-//                ", purchaseDate=" + purchaseDate +
-//                '}';
-//    }
 }

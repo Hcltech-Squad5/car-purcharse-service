@@ -44,16 +44,12 @@ public class BuyerDaoService {
             throw new IllegalArgumentException("Password is required for buyer creation process (even if not stored here).");
         }
 
-        User newUser = new User();
-        newUser.setUserName(email);
-        newUser.setPassword(rawPassword);
-        newUser.setRoles("BUYER");
 
-        logger.debug("Preparing to create user with username: {} and role: {}", newUser.getUserName(), newUser.getRoles());
+        logger.debug("Preparing to create user with username: {} and role: {}", email, "Buyer");
 
         try {
             logger.info("Sending user credentials to UserService for email: {}", email);
-            userDaoService.create(newUser);
+            userDaoService.createUser(email, rawPassword, "BUYER");
             logger.info("User account created successfully by UserService for email: {}", email);
         } catch (Exception e) {
             logger.error("Failed to create user account in UserService for email: {}. Error: {}", email, e.getMessage());
@@ -106,6 +102,7 @@ public class BuyerDaoService {
                 });
         logger.debug("Found existing buyer for update, ID: {}", id);
 
+        userDaoService.updateUser(userDaoService.getByUserName(existing.getEmail()), buyerDto.getEmail(), buyerDto.getPassword());
 
         modelMapper.map(buyerDto, existing);
 
@@ -125,6 +122,7 @@ public class BuyerDaoService {
             logger.warn("Attempted to delete non-existent buyer with ID: {}", id);
             throw new RuntimeException("Buyer not found for deletion");
         }
+        userDaoService.deleteByUserName(getBuyerById(id).getEmail());
         buyerRepository.deleteById(id);
         logger.info("Buyer with ID: {} deleted successfully.", id);
     }

@@ -5,6 +5,7 @@ import com.hcltech.car_purcharse_service.model.User;
 import com.hcltech.car_purcharse_service.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +61,7 @@ public class UserDaoService {
     public User getByUserName(String userName) {
         try {
             logger.info("fetching user by username {}", userName);
-            return userRepository.findByUserName(userName).orElseThrow();
+            return userRepository.findByUserName(userName).orElseThrow(()->new UsernameNotFoundException("The user is not found"));
         } catch (Exception e) {
             logger.error("Failed to fetch the USER by Username {}", userName);
             throw new RuntimeException(e);
@@ -138,6 +139,15 @@ public class UserDaoService {
             logger.error("Failed to create the user into Database");
             throw new RuntimeException(e);
         }
+
+    }
+
+    public User updateUser(User existUser, String newUserName, String newPassword) {
+
+        existUser.setUserName(newUserName);
+        existUser.setPassword(passwordEncoder.encode(newPassword));
+
+        return create(existUser);
 
     }
 }

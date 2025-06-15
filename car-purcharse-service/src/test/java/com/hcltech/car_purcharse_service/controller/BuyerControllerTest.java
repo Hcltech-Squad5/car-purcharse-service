@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(BuyerController.class) // <-- Use WebMvcTest here
+@WebMvcTest(BuyerController.class)
 @AutoConfigureMockMvc
 @WithMockUser(username = "testuser", roles = {"BUYER"})
 @Import({JwtUtil.class, JwtFilter.class, SecurityConfig.class})

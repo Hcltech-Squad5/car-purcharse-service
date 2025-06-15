@@ -1,6 +1,5 @@
 package com.hcltech.car_purcharse_service.exception;
 
-import com.hcltech.car_purcharse_service.dto.ResponseStructure;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,40 +38,6 @@ class GlobalExceptionHandlerTest {
             sb.append(String.format("%02X ", b));
         }
         return sb.toString();
-    }
-
-
-    // --- handleINFE (IdNotFoundException) Tests ---
-    @Test
-    @DisplayName("handleINFE should return NOT_FOUND status with correct message for IdNotFoundException")
-    void handleINFE_returnsNotFound() {
-        String errorMessage = "Seller Id is not present";
-        IdNotFoundException exception = new IdNotFoundException(errorMessage);
-
-        ResponseEntity<ResponseStructure<String>> response = globalExceptionHandler.handleINFE(exception);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("Id is not present", response.getBody().getData()); // Static message set in handler
-        assertEquals(errorMessage, response.getBody().getMessage()); // Dynamic message from exception
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getBody().getStatusCode());
-    }
-
-    @Test
-    @DisplayName("handleINFE should handle empty message in IdNotFoundException gracefully")
-    void handleINFE_emptyMessage_returnsNotFound() {
-        String errorMessage = "";
-        IdNotFoundException exception = new IdNotFoundException(errorMessage);
-
-        ResponseEntity<ResponseStructure<String>> response = globalExceptionHandler.handleINFE(exception);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals("Id is not present", response.getBody().getData());
-        assertEquals(errorMessage, response.getBody().getMessage()); // Should be empty
-        assertEquals(HttpStatus.NOT_FOUND.value(), response.getBody().getStatusCode());
     }
 
 

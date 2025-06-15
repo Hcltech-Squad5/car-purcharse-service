@@ -1,10 +1,10 @@
 package com.hcltech.car_purcharse_service.controller;
 
-import com.hcltech.car_purcharse_service.dto.ResponseStructure;
+import com.hcltech.car_purcharse_service.dto.SellerDto;
 import com.hcltech.car_purcharse_service.service.SellerService;
-import com.hcltech.car_purcharse_service.model.Seller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,32 +23,34 @@ public class SellerController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseStructure<Seller>> saveSeller(@RequestBody Seller seller) {
+    public ResponseEntity<SellerDto> saveSeller(@RequestBody SellerDto sellerDto) {
         log.info("Seller saved successfully");
-        return sellerService.saveSeller(seller);
+        return new ResponseEntity<>( sellerService.saveSeller(sellerDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseStructure<Seller>> findSellerById(@PathVariable int id) {
+    public ResponseEntity<SellerDto> findSellerById(@PathVariable int id) {
         log.info("Seller found by id");
-        return sellerService.findSellerById(id);
+        return new ResponseEntity<>( sellerService.findSellerById(id), HttpStatus.OK);
+
     }
 
     @GetMapping
-    public ResponseEntity<ResponseStructure<List<Seller>>> findAllSeller() {
+    public ResponseEntity<List<SellerDto>> findAllSeller() {
         log.info("All seller found");
-        return sellerService.findAllSeller();
+        return new ResponseEntity<>(sellerService.findAllSeller(),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseStructure<Seller>> updateSeller(@RequestBody Seller seller, @PathVariable int id) {
+    public ResponseEntity<SellerDto> updateSeller(@RequestBody SellerDto sellerDto, @PathVariable Integer id) {
         log.info("Seller updated ");
-        return sellerService.updateSeller(seller, id);
+        return new ResponseEntity<>( sellerService.updateSeller(sellerDto, id),HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseStructure<Boolean>> deleteSeller(@PathVariable int id) {
+    public ResponseEntity<Void> deleteSeller(@PathVariable Integer id) {
+        sellerService.deleteSeller(id);
         log.info("Seller deleted successfully");
-        return sellerService.deleteSeller(id);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 }

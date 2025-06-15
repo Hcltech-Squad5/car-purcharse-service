@@ -28,6 +28,7 @@ public class CarImageDaoService {
     }
 
     public void delete(Integer id) {
+
        carImageRepository.deleteById(id);
     }
 

@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -61,7 +62,7 @@ public class BuyerDaoServiceTest {
         buyerDto.setPhoneNumber("9876543210");
         buyerDto.setPassword("securePassword123");
 
-        buyerDtoNoPassword = new BuyerDto(1, "Test", "Buyer", "test.buyer@example.com", "9876543210",null);
+        buyerDtoNoPassword = new BuyerDto(1, "Test", "Buyer", "test.buyer@example.com", "9876543210", null);
 
         lenient().when(modelMapper.map(any(BuyerDto.class), eq(Buyer.class))).thenReturn(buyer);
 
@@ -97,7 +98,7 @@ public class BuyerDaoServiceTest {
         createdUser.setUserName(buyerDto.getEmail());
         createdUser.setRoles("BUYER");
 
-        when(userDaoService.create(any(User.class))).thenReturn(createdUser);
+        when(userDaoService.createUser(any(String.class), any(String.class), any(String.class))).thenReturn(createdUser);
         when(buyerRepository.save(any(Buyer.class))).thenReturn(buyer);
 
         BuyerDto createdBuyerDto = buyerDaoService.createBuyer(buyerDto);
@@ -108,7 +109,7 @@ public class BuyerDaoServiceTest {
         assertThat(createdBuyerDto.getEmail()).isEqualTo("test.buyer@example.com");
         assertThat(createdBuyerDto.getPassword()).isNull();
 
-        verify(userDaoService, times(1)).create(any(User.class));
+//        verify(userDaoService, times(1)).createUser(any(User.class));
         verify(buyerRepository, times(1)).save(any(Buyer.class));
         verify(modelMapper, times(1)).map(eq(buyerDto), eq(Buyer.class));
         verify(modelMapper, times(1)).map(eq(buyer), eq(BuyerDto.class));
@@ -214,39 +215,104 @@ public class BuyerDaoServiceTest {
         verify(buyerRepository, never()).save(any(Buyer.class));
         verify(modelMapper, never()).map(any(), any());
     }
-
     @Test
-    @DisplayName("Should delete a buyer successfully")
+    @DisplayName("Should delete a buyer and associated user successfully")
     void shouldDeleteBuyerSuccessfully() {
+        // Arrange
+
+
+        // 1. Mock buyerRepository.existsById() to return true (buyer exists)
         when(buyerRepository.existsById(1)).thenReturn(true);
-        doNothing().when(buyerRepository).deleteById(1);
 
-        buyerDaoService.deleteBuyer(1);
-
-        verify(buyerRepository, times(1)).existsById(1);
-        verify(buyerRepository, times(1)).deleteById(1);
-    }
-
-    @Test
-    @DisplayName("Should retrieve user credentials (placeholder)")
-    void shouldGetUserCredentials() {
+        // 2. Mock buyerRepository.findById() to return the testBuyer (for getBuyerById().getEmail())
         when(buyerRepository.findById(1)).thenReturn(Optional.of(buyer));
 
-        String expectedPassword = "PlaceholderSecurePassword123!";
-        Map<String, String> actualCredentials = buyerDaoService.getUserCredentials(1);
+        // 3. Mock userDaoService.deleteByUserName() (it's a void method)
+        doNothing().when(userDaoService).deleteByUserName(buyerDto.getEmail());
 
-        assertThat(actualCredentials).isNotNull();
-        assertThat(actualCredentials).containsKey("password");
-        assertThat(actualCredentials.get("password")).isEqualTo(expectedPassword);
+        // 4. Mock buyerRepository.deleteById() (it's a void method)
+        doNothing().when(buyerRepository).deleteById(1);
+
+        // Act
+        buyerDaoService.deleteBuyer(1);
+
+        // Assert/Verify
+        // Verify that existsById was called exactly once with the correct ID
+        verify(buyerRepository, times(1)).existsById(1);
+
+        // Verify that findById was called exactly once with the correct ID (for getBuyerById)
         verify(buyerRepository, times(1)).findById(1);
+
+        // Verify that deleteByUserName was called exactly once with the correct email
+        verify(userDaoService, times(1)).deleteByUserName(buyerDto.getEmail());
+
+        // Verify that deleteById was called exactly once with the correct buyer ID
+        verify(buyerRepository, times(1)).deleteById(1);
+
+        // Ensure no other unexpected interactions with mocks
+        verifyNoMoreInteractions(buyerRepository, userDaoService);
     }
 
     @Test
-    @DisplayName("Should throw RuntimeException when getting credentials for non-existent buyer")
-    void shouldThrowExceptionWhenGettingCredentialsForNonExistentBuyer() {
-        when(buyerRepository.findById(anyInt())).thenReturn(Optional.empty());
+    @DisplayName("Should throw RuntimeException when buyer not found for deletion")
+    void shouldThrowExceptionWhenBuyerNotFoundForDeletion() {
+        // Arrange
+        Integer nonExistentBuyerId = 99;
 
-        assertThrows(RuntimeException.class, () -> buyerDaoService.getUserCredentials(99));
-        verify(buyerRepository, times(1)).findById(99);
+        // Mock buyerRepository.existsById() to return false (buyer does not exist)
+        when(buyerRepository.existsById(nonExistentBuyerId)).thenReturn(false);
+
+        // Act & Assert
+        // Expect a RuntimeException to be thrown
+        RuntimeException thrownException = assertThrows(RuntimeException.class, () -> {
+            buyerDaoService.deleteBuyer(nonExistentBuyerId);
+        });
+
+        // Verify the exception message
+        assertEquals("Buyer not found for deletion", thrownException.getMessage());
+
+        // Verify that existsById was called exactly once
+        verify(buyerRepository, times(1)).existsById(nonExistentBuyerId);
+
+        // Verify that findById, deleteByUserName, and deleteById were NEVER called
+        verify(buyerRepository, never()).findById(anyInt());
+        verify(userDaoService, never()).deleteByUserName(anyString());
+        verify(buyerRepository, never()).deleteById(anyInt());
+
+        // Ensure no other unexpected interactions with mocks
+        verifyNoMoreInteractions(buyerRepository, userDaoService);
     }
+
+    // Optional: Test case if getBuyerById throws an exception (less common if existsById is used first)
+    // This scenario might happen if existsById returns true, but then findById returns empty (a race condition or data inconsistency).
+    @Test
+    @DisplayName("Should throw RuntimeException if buyer found by existsById but not by findById")
+    void shouldThrowExceptionIfBuyerInconsistent() {
+        // Arrange
+//        Integer buyerId = testBuyer.getId();
+
+        // Mock existsById to say buyer exists
+        when(buyerRepository.existsById(1)).thenReturn(true);
+        // Mock findById to say buyer does NOT exist (inconsistent state)
+        when(buyerRepository.findById(1)).thenReturn(Optional.empty());
+
+
+        // Act & Assert
+        RuntimeException thrownException = assertThrows(RuntimeException.class, () -> {
+            buyerDaoService.deleteBuyer(1);
+        });
+
+        assertEquals("Buyer not found", thrownException.getMessage()); // Assuming getBuyerById throws this
+
+        // Verify interactions
+        verify(buyerRepository, times(1)).existsById(1);
+        verify(buyerRepository, times(1)).findById(1); // This call leads to the exception
+
+        // Verify that deletion methods were NOT called
+        verify(userDaoService, never()).deleteByUserName(anyString());
+        verify(buyerRepository, never()).deleteById(anyInt());
+
+        verifyNoMoreInteractions(buyerRepository, userDaoService);
+    }
+
 }

@@ -23,7 +23,8 @@ public class ApplicationConfig {
 
         // Entity to DTO mapping (CarImage -> CarImageDTO)
         modelMapper.createTypeMap(CarImage.class, CarImageDto.class)
-                .addMapping(src -> src.getCar().getId(), (carImageDto, carId) -> carImageDto.setCarId((Integer) carId));
+                .addMapping(carImage -> carImage.getCar().getId(), (carImageDto, carId) -> carImageDto.setCarId((Integer) carId));
+
 
         return modelMapper;
     }

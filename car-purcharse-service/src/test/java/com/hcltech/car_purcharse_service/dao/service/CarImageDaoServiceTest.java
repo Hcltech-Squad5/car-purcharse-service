@@ -1,9 +1,9 @@
 package com.hcltech.car_purcharse_service.dao.service;
 
-import com.hcltech.car_purcharse_service.model.Car;
+import com.hcltech.car_purcharse_service.model.Car; // Import the Car model
 import com.hcltech.car_purcharse_service.model.CarImage;
 import com.hcltech.car_purcharse_service.repository.CarImageRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,140 +27,167 @@ class CarImageDaoServiceTest {
     @InjectMocks
     private CarImageDaoService carImageDaoService;
 
-    private CarImage carImage1;
-    private CarImage carImage2;
-    private Car car;
-
-    @BeforeEach
-    void setUp() {
-        car = new Car(); // Assuming a simple Car object for association
-        car.setId(101);
-
-        carImage1 = new CarImage(1, "publicId1", "http://example.com/image1.jpg", car);
-        carImage2 = new CarImage(2, "publicId2", "http://example.com/image2.jpg", car);
+    // Helper method to create a Car object (needed for CarImage's 'car' field)
+    private Car createCar(Integer id) {
+        Car car = new Car();
+        car.setId(id);
+        return car;
     }
 
+    private CarImage createCarImage(Integer id, Car car, String publicId, String imageUrl) {
+        CarImage image = new CarImage();
+        image.setId(id);
+        image.setCar(car); // Set the Car object directly
+        image.setPublicId(publicId);
+        image.setImageUrl(imageUrl);
+        return image;
+    }
+
+    // --- create() Tests ---
     @Test
-    void create_ShouldSaveCarImageAndReturnIt() {
-        // Arrange
-        CarImage newCarImage = new CarImage(null, "newPublicId", "http://example.com/new_image.jpg", car);
-        when(carImageRepository.save(newCarImage)).thenReturn(carImage1); // Simulate saving returns an ID
+    @DisplayName("create should successfully save a new car image")
+    void create_success() {
+        Car associatedCar = createCar(1); // Create a simple Car object
+        CarImage carImageToSave = createCarImage(null, associatedCar, "publicId1", "url1");
+        CarImage savedCarImage = createCarImage(1, associatedCar, "publicId1", "url1");
 
-        // Act
-        CarImage result = carImageDaoService.create(newCarImage);
+        when(carImageRepository.save(carImageToSave)).thenReturn(savedCarImage);
 
-        // Assert
+        CarImage result = carImageDaoService.create(carImageToSave);
+
         assertNotNull(result);
-        assertEquals(carImage1.getId(), result.getId());
-        assertEquals(carImage1.getPublicId(), result.getPublicId());
-        verify(carImageRepository, times(1)).save(newCarImage);
+        assertEquals(1, result.getId());
+        assertEquals("publicId1", result.getPublicId());
+        // Verify that the saved image's car ID matches the associated car's ID
+        assertNotNull(result.getCar());
+        assertEquals(associatedCar.getId(), result.getCar().getId());
+        verify(carImageRepository, times(1)).save(carImageToSave);
     }
 
     @Test
-    void update_ShouldSaveCarImageAndReturnIt() {
-        // Arrange
-        CarImage updatedCarImage = new CarImage(1, "updatedPublicId", "http://example.com/updated_image.jpg", car);
-        when(carImageRepository.save(updatedCarImage)).thenReturn(updatedCarImage);
+    @DisplayName("create should handle null CarImage input gracefully (repository save(null) behavior)")
+    void create_nullCarImageInput_returnsNull() {
+        when(carImageRepository.save(eq(null))).thenReturn(null);
 
-        // Act
-        CarImage result = carImageDaoService.update(updatedCarImage);
+        CarImage result = carImageDaoService.create(null);
 
-        // Assert
+        assertNull(result);
+        verify(carImageRepository, times(1)).save(eq(null));
+    }
+
+
+    // --- update() Tests ---
+    @Test
+    @DisplayName("update should successfully update an existing car image")
+    void update_success() {
+        Car associatedCar = createCar(1);
+        CarImage carImageToUpdate = createCarImage(1, associatedCar, "newPublicId", "newUrl");
+        CarImage updatedCarImage = createCarImage(1, associatedCar, "newPublicId", "newUrl");
+
+        when(carImageRepository.save(carImageToUpdate)).thenReturn(updatedCarImage);
+
+        CarImage result = carImageDaoService.update(carImageToUpdate);
+
         assertNotNull(result);
-        assertEquals(updatedCarImage.getId(), result.getId());
-        assertEquals(updatedCarImage.getPublicId(), result.getPublicId());
-        verify(carImageRepository, times(1)).save(updatedCarImage);
+        assertEquals(1, result.getId());
+        assertEquals("newPublicId", result.getPublicId());
+        assertNotNull(result.getCar());
+        assertEquals(associatedCar.getId(), result.getCar().getId());
+        verify(carImageRepository, times(1)).save(carImageToUpdate);
     }
 
     @Test
-    void delete_ShouldFindCarImageById_ButNotActuallyDeleteIt() { // Name changed to reflect service behavior
-        // Arrange
-        Integer idToDelete = 1;
-        when(carImageRepository.findById(idToDelete)).thenReturn(Optional.of(carImage1));
-        // Removed: doNothing().when(carImageRepository).delete(carImage1);
-        // Because the service's delete method *does not* call repository.delete()
+    @DisplayName("update should handle null CarImage input gracefully")
+    void update_nullCarImageInput_returnsNull() {
+        when(carImageRepository.save(eq(null))).thenReturn(null);
 
-        // Act
-        carImageDaoService.delete(idToDelete); // This calls the service's delete method
+        CarImage result = carImageDaoService.update(null);
 
-        // Assert
-        // Verify that findById was called
-        verify(carImageRepository, times(1)).findById(idToDelete);
-        // Verify that delete was *NOT* called, because the service doesn't call it.
-        verify(carImageRepository, never()).delete(any(CarImage.class));
+        assertNull(result);
+        verify(carImageRepository, times(1)).save(eq(null));
     }
 
+
+    // --- getById() Tests ---
     @Test
-    void delete_ShouldThrowExceptionIfNotFound() {
-        // Arrange
-        Integer idToDelete = 99;
-        when(carImageRepository.findById(idToDelete)).thenReturn(Optional.empty());
+    @DisplayName("getById should return CarImage when image exists")
+    void getById_carImageExists_returnsCarImage() {
+        Integer imageId = 1;
+        Car associatedCar = createCar(1);
+        CarImage foundCarImage = createCarImage(imageId, associatedCar, "publicId", "url");
 
-        // Act & Assert
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> carImageDaoService.delete(idToDelete));
-        assertEquals("The Car Image is not found", exception.getMessage());
-        verify(carImageRepository, times(1)).findById(idToDelete);
-        verify(carImageRepository, never()).delete(any(CarImage.class)); // Ensure delete is not called
-    }
+        when(carImageRepository.findById(imageId)).thenReturn(Optional.of(foundCarImage));
 
-    @Test
-    void getById_ShouldReturnCarImageIfFound() {
-        // Arrange
-        Integer idToFind = 1;
-        when(carImageRepository.findById(idToFind)).thenReturn(Optional.of(carImage1));
+        CarImage result = carImageDaoService.getById(imageId);
 
-        // Act
-        CarImage result = carImageDaoService.getById(idToFind);
-
-        // Assert
         assertNotNull(result);
-        assertEquals(carImage1.getId(), result.getId());
-        verify(carImageRepository, times(1)).findById(idToFind);
+        assertEquals(imageId, result.getId());
+        assertEquals("publicId", result.getPublicId());
+        assertNotNull(result.getCar());
+        assertEquals(associatedCar.getId(), result.getCar().getId());
+        verify(carImageRepository, times(1)).findById(imageId);
     }
 
-//    @Test
-//    void getById_ShouldThrowExceptionIfNotFound() {
-//        // Arrange
-//        Integer idToFind = 99;
-//        when(carImageRepository.findById(idToFind)).thenReturn(Optional.empty());
-//
-//        // Act & Assert
-//        RuntimeException exception = assertThrows(RuntimeException.class, () -> carImageDaoService.getById(idToFind));
-//        // This assertion should match the ERROR_MESSAGE from your service for consistency
-//        assertEquals("The Car Image is not found", exception.getMessage());
-//        verify(carImageRepository, times(1)).findById(idToFind);
-//    }
-
     @Test
-    void getByCarId_ShouldReturnListOfCarImages() {
-        // Arrange
-        Integer carIdToFind = 101;
-        List<CarImage> carImages = Arrays.asList(carImage1, carImage2);
-        when(carImageRepository.findByCarId(carIdToFind)).thenReturn(carImages);
+    @DisplayName("getById should throw RuntimeException when image does not exist")
+    void getById_carImageDoesNotExist_throwsRuntimeException() {
+        Integer nonExistentImageId = 99;
 
-        // Act
-        List<CarImage> result = carImageDaoService.getByCarId(carIdToFind);
+        when(carImageRepository.findById(nonExistentImageId)).thenReturn(Optional.empty());
 
-        // Assert
+        RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
+            carImageDaoService.getById(nonExistentImageId);
+        });
+        assertEquals("", thrown.getMessage()); // Your service returns "" for this specific case
+        verify(carImageRepository, times(1)).findById(nonExistentImageId);
+    }
+
+
+    // --- getByCarId() Tests ---
+    @Test
+    @DisplayName("getByCarId should return a list of CarImage when images exist for carId")
+    void getByCarId_imagesExist_returnsListOfCarImage() {
+        Integer carId = 10;
+        Car associatedCar = createCar(carId); // Create a Car object matching the carId
+        List<CarImage> carImages = Arrays.asList(
+                createCarImage(1, associatedCar, "pid1", "url1"),
+                createCarImage(2, associatedCar, "pid2", "url2")
+        );
+
+        when(carImageRepository.findByCarId(carId)).thenReturn(carImages);
+
+        List<CarImage> result = carImageDaoService.getByCarId(carId);
+
         assertNotNull(result);
+        assertFalse(result.isEmpty());
         assertEquals(2, result.size());
-        assertEquals(carImage1.getId(), result.get(0).getId());
-        assertEquals(carImage2.getId(), result.get(1).getId());
-        verify(carImageRepository, times(1)).findByCarId(carIdToFind);
+        assertEquals(carId, result.get(0).getCar().getId()); // Access getCar().getId()
+        verify(carImageRepository, times(1)).findByCarId(carId);
     }
 
     @Test
-    void getByCarId_ShouldReturnEmptyListIfNoImagesFound() {
-        // Arrange
-        Integer carIdToFind = 999;
-        when(carImageRepository.findByCarId(carIdToFind)).thenReturn(List.of()); // Return empty list
+    @DisplayName("getByCarId should return an empty list when no images exist for carId")
+    void getByCarId_noImages_returnsEmptyList() {
+        Integer carId = 99;
 
-        // Act
-        List<CarImage> result = carImageDaoService.getByCarId(carIdToFind);
+        when(carImageRepository.findByCarId(carId)).thenReturn(Collections.emptyList());
 
-        // Assert
+        List<CarImage> result = carImageDaoService.getByCarId(carId);
+
         assertNotNull(result);
         assertTrue(result.isEmpty());
-        verify(carImageRepository, times(1)).findByCarId(carIdToFind);
+        verify(carImageRepository, times(1)).findByCarId(carId);
+    }
+
+    @Test
+    @DisplayName("getByCarId should return empty list when carId is null (assuming repository handles it gracefully)")
+    void getByCarId_nullCarId_returnsEmptyList() {
+        when(carImageRepository.findByCarId(null)).thenReturn(Collections.emptyList());
+
+        List<CarImage> result = carImageDaoService.getByCarId(null);
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(carImageRepository, times(1)).findByCarId(null);
     }
 }

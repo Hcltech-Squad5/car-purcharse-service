@@ -1,6 +1,5 @@
 package com.hcltech.car_purcharse_service.exception;
 
-import com.hcltech.car_purcharse_service.dto.ResponseStructure;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,15 +13,6 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(IdNotFoundException.class)
-    public ResponseEntity<ResponseStructure<String>> handleINFE(IdNotFoundException exception)
-    {
-        ResponseStructure<String> structure = new ResponseStructure<>();
-        structure.setData("Id is not present");
-        structure.setMessage(exception.getMessage());
-        structure.setStatusCode(HttpStatus.NOT_FOUND.value());
-        return  new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
-    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<String> handleResourceNotFound(ResourceNotFoundException ex, WebRequest request) {

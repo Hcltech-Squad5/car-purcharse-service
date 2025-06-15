@@ -7,90 +7,24 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Data // Generates getters, setters, equals, hashCode, and toString
-@NoArgsConstructor // Generates a no-argument constructor
-@AllArgsConstructor // Generates a constructor with all arguments
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 @Entity
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false)
     private String name;
-    
-    @Column(nullable = false,unique = true)
-    private long contact;
-
-    @Column(nullable = false,unique = true)
-    private String email;
 
     @Column(nullable = false)
-    private String companyName;
+    private String contact;
 
-    @OneToMany(mappedBy = "seller",cascade = CascadeType.ALL )
-    private List<Car> cars;
+    @Column(nullable = false, unique = true)
+    private String email;
 
-//    public Seller() {
-//    }
-//    public Seller(int id, String name, long contact, String email, String companyName, List<Car> cars) {
-//        this.id = id;
-//        this.name = name;
-//        this.contact = contact;
-//        this.email = email;
-//        this.companyName = companyName;
-//        this.cars = cars;
-//    }
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//    public String getName() {
-//        return name;
-//    }
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//    public long getContact() {
-//        return contact;
-//    }
-//
-//    public void setContact(long contact) {
-//        this.contact = contact;
-//    }
-//    public String getEmail() {
-//        return email;
-//    }
-//
-//    public void setEmail(String email) {
-//        this.email = email;
-//    }
-//    public String getCompanyName() {
-//        return companyName;
-//    }
-//
-//    public void setCompanyName(String companyName) {
-//        this.companyName = companyName;
-//    }
-//
-//    public List<Car> getCars() {
-//        return cars;
-//    }
-//
-//    public void setCars(List<Car> cars) {
-//        this.cars = cars;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Seller{" +
-//                "id=" + id +
-//                ", companyName='" + companyName + '\'' +
-//                ", email='" + email + '\'' +
-//                ", PhoneNumber=" + contact +
-//                '}';
-//    }
+
 }

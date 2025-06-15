@@ -37,7 +37,7 @@ class CarDaoServiceTest {
 
     @BeforeEach
     void setUp() {
-        testSeller = new Seller(1, "Test Seller", 9832415264l, "seller@example.com","Honda",null);
+        testSeller = new Seller(1, "Honda", "9832415264l","seller@example.com");
 
         testCar1 = new Car(1, "Toyota", "Camry", 2023, 30000.0, true, testSeller);
         testCar2 = new Car(2, "Honda", "Civic", 2022, 25000.0, false, testSeller); // Not available for testing
